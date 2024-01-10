@@ -23,7 +23,7 @@ namespace Infrastructure
             Container.Bind<IGameStateMachine>().To<GameStateMachine>().AsSingle();
             Container.Bind<ISceneLoader>().To<SceneLoader>().AsSingle();
             Container.Bind<IInputService>().To<InputService>().AsSingle();
-            Container.Bind<IAssetsService>().To<AssetsService>().AsSingle();
+            Container.Bind<IAssetsProvider>().To<AssetsProvider>().AsSingle();
             Container.Bind<IGameStateService>().To<GameStateService>().AsSingle();
             Container.Bind<IAudioService>().To<AudioService>().AsSingle();
             Container.Bind<ISaveLoadService>().To<SaveLoadService>().AsSingle();
