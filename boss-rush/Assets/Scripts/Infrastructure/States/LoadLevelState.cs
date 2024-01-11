@@ -1,5 +1,7 @@
-﻿using Infrastructure.Services.Loader;
+﻿using Infrastructure.Services.Factory;
+using Infrastructure.Services.Loader;
 using Infrastructure.States.Interfaces;
+using Items.Boss;
 using Ui.Curtain;
 using UnityEngine;
 
@@ -10,12 +12,14 @@ namespace Infrastructure.States
         private readonly GameStateMachine _stateMachine;
         private readonly ISceneLoader _sceneLoader;
         private readonly LoadingCurtain _loadingCurtain;
+        private readonly IGameFactory _gameFactory;
 
-        public LoadLevelState(GameStateMachine stateMachine, ISceneLoader sceneLoader, LoadingCurtain loadingCurtain)
+        public LoadLevelState(GameStateMachine stateMachine, ISceneLoader sceneLoader, LoadingCurtain loadingCurtain, IGameFactory gameFactory)
         {
             _stateMachine = stateMachine;
             _sceneLoader = sceneLoader;
             _loadingCurtain = loadingCurtain;
+            _gameFactory = gameFactory;
         }
 
         public void Enter(string sceneName)
@@ -42,7 +46,8 @@ namespace Infrastructure.States
 
         private void InitGameWorld()
         {
-    
+            _gameFactory.CreatePlayer();
+            _gameFactory.CreateBossEnemy(BossType.Kinght);
         }
     }
 }
