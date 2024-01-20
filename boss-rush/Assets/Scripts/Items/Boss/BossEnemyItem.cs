@@ -1,10 +1,9 @@
-﻿using Items.Boss;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace Items
+namespace Items.Boss
 {
     [CreateAssetMenu(fileName = "_BOSS_ENEMY_ITEM", menuName = "Items/BossEnemy", order = 1)]
-    public class BossEnemyItem : GameObjectItem
+    public class BossEnemyItem : CharacterItem
     {
         [SerializeField] private BossType type;
 

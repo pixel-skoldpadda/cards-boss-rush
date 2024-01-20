@@ -37,6 +37,8 @@ namespace Infrastructure.Services.Factory
         {
             GameObject prefab = _assets.LoadResource(AssetsPath.HudPrefabPath, false);
             Hud hud = _diContainer.InstantiatePrefabForComponent<Hud>(prefab);
+
+            _diContainer.Bind<BossHealthBar>().FromInstance(hud.BossHealthBar);
         }
     }
 }

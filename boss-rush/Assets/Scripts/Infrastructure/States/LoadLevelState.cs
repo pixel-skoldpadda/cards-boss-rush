@@ -49,9 +49,10 @@ namespace Infrastructure.States
 
         private void InitGameWorld()
         {
+            _uiFactory.CreateHud();
+            
             _gameFactory.CreatePlayer();
             _gameFactory.CreateBossEnemy(BossType.Kinght);
-            _uiFactory.CreateHud();
         }
     }
 }

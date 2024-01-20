@@ -12,8 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1eef3b7b21c94dbb8d57fc0d5437a4d2, type: 3}
   m_Name: BOSS_ENEMY_ITEM
   m_EditorClassIdentifier: 
-  id: BOSS_ENEMY_1
-  itemName: 
+  itemName: "\u0421\u0443\u0440\u043E\u0432\u044B\u0439 \u0431\u043E\u0431!"
   description: 
   prefab: {fileID: 4818619215306328716, guid: 84134f9506bed7b489fb61f3ffd94c98, type: 3}
   spawnPoint: {x: 5, y: 0, z: 0}
+  maxHealth: 500
+  deck:
+  - {fileID: 11400000, guid: 067fd02d40786d249b363445568f3cfd, type: 2}
+  - {fileID: 11400000, guid: 067fd02d40786d249b363445568f3cfd, type: 2}
+  - {fileID: 11400000, guid: 33020f3c8f70487489b31c4dc1038cf2, type: 2}
+  - {fileID: 11400000, guid: 33020f3c8f70487489b31c4dc1038cf2, type: 2}
+  - {fileID: 11400000, guid: 0abeb3b81c7fbd74088735d124454b6f, type: 2}
+  - {fileID: 11400000, guid: 0abeb3b81c7fbd74088735d124454b6f, type: 2}
+  - {fileID: 11400000, guid: 1b990ae86e47d7544a49cc0ee97b0519, type: 2}
+  - {fileID: 11400000, guid: 1b990ae86e47d7544a49cc0ee97b0519, type: 2}
+  type: 0

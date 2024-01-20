@@ -12,8 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 697a31185713439280a19d0319723842, type: 3}
   m_Name: PLAYER_ITEM
   m_EditorClassIdentifier: 
-  id: PLAYER
   itemName: 
   description: 
   prefab: {fileID: 1809785152957721139, guid: ba9e832e47f33d440a5e2ad99cd578cd, type: 3}
   spawnPoint: {x: -5, y: 0, z: 0}
+  maxHealth: 100
+  deck:
+  - {fileID: 11400000, guid: 33020f3c8f70487489b31c4dc1038cf2, type: 2}
+  - {fileID: 11400000, guid: 33020f3c8f70487489b31c4dc1038cf2, type: 2}
+  - {fileID: 11400000, guid: 33020f3c8f70487489b31c4dc1038cf2, type: 2}
+  - {fileID: 11400000, guid: 0abeb3b81c7fbd74088735d124454b6f, type: 2}
+  - {fileID: 11400000, guid: 0abeb3b81c7fbd74088735d124454b6f, type: 2}
+  - {fileID: 11400000, guid: 0abeb3b81c7fbd74088735d124454b6f, type: 2}
+  - {fileID: 11400000, guid: 067fd02d40786d249b363445568f3cfd, type: 2}

@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using GameObjects.Enemy;
 using GameObjects.Player;
 using Infrastructure.Services.Assets;
 using Infrastructure.Services.Items;
@@ -32,7 +34,8 @@ namespace Infrastructure.Services.Factory
         public void CreateBossEnemy(BossType type)
         {
             BossEnemyItem item = _items.GetBossEnemyItem(type);
-            _diContainer.InstantiatePrefab(item.Prefab, item.SpawnPoint, Quaternion.identity, null);
+            _diContainer.InstantiatePrefabForComponent<BossEnemy>(item.Prefab, item.SpawnPoint, Quaternion.identity, null, 
+                    new List<BossEnemyItem> { item });
         }
     }
 }
