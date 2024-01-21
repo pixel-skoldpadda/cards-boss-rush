@@ -1,6 +1,6 @@
 using System.Collections.Generic;
-using GameObjects.Enemy;
-using GameObjects.Player;
+using GameObjects.Character.Enemy;
+using GameObjects.Character.Player;
 using Infrastructure.Services.Assets;
 using Infrastructure.Services.Items;
 using Items;
@@ -27,7 +27,9 @@ namespace Infrastructure.Services.Factory
         public void CreatePlayer()
         {
             PlayerItem item = _items.PlayerItem;
-            Player player = _diContainer.InstantiatePrefabForComponent<Player>(item.Prefab, item.SpawnPoint, Quaternion.identity, null);
+            Player player = _diContainer.InstantiatePrefabForComponent<Player>(item.Prefab, item.SpawnPoint, Quaternion.identity, null,
+                new List<PlayerItem> { item });
+            
             _diContainer.Bind<Player>().FromInstance(player).AsSingle();
         }
 

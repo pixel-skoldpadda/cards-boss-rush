@@ -1,28 +1,19 @@
 ﻿using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace Ui.Hud
 {
-    public class BossHealthBar : MonoBehaviour
+    public class BossHealthBar : HealthBar
     {
-        [SerializeField] private Image health;
         [SerializeField] private TextMeshProUGUI bossNameText;
-        [SerializeField] private TextMeshProUGUI healthAmountText;
 
         private int _maxHealth;
 
         public void Init(int maxHealth, string bossName)
         {
-            _maxHealth = maxHealth;
+            Init(maxHealth);
+            
             bossNameText.text = bossName;
-            UpdateHealthBar(maxHealth);
-        }
-
-        public void UpdateHealthBar(int currentValue)
-        {
-            health.fillAmount = (float) currentValue / _maxHealth;
-            healthAmountText.text = $"{currentValue}/{_maxHealth}";
         }
     }
 }
