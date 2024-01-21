@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: 15_PROTECTION_CARD_ITEM
   m_EditorClassIdentifier: 
   itemName: "\u041A\u0430\u0440\u0442\u0430 \u0437\u0430\u0449\u0438\u0442\u044B"
-  description: "\u0414\u043E\u0431\u0430\u0432\u043B\u044F\u0435\u0442 {0} \u0449\u0438\u0442\u0430
-    \u043F\u043E\u0441\u043B\u0435 \u0438\u0441\u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u043D\u0438\u044F."
+  description: "\u0414\u043E\u0431\u0430\u0432\u043B\u044F\u0435\u0442 <color=#3477eb>{0}</color>
+    \u0449\u0438\u0442\u0430\n\u043F\u043E\u0441\u043B\u0435 \u0438\u0441\u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u043D\u0438\u044F"
   cardType: 0
   value: 15
+  faceSprite: {fileID: 21300000, guid: 8b29d3273684138439fc945422e74109, type: 3}

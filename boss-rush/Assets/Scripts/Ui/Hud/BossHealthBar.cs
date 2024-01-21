@@ -7,8 +7,6 @@ namespace Ui.Hud
     {
         [SerializeField] private TextMeshProUGUI bossNameText;
 
-        private int _maxHealth;
-
         public void Init(int maxHealth, string bossName)
         {
             Init(maxHealth);

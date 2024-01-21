@@ -17,6 +17,8 @@ namespace GameObjects.Character
         {
             item = characterItem;
             health = characterItem.MaxHealth;
+            
+            CreateCardsDeck();
         }
 
         protected abstract void CreateCardsDeck();

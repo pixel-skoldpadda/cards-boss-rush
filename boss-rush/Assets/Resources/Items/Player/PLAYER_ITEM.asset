@@ -25,3 +25,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 0abeb3b81c7fbd74088735d124454b6f, type: 2}
   - {fileID: 11400000, guid: 0abeb3b81c7fbd74088735d124454b6f, type: 2}
   - {fileID: 11400000, guid: 067fd02d40786d249b363445568f3cfd, type: 2}
+  cardsOnHand: 5
+  protectionCards: 2
+  attackCards: 3

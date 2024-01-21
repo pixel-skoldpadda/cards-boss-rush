@@ -7,8 +7,10 @@ namespace Items.Card
     {
         [SerializeField] private CardType cardType;
         [SerializeField] private int value;
-
+        [SerializeField] private Sprite faceSprite;
+        
         public CardType CardType => cardType;
         public int Value => value;
+        public Sprite FaceSprite => faceSprite;
     }
 }

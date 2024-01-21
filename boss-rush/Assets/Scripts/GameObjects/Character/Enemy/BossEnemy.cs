@@ -1,6 +1,5 @@
 ﻿using Items.Boss;
 using Ui.Hud;
-using UnityEngine;
 using Zenject;
 
 namespace GameObjects.Character.Enemy
@@ -18,7 +17,7 @@ namespace GameObjects.Character.Enemy
 
         protected override void CreateCardsDeck()
         {
-            cardsDeck = new CardsDeck(item.Deck);
+            cardsDeck = new CardsDeck(item.Deck, item.AttackCards, item.ProtectionCards);
         }
     }
 }

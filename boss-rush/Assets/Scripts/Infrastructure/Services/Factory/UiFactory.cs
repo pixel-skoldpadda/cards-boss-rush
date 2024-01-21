@@ -39,6 +39,7 @@ namespace Infrastructure.Services.Factory
             Hud hud = _diContainer.InstantiatePrefabForComponent<Hud>(prefab);
 
             _diContainer.Bind<BossHealthBar>().FromInstance(hud.BossHealthBar);
+            _diContainer.Bind<CardsContainer>().FromInstance(hud.CardsContainer);
         }
     }
 }
