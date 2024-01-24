@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using DG.Tweening;
 using Items.Card;
 using TMPro;
 using UnityEngine;
@@ -43,6 +44,9 @@ namespace Ui.Hud
             
             for (var i = 0; i < size; i++)
             {
+                float coefficient = size > 1 ? Mathf.Abs(i / (size - 1f) - .5f) : 0;
+                position.y = offsetY * coefficient;
+                
                 cards[i].CardAnimator.MoveToPosition(position, i);
                 position.x += spacingX;
             }
