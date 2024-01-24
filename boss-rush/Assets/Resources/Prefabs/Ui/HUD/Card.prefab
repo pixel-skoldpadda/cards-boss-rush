@@ -112,11 +112,11 @@ RectTransform:
   - {fileID: 953224953193043866}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 485.558, y: 677.825}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_SizeDelta: {x: 485, y: 680}
+  m_Pivot: {x: 0.5, y: 0}
 --- !u!223 &1538126258772849929
 Canvas:
   m_ObjectHideFlags: 0
@@ -202,6 +202,22 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+  - eventID: 4
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 5957640070724981756}
+          m_TargetAssemblyTypeName: Ui.Hud.Card.Card, Assembly-CSharp
+          m_MethodName: OnPointerClick
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!114 &6517722342069161200
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -214,7 +230,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38a05d37ce0441f0855ea8a1dc8ed067, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveOffset: 250
+  rectTransform: {fileID: 2441270645342375479}
   canvas: {fileID: 1538126258772849929}
 --- !u!114 &5957640070724981756
 MonoBehaviour:

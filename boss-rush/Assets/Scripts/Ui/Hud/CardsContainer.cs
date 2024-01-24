@@ -7,54 +7,53 @@ namespace Ui.Hud
 {
     public class CardsContainer : MonoBehaviour
     {
+        [SerializeField] private float offsetY;
+        [SerializeField] private float spacingX;
+        [SerializeField] private GameObject cardPrefab;
         [SerializeField] private TextMeshProUGUI cardsInDeckCounter;
         [SerializeField] private TextMeshProUGUI cardsInOutCounter;
 
-        [SerializeField] private List<Card.Card> cards;
+        private readonly List<Card.Card> cards = new();
 
         private Card.Card _selectedCard;
-        
-        public void UpdateCards(List<CardItem> cardItems)
-        {
-            for (var i = 0; i < cards.Count; i++)
-            {
-                Card.Card card = cards[i];
-                card.Init(cardItems[i], i);
 
-                card.OnCardPickUp += OnCardPickUp;
-                card.OnCardPickDown += OnCardPickDown;
-            }
-        }
-
-        private void OnCardPickDown(int cardIndex)
+        public void AddCards(List<CardItem> cardItems)
         {
-            for (var i = 0; i < cards.Count; i++)
+            for (var i = 0; i < cardItems.Count; i++)
             {
-                if (cardIndex != i)
-                {
-                    cards[i].CardAnimator.ResetPosition();
-                }
-            }
-        }
-
-        private void OnCardPickUp(int cardIndex)
-        {
-            for (var i = 0; i < cards.Count; i++)
-            {
-                if (i == cardIndex)
-                {
-                    continue;
-                }
+                GameObject cardGameObject = Instantiate(cardPrefab, transform);
                 
-                if (i < cardIndex)
-                {
-                    cards[i].CardAnimator.MoveToLeft();
-                }
-                else
-                {
-                    cards[i].CardAnimator.MoveToRight();
-                }
+                Card.Card card = cardGameObject.GetComponent<Card.Card>();
+                card.Init(cardItems[i]);
+                card.OnCardClicked += OnCardClicked;
+                
+                cards.Add(card);
             }
+
+            AlignCards();
+        }
+
+        private void AlignCards()
+        {
+            int size = cards.Count;
+            
+            Vector2 position = new Vector3();
+            position.y = offsetY;
+            position.x = -(spacingX * size - spacingX) / 2;
+            
+            for (var i = 0; i < size; i++)
+            {
+                cards[i].CardAnimator.MoveToPosition(position, i);
+                position.x += spacingX;
+            }
+        }
+
+        private void OnCardClicked(Card.Card clickedCard)
+        {
+            cards.Remove(clickedCard);
+            Destroy(clickedCard.gameObject);
+            
+            AlignCards();
         }
 
         public void UpdateCardsInDeckCounter(int count)

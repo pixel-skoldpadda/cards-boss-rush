@@ -14,16 +14,12 @@ namespace Ui.Hud.Card
         [SerializeField] private CardAnimator cardAnimator;
 
         private CardItem _cardItem;
-        private int _cardIndex;
-
-        public Action<int> OnCardPickUp;
-        public Action<int> OnCardPickDown;
         
-        public void Init(CardItem cardItem, int cardIndex)
+        public Action<Card> OnCardClicked;
+        
+        public void Init(CardItem cardItem)
         {
             _cardItem = cardItem;
-            _cardIndex = cardIndex;
-
             descriptionText.text = string.Format(_cardItem.Description, _cardItem.Value);
 
             faceImage.sprite = _cardItem.FaceSprite;
@@ -32,16 +28,28 @@ namespace Ui.Hud.Card
 
         public void OnPointerEnter()
         {
-            cardAnimator.PickUp();
-            OnCardPickUp?.Invoke(_cardIndex);
+            if (!cardAnimator.IsMoving())
+            {
+                cardAnimator.PickUp();
+            }
         }
         
         public void OnPointerExit()
         {
-            cardAnimator.PickDown();
-            OnCardPickDown.Invoke(_cardIndex);
+            if (!cardAnimator.IsMoving())
+            {
+                cardAnimator.PickDown();
+            }
         }
 
+        public void OnPointerClick()
+        {
+            if (!cardAnimator.IsMoving())
+            {
+                OnCardClicked?.Invoke(this);
+            }
+        }
+        
         public CardAnimator CardAnimator => cardAnimator;
     }
 }

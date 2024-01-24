@@ -24,7 +24,7 @@ namespace GameObjects.Character.Player
 
         private void OnCardsGenerated()
         {
-            _cardsContainer.UpdateCards(cardsDeck.CardsInHand);
+            _cardsContainer.AddCards(cardsDeck.CardsInHand);
             _cardsContainer.UpdateCardsInDeckCounter(cardsDeck.GetCardsCount());
         }
 

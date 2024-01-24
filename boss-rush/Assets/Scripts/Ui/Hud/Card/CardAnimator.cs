@@ -7,67 +7,119 @@ namespace Ui.Hud.Card
     {
         private const int MAX_SORTING_ORDER = 5;
         
-        [SerializeField] private int moveOffset;
+        [SerializeField] private RectTransform rectTransform;
         [SerializeField] private Canvas canvas;
         
-        private Vector3 _endPosition;
+        private Vector2 _endPosition;
 
-        private Vector3 _defaultPosition;
-        private Vector3 _defaultRotation;
+        private Vector2 _defaultPosition;
+        private Vector2 _defaultRotation;
         private int _defaultSortingOrder;
         
         private Sequence _pickUpCardSequence;
         private Sequence _pickDownCardSequence;
-        
-        private void Awake()
-        {
-            Transform cardTransform = transform;
+        private Sequence _resetSequence;
 
-            _defaultPosition = cardTransform.position;
-            _endPosition = _defaultPosition;
-            _endPosition.y += moveOffset;
-            
-            _defaultRotation = cardTransform.rotation.eulerAngles;
-            _defaultSortingOrder = canvas.sortingOrder;
-        }
+        private Tweener _moveRightTween;
+        private Tweener _moveLeftTween;
+
+        private bool _cardMoving;
         
         public void PickUp()
         {
             canvas.sortingOrder = MAX_SORTING_ORDER;
-            
-            _pickUpCardSequence = DOTween.Sequence()
-                .Append(transform.DOMove(_endPosition, .2f))
-                .Join(transform.DOScale(1.5f, .2f))
-                .Join(transform.DORotate(Vector3.zero, .2f));
+            if (_pickDownCardSequence != null && _pickDownCardSequence.IsActive())
+            {
+                _pickDownCardSequence.Kill();
+            }
+
+            if (_pickUpCardSequence == null || !_pickUpCardSequence.IsActive())
+            {
+                _pickUpCardSequence = DOTween.Sequence()
+                    .Append(rectTransform.DOMove(_endPosition, .15f))
+                    .Join(rectTransform.DOScale(1.5f, .15f))
+                    .Join(rectTransform.DORotate(Vector3.zero, .15f))
+                    .SetEase(Ease.OutQuad);
+            }
         }
-        
+
         public void PickDown()
         {
             canvas.sortingOrder = _defaultSortingOrder;
+            if (_pickUpCardSequence != null || _pickUpCardSequence.IsActive())
+            {
+                _pickUpCardSequence.Kill();
+            }
+
+            if (_pickDownCardSequence == null || !_pickDownCardSequence.IsActive())
+            {
+                _pickDownCardSequence = DOTween.Sequence()
+                    .Append(rectTransform.DOMove(_defaultPosition, .15f))
+                    .Join(rectTransform.DOScale(1f, .15f))
+                    .Join(rectTransform.DORotate(_defaultRotation, .15f))
+                    .SetEase(Ease.InQuad);
+            }
+        }
+
+        public void MoveToPosition(Vector2 position, int cardIndex)
+        {
+            _cardMoving = true;
+            _defaultSortingOrder = cardIndex;
+            canvas.sortingOrder = _defaultSortingOrder;
             
-            _pickDownCardSequence = DOTween.Sequence()
-                .Append(transform.DOMove(_defaultPosition, .2f))
-                .Join(transform.DOScale(1f, .2f))
-                .Join(transform.DORotate(_defaultRotation, .2f));
+            rectTransform
+                .DOLocalMove(position, .1f)
+                .OnComplete(() =>
+                {
+                    UpdatePosition();
+                    _cardMoving = false;
+                });
         }
 
         public void MoveToLeft()
         {
             Vector3 leftPosition = _defaultPosition;
             leftPosition.x -= 75;
-            transform.DOMove(leftPosition, .2f);
+            _moveLeftTween = rectTransform.DOMove(leftPosition, .15f);
         }
 
         public void MoveToRight()
         {
             Vector3 rightPosition = _defaultPosition;
             rightPosition.x += 75;
-            transform.DOMove(rightPosition, .2f);
+            _moveRightTween = rectTransform.DOMove(rightPosition, .15f);
         }
 
-        public void ResetPosition()
+        public void Reset()
         {
-            transform.DOMove(_defaultPosition, .2f);
+            DOTween.Sequence()
+                .Append(rectTransform.DOMove(_defaultPosition, .15f))
+                .Join(rectTransform.DOScale(1f, .15f))
+                .Join(rectTransform.DORotate(_defaultRotation, .15f));
+        }
+
+        private void UpdatePosition()
+        {
+            _defaultPosition = rectTransform.position;
+            _endPosition = _defaultPosition;
+            _endPosition.y = 0;
+            
+            _defaultRotation = rectTransform.rotation.eulerAngles;
+            _defaultSortingOrder = canvas.sortingOrder;
+        }
+
+        private void OnDestroy()
+        { 
+            _pickUpCardSequence?.Kill(); 
+            _pickDownCardSequence?.Kill();
+            _moveRightTween?.Kill();
+            _moveLeftTween?.Kill();
+            _resetSequence?.Kill();
+        }
+
+        public bool IsMoving()
+        {
+            return _cardMoving;
         }
     }
 }
