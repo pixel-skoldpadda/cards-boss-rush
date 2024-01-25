@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using DG.Tweening;
+using System.ComponentModel;
 using Items.Card;
 using TMPro;
 using UnityEngine;
@@ -8,47 +8,58 @@ namespace Ui.Hud
 {
     public class CardsContainer : MonoBehaviour
     {
-        [SerializeField] private float offsetY;
-        [SerializeField] private float spacingX;
+        [Description("Cards rotation settings")]
+        [SerializeField] private AnimationCurve rotationCurve;
+        [SerializeField] private float rotationValue;
+        
+        [Space(10)] 
+        [Description("Cards position settings")] 
+        [SerializeField] private AnimationCurve yOffsetCurve;
+        [SerializeField] private float yOffsetValue;
+        [SerializeField] private float xOffsetValue;
+        
+        [Space(10)]
         [SerializeField] private GameObject cardPrefab;
         [SerializeField] private TextMeshProUGUI cardsInDeckCounter;
         [SerializeField] private TextMeshProUGUI cardsInOutCounter;
 
         private readonly List<Card.Card> cards = new();
 
-        private Card.Card _selectedCard;
-
-        public void AddCards(List<CardItem> cardItems)
+        public void AddCardsToDeck(List<CardItem> cardItems)
         {
-            for (var i = 0; i < cardItems.Count; i++)
+            foreach (CardItem cardItem in cardItems)
             {
-                GameObject cardGameObject = Instantiate(cardPrefab, transform);
-                
-                Card.Card card = cardGameObject.GetComponent<Card.Card>();
-                card.Init(cardItems[i]);
-                card.OnCardClicked += OnCardClicked;
-                
-                cards.Add(card);
+                AddCard(cardItem);
             }
-
             AlignCards();
+        }
+
+        public void AddCard(CardItem cardItem)
+        {
+            GameObject cardGameObject = Instantiate(cardPrefab, transform);
+                
+            Card.Card card = cardGameObject.GetComponent<Card.Card>();
+            card.Init(cardItem);
+            card.OnCardClicked += OnCardClicked;
+            cards.Add(card);
         }
 
         private void AlignCards()
         {
             int size = cards.Count;
             
-            Vector2 position = new Vector3();
-            position.y = offsetY;
-            position.x = -(spacingX * size - spacingX) / 2;
+            Vector2 position = new Vector2();
+            position.x = -(xOffsetValue * size - xOffsetValue) / 2;
+            Vector3 rotation = new Vector3();
             
-            for (var i = 0; i < size; i++)
+            for (int i = 0; i < size; i++)
             {
-                float coefficient = size > 1 ? Mathf.Abs(i / (size - 1f) - .5f) : 0;
-                position.y = offsetY * coefficient;
+                float cardsRatio = size > 1 ? i / (size - 1f) : .5f;
+                position.y = yOffsetCurve.Evaluate(cardsRatio) * yOffsetValue;
+                rotation.z = rotationCurve.Evaluate(cardsRatio) * rotationValue;
                 
-                cards[i].CardAnimator.MoveToPosition(position, i);
-                position.x += spacingX;
+                cards[i].CardAnimator.PlayPositioningAnimation(position, rotation, i);
+                position.x += xOffsetValue;
             }
         }
 

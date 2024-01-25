@@ -14,6 +14,7 @@ namespace Ui.Hud.Card
         [SerializeField] private CardAnimator cardAnimator;
 
         private CardItem _cardItem;
+        private int _cardIndex;
         
         public Action<Card> OnCardClicked;
         
@@ -28,7 +29,7 @@ namespace Ui.Hud.Card
 
         public void OnPointerEnter()
         {
-            if (!cardAnimator.IsMoving())
+            if (!cardAnimator.IsMoving)
             {
                 cardAnimator.PickUp();
             }
@@ -36,7 +37,7 @@ namespace Ui.Hud.Card
         
         public void OnPointerExit()
         {
-            if (!cardAnimator.IsMoving())
+            if (!cardAnimator.IsMoving)
             {
                 cardAnimator.PickDown();
             }
@@ -44,12 +45,12 @@ namespace Ui.Hud.Card
 
         public void OnPointerClick()
         {
-            if (!cardAnimator.IsMoving())
+            if (!cardAnimator.IsMoving)
             {
                 OnCardClicked?.Invoke(this);
             }
         }
-        
+
         public CardAnimator CardAnimator => cardAnimator;
     }
 }

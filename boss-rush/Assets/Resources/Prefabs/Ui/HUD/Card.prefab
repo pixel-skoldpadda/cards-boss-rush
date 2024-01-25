@@ -232,6 +232,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rectTransform: {fileID: 2441270645342375479}
   canvas: {fileID: 1538126258772849929}
+  _defaultRotation: {x: 0, y: 0, z: 0}
 --- !u!114 &5957640070724981756
 MonoBehaviour:
   m_ObjectHideFlags: 0
