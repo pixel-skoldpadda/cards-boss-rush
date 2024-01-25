@@ -36,10 +36,10 @@ namespace Ui.Hud.Card
             if (_pickUpCardSequence == null || !_pickUpCardSequence.IsActive())
             {
                 _pickUpCardSequence = DOTween.Sequence()
-                    .Append(rectTransform.DOMove(_endPosition, .15f))
-                    .Join(rectTransform.DOScale(1.2f, .15f))
-                    .Join(rectTransform.DORotate(Vector3.zero, .15f))
-                    .SetEase(Ease.InCubic);
+                    .Append(rectTransform.DOMove(_endPosition, .03f))
+                    .Join(rectTransform.DOScale(1.1f, .03f))
+                    .Join(rectTransform.DORotate(Vector3.zero, .03f))
+                    .SetEase(Ease.OutExpo);
             }
         }
 
@@ -53,14 +53,22 @@ namespace Ui.Hud.Card
             if (_pickDownCardSequence == null || !_pickDownCardSequence.IsActive())
             {
                 _pickDownCardSequence = DOTween.Sequence()
-                    .Append(rectTransform.DOMove(_defaultPosition, .2f))
-                    .Join(rectTransform.DOScale(1f, .2f))
-                    .Join(rectTransform.DORotate(_defaultRotation, .2f))
+                    .Append(rectTransform.DOMove(_defaultPosition, .5f))
+                    .Join(rectTransform.DOScale(1f, .5f))
+                    .Join(rectTransform.DORotate(_defaultRotation, .5f))
                     .OnComplete(() => canvas.sortingOrder = _defaultSortingOrder)
-                    .SetEase(Ease.InCirc);
+                    .SetEase(Ease.InSine);
             }
         }
 
+        public void MoveToAndDestroy(Vector3 endPosition, TweenCallback onComplete)
+        {
+            DOTween.Sequence()
+                .Append(rectTransform.DOMove(endPosition, .5f))
+                .SetEase(Ease.InQuart)
+                .OnComplete(onComplete);
+        }
+        
         public void PlayPositioningAnimation(Vector2 position, Vector3 rotation, int sortingOrder)
         {
             _isMoving = true;
