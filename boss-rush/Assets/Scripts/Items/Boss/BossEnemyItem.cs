@@ -6,7 +6,9 @@ namespace Items.Boss
     public class BossEnemyItem : CharacterItem
     {
         [SerializeField] private BossType type;
+        [SerializeField] private Sprite bossSprite;
 
         public BossType Type => type;
+        public Sprite BossSprite => bossSprite;
     }
 }

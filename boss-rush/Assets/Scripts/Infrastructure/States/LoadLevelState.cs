@@ -52,7 +52,7 @@ namespace Infrastructure.States
             _uiFactory.CreateHud();
             
             _gameFactory.CreatePlayer();
-            _gameFactory.CreateBossEnemy(BossType.Kinght);
+            _gameFactory.CreateBossEnemy(BossType.CosmicSlug);
         }
     }
 }
