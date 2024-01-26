@@ -1,5 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
+using Data;
+using GameObjects.Character;
+using Infrastructure.Services.State;
 using Items.Card;
 using TMPro;
 using UnityEngine;
@@ -24,8 +27,55 @@ namespace Ui.Hud
         [SerializeField] private TextMeshProUGUI cardsInOutCounter;
 
         private readonly List<Card.Card> cards = new();
+        private IGameStateService _gameStateService;
 
-        public void AddCardsToDeck(List<CardItem> cardItems)
+        private CardsDeck _cardsDeck;
+        
+        public void Construct(IGameStateService gameStateService)
+        {
+            _gameStateService = gameStateService;
+        }
+
+        public void InitCardsDeck(CardsDeck cardsDeck)
+        {
+            _cardsDeck = cardsDeck;
+            
+            cardsDeck.OnCardsGenerated += OnCardsGenerated;
+            cardsDeck.OnHangUp += OnHangUp;
+            cardsDeck.OnCardGoOut += OnCardGoOut;
+            cardsDeck.OnCardsDiscarding += OnCardsDiscarding;
+        }
+
+        private void OnCardGoOut()
+        {
+            cardsInOutCounter.text = $"{_cardsDeck.OutCardsCount}";
+        }
+
+        private void OnCardsGenerated()
+        {
+            AddCardsToDeck(_cardsDeck.CardsInHand);
+            cardsInDeckCounter.text = $"{_cardsDeck.CardsCount}";
+        }
+
+        private void OnHangUp()
+        {
+            cardsInOutCounter.text = $"{_cardsDeck.OutCardsCount}";
+            cardsInDeckCounter.text = $"{_cardsDeck.CardsCount}";
+        }
+        
+        private void OnCardsDiscarding()
+        {
+            cardsInOutCounter.text = $"{_cardsDeck.OutCardsCount}";
+            
+            foreach (Card.Card card in cards)
+            {
+                card.DisableInteraction();
+                Destroy(card.gameObject);
+            }
+            cards.Clear();
+        }
+
+        private void AddCardsToDeck(List<CardItem> cardItems)
         {
             foreach (CardItem cardItem in cardItems)
             {
@@ -34,7 +84,7 @@ namespace Ui.Hud
             AlignCards();
         }
 
-        public void AddCard(CardItem cardItem)
+        private void AddCard(CardItem cardItem)
         {
             GameObject cardGameObject = Instantiate(cardPrefab, transform);
                 
@@ -65,20 +115,46 @@ namespace Ui.Hud
 
         private void OnCardClicked(Card.Card clickedCard)
         {
+            GameState gameState = _gameStateService.State;
+            Character player = gameState.ActiveCharacter;
+
+            if (!player.CardsDeck.CanUseCard())
+            {
+                //: todo show particle text
+                return;
+            }
+            
+            clickedCard.DisableInteraction();
             cards.Remove(clickedCard);
-            Destroy(clickedCard.gameObject);
+
+            CardItem cardItem = clickedCard.CardItem;
+            CardType cardType = cardItem.CardType;
+
+            Vector3 position = Vector3.zero;
+            if (CardType.Attack.Equals(cardType))
+            {
+                position = Camera.main.WorldToScreenPoint(gameState.GetOpponentCharacter().transform.position);
+            }
+            else if (CardType.Protection.Equals(cardType))
+            {
+                position = Camera.main.WorldToScreenPoint(player.transform.position);
+            }
+            
+            clickedCard.CardAnimator.MoveToAndDestroy(position, () =>
+            {
+                Destroy(clickedCard.gameObject);
+                player.UseCard(cardItem);
+            });
             
             AlignCards();
         }
 
-        public void UpdateCardsInDeckCounter(int count)
+        private void OnDestroy()
         {
-            cardsInDeckCounter.text = $"{count}";
-        }
-        
-        public void UpdateCardsInOutCounter(int count)
-        {
-            cardsInOutCounter.text = $"{count}";
+            _cardsDeck.OnCardsGenerated -= OnCardsGenerated;
+            _cardsDeck.OnHangUp -= OnHangUp;
+            _cardsDeck.OnCardGoOut -= OnCardGoOut;
+            _cardsDeck.OnCardsDiscarding -= OnCardsDiscarding;
         }
     }
 }

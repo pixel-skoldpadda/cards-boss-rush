@@ -2,6 +2,7 @@
 using Items.Card;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace Ui.Hud.Card
@@ -12,7 +13,8 @@ namespace Ui.Hud.Card
         [SerializeField] private Image faceImage;
         [SerializeField] private GameObject shirt;
         [SerializeField] private CardAnimator cardAnimator;
-
+        [SerializeField] private EventTrigger eventTrigger;
+        
         private CardItem _cardItem;
         private int _cardIndex;
         
@@ -52,5 +54,11 @@ namespace Ui.Hud.Card
         }
 
         public CardAnimator CardAnimator => cardAnimator;
+        public CardItem CardItem => _cardItem;
+
+        public void DisableInteraction()
+        {
+            eventTrigger.enabled = false;
+        }
     }
 }

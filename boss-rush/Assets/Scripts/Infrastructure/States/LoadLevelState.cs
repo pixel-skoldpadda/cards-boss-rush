@@ -44,7 +44,7 @@ namespace Infrastructure.States
         {
             InitGameWorld();
             
-            _stateMachine.Enter<GameLoopState>();
+            _stateMachine.Enter<StepTransitionState>();
         }
 
         private void InitGameWorld()

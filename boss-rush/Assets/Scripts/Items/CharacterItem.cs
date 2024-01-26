@@ -9,7 +9,9 @@ namespace Items
     {
         [SerializeField] private int maxHealth;
         [SerializeField] private List<CardItem> deck;
-        
+        [SerializeField] private int useCardsLimit = 3;
+        [SerializeField] private string stepDescription;
+
         [Space(10)]
         [Description("Deck settings")]
         [SerializeField] private int cardsOnHand;
@@ -21,5 +23,7 @@ namespace Items
         public int CardsOnHand => cardsOnHand;
         public int ProtectionCards => protectionCards;
         public int AttackCards => attackCards;
+        public int UseCardsLimit => useCardsLimit;
+        public string StepDescription => stepDescription;
     }
 }

@@ -232,7 +232,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rectTransform: {fileID: 2441270645342375479}
   canvas: {fileID: 1538126258772849929}
-  _defaultRotation: {x: 0, y: 0, z: 0}
 --- !u!114 &5957640070724981756
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -249,6 +248,7 @@ MonoBehaviour:
   faceImage: {fileID: 5788185012842884212}
   shirt: {fileID: 4023716585278856639}
   cardAnimator: {fileID: 6517722342069161200}
+  eventTrigger: {fileID: 5291561470623220931}
 --- !u!1 &8372765932021162538
 GameObject:
   m_ObjectHideFlags: 0
