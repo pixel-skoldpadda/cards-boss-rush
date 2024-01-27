@@ -13,16 +13,13 @@ namespace Infrastructure.States
         private readonly ISceneLoader _sceneLoader;
         private readonly LoadingCurtain _loadingCurtain;
         private readonly IGameFactory _gameFactory;
-        private readonly IUiFactory _uiFactory;
 
-        public LoadLevelState(
-            GameStateMachine stateMachine, ISceneLoader sceneLoader, LoadingCurtain loadingCurtain, IGameFactory gameFactory, IUiFactory uiFactory)
+        public LoadLevelState(GameStateMachine stateMachine, ISceneLoader sceneLoader, LoadingCurtain loadingCurtain, IGameFactory gameFactory)
         {
             _stateMachine = stateMachine;
             _sceneLoader = sceneLoader;
             _loadingCurtain = loadingCurtain;
             _gameFactory = gameFactory;
-            _uiFactory = uiFactory;
         }
 
         public void Enter(string sceneName)
@@ -49,9 +46,6 @@ namespace Infrastructure.States
 
         private void InitGameWorld()
         {
-            // _uiFactory.CreateHud();
-            //
-            // _gameFactory.CreatePlayer();
             _gameFactory.CreateBossEnemy(BossType.CosmicSlug);
         }
     }

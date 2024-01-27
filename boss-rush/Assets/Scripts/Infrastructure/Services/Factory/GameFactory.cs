@@ -1,9 +1,7 @@
 using System.Collections.Generic;
 using GameObjects.Character.Enemy;
-using GameObjects.Character.Player;
 using Infrastructure.Services.Items;
 using Infrastructure.Services.State;
-using Items;
 using Items.Boss;
 using UnityEngine;
 using Zenject;
@@ -22,15 +20,6 @@ namespace Infrastructure.Services.Factory
             _instantiator = instantiator;
             _gameStateService = gameStateService;
             _items = items;
-        }
-
-        public void CreatePlayer()
-        {
-            PlayerItem item = _items.PlayerItem;
-            Player player = _instantiator.InstantiatePrefabForComponent<Player>(item.Prefab, item.SpawnPoint, Quaternion.identity, null,
-                new List<PlayerItem> { item });
-            
-            _gameStateService.State.Characters.Add(player);
         }
 
         public void CreateBossEnemy(BossType type)
