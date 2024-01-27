@@ -30,6 +30,7 @@ namespace Infrastructure.States
                 [typeof(StepTransitionState)] = new StepTransitionState(this, gameStateService),
                 [typeof(GenerateCardsInHandState)] = new GenerateCardsInHandState(this, gameStateService),
                 [typeof(WaitEndTurnState)] = new WaitEndTurnState(this, gameStateService),
+                [typeof(CheckHealthState)] = new CheckHealthState(this, gameStateService),
                 [typeof(GameLoopState)] = new GameLoopState(this)
             };
         }

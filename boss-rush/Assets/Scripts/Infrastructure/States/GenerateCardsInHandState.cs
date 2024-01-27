@@ -3,6 +3,7 @@ using GameObjects.Character;
 using Infrastructure.Services.State;
 using Infrastructure.States.Interfaces;
 using Ui.Hud;
+using Ui.Hud.MiddleContainers;
 using UnityEngine;
 
 namespace Infrastructure.States
@@ -24,8 +25,13 @@ namespace Infrastructure.States
             
             GameState gameState = _gameStateService.State;
 
+            //: TODO Костыль для генерации карт в руки босса (разрулить иначе)!
             Character character = gameState.ActiveCharacter;
-            character.CardsDeck.GeneratedCardsInHand();
+            if (character.IsPlayer())
+            {
+                character.CardsDeck.GeneratedCardsInHand();
+                gameState.GetOpponentCharacter().CardsDeck.GeneratedCardsInHand();
+            }
 
             StepContainer stepContainer = gameState.HUD.StepContainer;
             stepContainer.Hide(() =>

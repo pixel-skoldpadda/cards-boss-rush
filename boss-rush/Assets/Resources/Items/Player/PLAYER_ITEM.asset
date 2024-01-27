@@ -16,7 +16,7 @@ MonoBehaviour:
   description: 
   prefab: {fileID: 1809785152957721139, guid: ba9e832e47f33d440a5e2ad99cd578cd, type: 3}
   spawnPoint: {x: -5, y: -2, z: 0}
-  maxHealth: 50
+  maxHealth: 100
   deck:
   - {fileID: 11400000, guid: 33020f3c8f70487489b31c4dc1038cf2, type: 2}
   - {fileID: 11400000, guid: 33020f3c8f70487489b31c4dc1038cf2, type: 2}

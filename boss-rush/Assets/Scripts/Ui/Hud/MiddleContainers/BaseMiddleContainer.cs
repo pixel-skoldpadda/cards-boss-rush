@@ -1,26 +1,23 @@
 ﻿using DG.Tweening;
-using TMPro;
 using UnityEngine;
 
-namespace Ui.Hud
+namespace Ui.Hud.MiddleContainers
 {
-    public class StepContainer : MonoBehaviour
+    public class BaseMiddleContainer : MonoBehaviour
     {
-        [SerializeField] private TextMeshProUGUI stepText;
         [SerializeField] private CanvasGroup canvasGroup;
-
-        public void Show(string stepDescription, TweenCallback onComplete)
+        
+        public void Show(TweenCallback onComplete)
         {
-            stepText.text = stepDescription;
             canvasGroup
                 .DOFade(1, 2f)
                 .OnComplete(onComplete);
         }
-
+        
         public void Hide(TweenCallback onComplete)
         {
             canvasGroup
-                .DOFade(0, .5f)
+                .DOFade(0, 2f)
                 .OnComplete(onComplete);
         }
     }

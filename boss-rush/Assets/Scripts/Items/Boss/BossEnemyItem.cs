@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.ComponentModel;
+using Items.Boss.AI;
+using UnityEngine;
 
 namespace Items.Boss
 {
@@ -7,8 +9,14 @@ namespace Items.Boss
     {
         [SerializeField] private BossType type;
         [SerializeField] private Sprite bossSprite;
-
+        
+        [Space(10)] 
+        [Description("AI settings")]
+        [SerializeField]
+        private UtilityAiItem utilityAiItem;
+        
         public BossType Type => type;
         public Sprite BossSprite => bossSprite;
+        public UtilityAiItem UtilityAiItem => utilityAiItem;
     }
 }

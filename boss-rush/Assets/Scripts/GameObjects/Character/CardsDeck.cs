@@ -11,6 +11,7 @@ namespace GameObjects.Character
 
         private readonly List<CardItem> _protectionCards = new();
         private readonly List<CardItem> _attackCards =  new();
+        private readonly List<CardItem> _cardsStack = new();
         
         private readonly int _attackCardsCount;
         private readonly int _protectionCardsCount;
@@ -33,6 +34,24 @@ namespace GameObjects.Character
             DistributeCardsByType(allCards);
         }
 
+        public CardItem ChooseCardToStack(CardType cardType)
+        {
+            CardItem cardItem = null;
+            foreach (CardItem item in _cardsInHand)
+            {
+                if (cardType.Equals(item.CardType))
+                {
+                    cardItem = item;
+                    break;
+                }
+            }
+            
+            _cardsInHand.Remove(cardItem);
+            _cardsStack.Add(cardItem);
+
+            return cardItem;
+        }
+        
         public void DiscardingCards()
         {
             foreach (CardItem cardItem in _cardsInHand)
@@ -56,12 +75,16 @@ namespace GameObjects.Character
             OnCardsGenerated?.Invoke();
         }
 
-        public void RemoveCardsFromHand(CardItem cardItem)
+        public void UpdateUsedCardsCounter()
         {
             _cardsUsed++;
+        }
+        
+        public void RemoveCardsFromHand(CardItem cardItem)
+        {
             OnUsedCardsCountChanged?.Invoke(_cardsUsed, _useCardsLimit);
-            
-            _cardsInHand.Remove(cardItem);
+
+            _cardsInHand.Remove(cardItem);    
             _outCards.Add(cardItem);
             
             OnCardGoOut?.Invoke();
@@ -71,8 +94,25 @@ namespace GameObjects.Character
         {
             return _cardsUsed < _useCardsLimit;
         }
+
+        public bool HasAnyCardInHand(CardType cardType)
+        {
+            foreach (CardItem cardItem in _cardsInHand)
+            {
+                if (cardType.Equals(cardItem.CardType))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
         
         public List<CardItem> CardsInHand => _cardsInHand;
+        public int CardsCount => _protectionCards.Count + _attackCards.Count;
+        public int OutCardsCount => _outCards.Count;
+        public int UseCardsLimit => _useCardsLimit;
+        public int CardsUsed => _cardsUsed;
+        public List<CardItem> CardsStack => _cardsStack;
 
         private void PutCardsInHand(List<CardItem> cards, int count)
         {
@@ -84,12 +124,6 @@ namespace GameObjects.Character
                 cards.RemoveAt(index);
             }
         }
-
-        public int CardsCount => _protectionCards.Count + _attackCards.Count;
-        public int OutCardsCount => _outCards.Count;
-        
-        public int UseCardsLimit => _useCardsLimit;
-        public int CardsUsed => _cardsUsed;
 
         private void TryHangUp()
         {

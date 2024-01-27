@@ -1,7 +1,7 @@
 ﻿using TMPro;
 using UnityEngine;
 
-namespace Ui.Hud
+namespace Ui.Hud.Boss
 {
     public class BossHealthBar : HealthBar
     {

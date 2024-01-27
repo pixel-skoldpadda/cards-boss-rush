@@ -22,16 +22,22 @@ namespace Infrastructure.States
             Debug.Log($"{GetType()} entered.");
 
             GameState gameState = _gameStateService.State;
-            gameState.OnTurnStarted?.Invoke();
 
             Character character = gameState.ActiveCharacter;
-            character.OnEndTurn += () =>
-            {
-                character.CardsDeck.DiscardingCards();
-                _stateMachine.Enter<StepTransitionState>();
-            };
+            character.OnEndTurn += OnTurnEnded;
+            
+            gameState.OnTurnStarted?.Invoke();
         }
 
+        private void OnTurnEnded()
+        {
+            Character character = _gameStateService.State.ActiveCharacter;
+            character.OnEndTurn -= OnTurnEnded;
+            
+            character.CardsDeck.DiscardingCards();
+            _stateMachine.Enter<CheckHealthState>();
+        }
+        
         public void Exit()
         {
             Debug.Log($"{GetType()} exited.");

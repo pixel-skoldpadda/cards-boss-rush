@@ -49,9 +49,9 @@ namespace Infrastructure.States
 
         private void InitGameWorld()
         {
-            _uiFactory.CreateHud();
-            
-            _gameFactory.CreatePlayer();
+            // _uiFactory.CreateHud();
+            //
+            // _gameFactory.CreatePlayer();
             _gameFactory.CreateBossEnemy(BossType.CosmicSlug);
         }
     }

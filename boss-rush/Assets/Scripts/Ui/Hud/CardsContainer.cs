@@ -117,8 +117,9 @@ namespace Ui.Hud
         {
             GameState gameState = _gameStateService.State;
             Character player = gameState.ActiveCharacter;
+            CardsDeck cardsDeck = player.CardsDeck;
 
-            if (!player.CardsDeck.CanUseCard())
+            if (!cardsDeck.CanUseCard())
             {
                 //: todo show particle text
                 return;
@@ -140,6 +141,7 @@ namespace Ui.Hud
                 position = Camera.main.WorldToScreenPoint(player.transform.position);
             }
             
+            cardsDeck.UpdateUsedCardsCounter();
             clickedCard.CardAnimator.MoveToAndDestroy(position, () =>
             {
                 Destroy(clickedCard.gameObject);

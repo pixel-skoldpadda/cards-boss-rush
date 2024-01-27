@@ -1,4 +1,5 @@
 ﻿using System;
+using Data;
 using Items;
 using Items.Card;
 using Ui.Hud;
@@ -11,28 +12,36 @@ namespace GameObjects.Character
         [SerializeField] protected HealthBar healthBar;
 
         protected CharacterItem item;
+        protected GameState gameState;
         protected CardsDeck cardsDeck;
 
         protected int health;
         protected int shield;
-        
-        private Action onEndTurn;
-        
+
         protected Action<int> OnHealthChanged;
         protected Action<int> OnShieldChanged;
-        
-        protected void Construct(CharacterItem characterItem)
+
+        public Action OnEndTurn { get; set; }
+
+        protected void Construct(CharacterItem characterItem, GameState state)
         {
             item = characterItem;
+            gameState = state;
             health = characterItem.MaxHealth;
             
             CreateCardsDeck();
+            gameState.OnTurnStarted += OnTurnStarted;
         }
 
+        protected abstract void OnTurnStarted();
         protected abstract void CreateCardsDeck();
-        protected abstract void UseAttackCard(CardItem cardItem);
 
-        public void TakeDamage(int damage)
+        private void UseAttackCard(CardItem cardItem)
+        {
+            gameState.GetOpponentCharacter().TakeDamage(cardItem.Value);
+        }
+
+        private void TakeDamage(int damage)
         {
             if (damage > Shield)
             {
@@ -48,7 +57,7 @@ namespace GameObjects.Character
             healthBar.UpdateHealthBar(health);
         }
 
-        public void UseCard(CardItem cardItem)
+        public virtual void UseCard(CardItem cardItem)
         {
             CardType type = cardItem.CardType;
             if (CardType.Attack.Equals(type))
@@ -63,16 +72,12 @@ namespace GameObjects.Character
             cardsDeck.RemoveCardsFromHand(cardItem);
         }
 
+        public int HealthWithShield => health + shield;
         public CardsDeck CardsDeck => cardsDeck;
         public CharacterItem Item => item;
 
-        public Action OnEndTurn
-        {
-            get => onEndTurn;
-            set => onEndTurn = value;
-        }
 
-        public int Shield
+        protected int Shield
         {
             get => shield;
             set
@@ -99,8 +104,9 @@ namespace GameObjects.Character
 
         protected virtual void OnDestroy()
         {
-            OnHealthChanged -= healthBar.UpdateHealthBar;
-            OnShieldChanged -= healthBar.UpdateShieldCounter;
+            OnHealthChanged = null;
+            OnShieldChanged = null;
+            gameState.OnTurnStarted = null;
         }
     }
 }

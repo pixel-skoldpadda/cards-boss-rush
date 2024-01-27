@@ -5,6 +5,8 @@ using Infrastructure.Services.WindowsManager;
 using Infrastructure.States;
 using Items;
 using Ui.Hud;
+using Ui.Hud.Boss;
+using Ui.Hud.MiddleContainers;
 using Ui.Windows;
 using UnityEngine;
 using Zenject;
@@ -39,17 +41,12 @@ namespace Infrastructure.Services.Factory
         public void CreateHud()
         {
             GameObject prefab = _assets.LoadResource(AssetsPath.HudPrefabPath, false);
-            Hud hud = _diContainer.InstantiatePrefabForComponent<Hud>(prefab);
-            _gameStateService.State.HUD = hud;
-            
-            CardsContainer cardsContainer = hud.CardsContainer;
-            cardsContainer.Construct(_gameStateService);
-            hud.EndTurnButton.Construct(_gameStateService);
+            Hud hud = Object.Instantiate(prefab).GetComponent<Hud>();
 
-            _diContainer.Bind<BossHealthBar>().FromInstance(hud.BossHealthBar);
-            _diContainer.Bind<CardsContainer>().FromInstance(cardsContainer);
-            _diContainer.Bind<StepContainer>().FromInstance(hud.StepContainer);
-            _diContainer.Bind<CardsLimitContainer>().FromInstance(hud.CardsLimitContainer);
+            hud.CardsContainer.Construct(_gameStateService);
+            hud.EndTurnButton.Construct(_gameStateService);
+            
+            _gameStateService.State.HUD = hud;
         }
     }
 }

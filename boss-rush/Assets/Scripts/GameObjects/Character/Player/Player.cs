@@ -8,36 +8,38 @@ namespace GameObjects.Character.Player
 {
     public class Player : Character
     {
-        private IGameStateService _gameStateService;
         private CardsLimitContainer _limitContainer;
         
         [Inject]
-        public void Construct(PlayerItem playerItem, CardsContainer cardsContainer, CardsLimitContainer limitContainer, IGameStateService gameStateService)
+        public void Construct(PlayerItem playerItem, IGameStateService gameStateService)
         {
-            base.Construct(playerItem);
+            base.Construct(playerItem, gameStateService.State);
 
-            _gameStateService = gameStateService;
-            _limitContainer = limitContainer;
+            Hud hud = gameState.HUD;
+
+            _limitContainer = hud.CardsLimitContainer;
             
-            cardsContainer.InitCardsDeck(cardsDeck);
-            cardsDeck.OnUsedCardsCountChanged += limitContainer.UpdateUsedCardsCounter;
-            limitContainer.UpdateUsedCardsCounter(cardsDeck.CardsUsed, cardsDeck.UseCardsLimit);
+            hud.CardsContainer.InitCardsDeck(cardsDeck);
+            cardsDeck.OnUsedCardsCountChanged += _limitContainer.UpdateUsedCardsCounter;
+            _limitContainer.UpdateUsedCardsCounter(cardsDeck.CardsUsed, cardsDeck.UseCardsLimit);
             
             healthBar.Init(playerItem.MaxHealth);
             OnHealthChanged += healthBar.UpdateHealthBar;
             OnShieldChanged += healthBar.UpdateShieldCounter;
         }
-        
+
+        protected override void OnTurnStarted()
+        {
+            if (gameState.ActiveCharacter.IsPlayer())
+            {
+                Shield = 0;
+            }
+        }
+
         protected override void CreateCardsDeck()
         {
             // TODO Get cards from state
             cardsDeck = new CardsDeck(item.Deck, item.AttackCards, item.ProtectionCards, item.UseCardsLimit);
-        }
-
-        protected override void UseAttackCard(CardItem cardItem)
-        {
-            Character character = _gameStateService.State.GetOpponentCharacter();
-            character.TakeDamage(cardItem.Value);
         }
 
         public override bool IsPlayer()

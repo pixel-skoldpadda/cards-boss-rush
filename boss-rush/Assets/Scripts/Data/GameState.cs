@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using GameObjects.Character;
+using GameObjects.Character.Player;
 using Ui.Hud;
 
 namespace Data
@@ -54,5 +55,17 @@ namespace Data
         }
 
         public List<Character> Characters => _characters;
+
+        public Player GetPlayer()
+        {
+            foreach (Character character in _characters)
+            {
+                if (character.IsPlayer())
+                {
+                    return (Player)character;
+                }
+            }
+            return null;
+        }
     }
 }
