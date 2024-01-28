@@ -6,6 +6,7 @@ using Infrastructure.Services.Items;
 using Infrastructure.Services.Loader;
 using Infrastructure.Services.SaveLoad;
 using Infrastructure.Services.State;
+using Infrastructure.Services.WindowsManager;
 using Infrastructure.States.Interfaces;
 using Ui.Curtain;
 using Zenject;
@@ -19,7 +20,7 @@ namespace Infrastructure.States
 
         [Inject]
         public GameStateMachine(ISceneLoader sceneLoader, LoadingCurtain loadingCurtain, IGameStateService gameStateService, ISaveLoadService saveLoadService,
-            IAudioService audio, IItemsService items, IGameFactory gameFactory, IUiFactory uiFactory)
+            IAudioService audio, IItemsService items, IGameFactory gameFactory, IUiFactory uiFactory, IWindowsManager windowsManager)
         {
             _states = new Dictionary<Type, IExitableState>
             {
@@ -30,7 +31,7 @@ namespace Infrastructure.States
                 [typeof(StepTransitionState)] = new StepTransitionState(this, gameStateService),
                 [typeof(GenerateCardsInHandState)] = new GenerateCardsInHandState(this, gameStateService),
                 [typeof(WaitEndTurnState)] = new WaitEndTurnState(this, gameStateService),
-                [typeof(CheckHealthState)] = new CheckHealthState(this, gameStateService),
+                [typeof(CheckHealthState)] = new CheckHealthState(this, gameStateService, windowsManager),
                 [typeof(GameLoopState)] = new GameLoopState(this)
             };
         }

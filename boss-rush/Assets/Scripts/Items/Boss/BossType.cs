@@ -3,5 +3,6 @@
     public enum BossType
     {
         CosmicSlug,
+        FireDragon
     }
 }

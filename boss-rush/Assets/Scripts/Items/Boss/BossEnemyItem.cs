@@ -8,7 +8,6 @@ namespace Items.Boss
     public class BossEnemyItem : CharacterItem
     {
         [SerializeField] private BossType type;
-        [SerializeField] private Sprite bossSprite;
         
         [Space(10)] 
         [Description("AI settings")]
@@ -16,7 +15,6 @@ namespace Items.Boss
         private UtilityAiItem utilityAiItem;
         
         public BossType Type => type;
-        public Sprite BossSprite => bossSprite;
         public UtilityAiItem UtilityAiItem => utilityAiItem;
     }
 }

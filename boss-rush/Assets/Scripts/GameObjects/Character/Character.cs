@@ -1,5 +1,6 @@
 ﻿using System;
 using Data;
+using Infrastructure.States;
 using Items;
 using Items.Card;
 using Ui.Hud;
@@ -10,29 +11,34 @@ namespace GameObjects.Character
     public abstract class Character : MonoBehaviour
     {
         [SerializeField] protected HealthBar healthBar;
+        [SerializeField] protected CharacterAnimator animator;
 
+        public Action OnEndTurn { get; set; }
+        
         protected CharacterItem item;
         protected GameState gameState;
         protected CardsDeck cardsDeck;
 
-        protected int health;
-        protected int shield;
-
         protected Action<int> OnHealthChanged;
         protected Action<int> OnShieldChanged;
 
-        public Action OnEndTurn { get; set; }
+        private int health;
+        private int shield;
 
-        protected void Construct(CharacterItem characterItem, GameState state)
+        private IGameStateMachine _stateMachine;
+        
+        protected void Construct(CharacterItem characterItem, GameState state, IGameStateMachine stateMachine)
         {
             item = characterItem;
             gameState = state;
+            _stateMachine = stateMachine;
             health = characterItem.MaxHealth;
             
             CreateCardsDeck();
         }
         
         protected abstract void CreateCardsDeck();
+        protected abstract void UseAttackCard(CardItem cardItem);
 
         public virtual void UseCard(CardItem cardItem)
         {
@@ -51,6 +57,7 @@ namespace GameObjects.Character
 
         public CardsDeck CardsDeck => cardsDeck;
         public CharacterItem Item => item;
+        public CharacterAnimator Animator => animator;
 
         public int Health
         {
@@ -72,11 +79,6 @@ namespace GameObjects.Character
             return false;
         }
 
-        private void UseAttackCard(CardItem cardItem)
-        {
-            gameState.GetOpponentCharacter().TakeDamage(cardItem.Value);
-        }
-
         protected int Shield
         {
             get => shield;
@@ -94,20 +96,28 @@ namespace GameObjects.Character
             gameState.OnTurnStarted = null;
         }
 
-        private void TakeDamage(int damage)
+        public void TakeDamage(int damage)
         {
-            if (damage > Shield)
+            damage -= Shield;
+            Shield = damage < 0 ? Math.Abs(damage) : 0;
+
+            if (damage < 0)
             {
-                damage -= Shield;
-                Shield = 0;
+                Shield = Math.Abs(damage);
             }
             else
             {
-                Shield -= damage;
+                Shield = 0;
+                Health -= damage;
+                
+                animator.PlayDamageAnimation();
+                
+                healthBar.UpdateHealthBar(Health);
+                if (Health <= 0)
+                {
+                    _stateMachine.Enter<CheckHealthState>();
+                }
             }
-            
-            Health -= damage;
-            healthBar.UpdateHealthBar(health);
         }
     }
 }

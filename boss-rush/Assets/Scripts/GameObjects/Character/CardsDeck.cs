@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using Items.Card;
+using ModestTree;
 
 namespace GameObjects.Character
 {
     public class CardsDeck
     {
+        private readonly List<CardItem> _allCards;
         private readonly List<CardItem> _outCards = new();
         private readonly List<CardItem> _cardsInHand = new();
 
@@ -27,6 +29,7 @@ namespace GameObjects.Character
 
         public CardsDeck(List<CardItem> allCards, int attackCardsCount, int protectionCardsCount, int useCardsLimit)
         {
+            _allCards = allCards;
             _attackCardsCount = attackCardsCount;
             _protectionCardsCount = protectionCardsCount;
             _useCardsLimit = useCardsLimit;
@@ -75,6 +78,41 @@ namespace GameObjects.Character
             OnCardsGenerated?.Invoke();
         }
 
+        public List<CardItem> GetRandomThreeSpecialCards()
+        {
+            List<CardItem> allSpecialCards = new List<CardItem>();
+            foreach (CardItem cardItem in _allCards)
+            {
+                if (cardItem.Special)
+                {
+                    allSpecialCards.Add(cardItem);
+                }
+            }
+
+            int cardsCount = allSpecialCards.Count;
+            if (cardsCount == 0)
+            {
+                Log.Error("Special card in deck cannot be null!");
+                return null;
+            }
+
+            if (cardsCount <= 3)
+            {
+                return allSpecialCards;
+            }
+
+            List<CardItem> randomCards = new List<CardItem>(3);
+            Random random = new Random();
+            for (int i = 0; i < 3; i++)
+            {
+                int index = random.Next(0, allSpecialCards.Count);
+                randomCards.Add(allSpecialCards[index]);
+                allSpecialCards.RemoveAt(index);
+            }
+
+            return randomCards;
+        }
+        
         public void UpdateUsedCardsCounter()
         {
             _cardsUsed++;

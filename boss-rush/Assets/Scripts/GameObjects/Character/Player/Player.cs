@@ -1,6 +1,10 @@
-﻿using Infrastructure.Services.State;
+﻿using System.Collections.Generic;
+using Infrastructure.Services.State;
+using Infrastructure.States;
 using Items;
+using Items.Card;
 using Ui.Hud;
+using UnityEngine;
 using Zenject;
 
 namespace GameObjects.Character.Player
@@ -10,9 +14,9 @@ namespace GameObjects.Character.Player
         private CardsLimitContainer _limitContainer;
         
         [Inject]
-        public void Construct(PlayerItem playerItem, IGameStateService gameStateService)
+        public void Construct(PlayerItem playerItem, IGameStateService gameStateService, IGameStateMachine stateMachine)
         {
-            base.Construct(playerItem, gameStateService.State);
+            base.Construct(playerItem, gameStateService.State, stateMachine);
 
             Hud hud = gameState.HUD;
 
@@ -29,8 +33,16 @@ namespace GameObjects.Character.Player
 
         protected override void CreateCardsDeck()
         {
-            // TODO Get cards from state
-            cardsDeck = new CardsDeck(item.Deck, item.AttackCards, item.ProtectionCards, item.UseCardsLimit);
+            List<CardItem> cardItems = item.Deck;
+            cardItems.AddRange(gameState.PlayerCards);
+
+            cardsDeck = new CardsDeck(cardItems, item.AttackCards, item.ProtectionCards, item.UseCardsLimit);
+        }
+
+        protected override void UseAttackCard(CardItem cardItem)
+        {
+            animator.PlayAttackAnimation(Vector3.right);
+            gameState.GetOpponentCharacter().TakeDamage(cardItem.Value);
         }
 
         public override bool IsPlayer()

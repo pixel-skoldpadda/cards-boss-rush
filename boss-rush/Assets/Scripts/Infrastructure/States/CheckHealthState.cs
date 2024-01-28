@@ -2,21 +2,26 @@
 using DG.Tweening;
 using GameObjects.Character;
 using Infrastructure.Services.State;
+using Infrastructure.Services.WindowsManager;
 using Infrastructure.States.Interfaces;
 using Ui.Hud.MiddleContainers;
+using Ui.Windows;
 using UnityEngine;
 
 namespace Infrastructure.States
 {
+    // TODO: Переименовать стейт
     public class CheckHealthState : IState
     {
         private readonly IGameStateMachine _stateMachine;
         private readonly IGameStateService _gameStateService;
+        private readonly IWindowsManager _windowsManager;
 
-        public CheckHealthState(IGameStateMachine stateMachine, IGameStateService gameStateService)
+        public CheckHealthState(IGameStateMachine stateMachine, IGameStateService gameStateService, IWindowsManager windowsManager)
         {
             _stateMachine = stateMachine;
             _gameStateService = gameStateService;
+            _windowsManager = windowsManager;
         }
         
         public void Enter()
@@ -24,7 +29,7 @@ namespace Infrastructure.States
             Debug.Log($"{GetType()} entered.");
             
             Character character = _gameStateService.State.GetOpponentCharacter();
-            if (character.Health <= 0)
+            character.Animator.PlayDeathAnimation(() =>
             {
                 if (character.IsPlayer())
                 {
@@ -32,13 +37,10 @@ namespace Infrastructure.States
                 }
                 else
                 {
-                    
+                    _windowsManager.OpenWindow(
+                        WindowType.ChooseCardWindow, false, null, character.CardsDeck.GetRandomThreeSpecialCards());
                 }
-            }
-            else
-            {
-                _stateMachine.Enter<StepTransitionState>();
-            }
+            });
         }
 
         private void ShowDeathContainer()

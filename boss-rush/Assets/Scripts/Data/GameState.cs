@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using GameObjects.Character;
 using GameObjects.Character.Player;
+using Items.Card;
 using Ui.Hud;
+using UnityEngine;
 
 namespace Data
 {
@@ -18,6 +20,8 @@ namespace Data
         
         [NonSerialized] private Action _onTurnStarted;
         [NonSerialized] private Action _onTurnFinished;
+
+        [SerializeField] private List<CardItem> _playerCards = new();
         
         public Character GetOpponentCharacter()
         {
@@ -66,6 +70,12 @@ namespace Data
                 }
             }
             return null;
+        }
+
+        public List<CardItem> PlayerCards
+        {
+            get => _playerCards;
+            set => _playerCards = value;
         }
     }
 }

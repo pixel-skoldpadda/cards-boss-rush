@@ -1,5 +1,4 @@
 ﻿using Infrastructure.Services.Items;
-using Infrastructure.Services.WindowsManager;
 using Infrastructure.States;
 using Items;
 using Ui.Windows;
@@ -20,10 +19,10 @@ namespace Infrastructure.Services.Factory
             _instantiator = instantiator;
         }
         
-        public T CreateWindow<T>(WindowType type, IWindowsManager windowsManager, object[] args) where T : Window
+        public T CreateWindow<T>(WindowType type, object[] args) where T : Window
         {
             WindowItem item = _items.GetWindowItem(type);
-            Window window = _instantiator.InstantiatePrefabForComponent<T>(item.Prefab);
+            Window window = _instantiator.InstantiatePrefabForComponent<T>(item.Prefab, args);
 
             return (T) window;
         }

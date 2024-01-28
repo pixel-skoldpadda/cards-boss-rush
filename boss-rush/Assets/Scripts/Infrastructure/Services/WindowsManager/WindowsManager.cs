@@ -44,7 +44,7 @@ namespace Infrastructure.Services.WindowsManager
 
             if (_current == null)
             {
-                Window window = _uiFactory.CreateWindow<Window>(windowType, this, args);
+                Window window = _uiFactory.CreateWindow<Window>(windowType, args);
                 if (onClose != null)
                 {
                     window.OnWindowClosed += onClose;   

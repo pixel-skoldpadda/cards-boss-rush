@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Ai;
 using Infrastructure.Services.State;
+using Infrastructure.States;
 using Items.Boss;
 using Items.Card;
 using Ui.Hud;
@@ -12,23 +13,19 @@ namespace GameObjects.Character.Enemy
 {
     public class BossEnemy : Character
     {
-        [SerializeField] private SpriteRenderer spriteRenderer;
-        
         private BossCardsContainer _cardsContainer;
         private UtilityAi _utilityAi;
         
         [Inject]
-        public void Construct(BossEnemyItem enemyItem, IGameStateService gameStateService)
+        public void Construct(BossEnemyItem enemyItem, IGameStateService gameStateService, IGameStateMachine stateMachine)
         {
-            base.Construct(enemyItem, gameStateService.State);
+            base.Construct(enemyItem, gameStateService.State, stateMachine);
 
             Hud hud = gameState.HUD;
             _cardsContainer = hud.BossCardsContainer;
-            
-            spriteRenderer.sprite = enemyItem.BossSprite;
 
             BossHealthBar bossHealthBar = hud.BossHealthBar;
-            bossHealthBar.Init(health, enemyItem.ItemName);
+            bossHealthBar.Init(Health, enemyItem.ItemName);
             healthBar = bossHealthBar;
             
             OnHealthChanged += healthBar.UpdateHealthBar;
@@ -41,12 +38,8 @@ namespace GameObjects.Character.Enemy
 
         private void OnTurnStarted()
         {
-            if (gameState.ActiveCharacter.IsPlayer())
-            {
-                ChooseCardsInStack();
-            }
-            else
-            {
+            if (!gameState.ActiveCharacter.IsPlayer())
+            {                
                 UseAllCardsInStack();
             }
         }
@@ -81,6 +74,12 @@ namespace GameObjects.Character.Enemy
             }
         }
 
+        protected override void UseAttackCard(CardItem cardItem)
+        {
+            animator.PlayAttackAnimation(Vector3.left);
+            gameState.GetOpponentCharacter().TakeDamage(cardItem.Value);
+        }
+
         public override void UseCard(CardItem cardItem)
         {
             cardsDeck.UpdateUsedCardsCounter();
@@ -91,6 +90,7 @@ namespace GameObjects.Character.Enemy
         protected override void CreateCardsDeck()
         {
             cardsDeck = new CardsDeck(item.Deck, item.AttackCards, item.ProtectionCards, item.UseCardsLimit);
+            cardsDeck.OnCardsGenerated += ChooseCardsInStack;
         }
 
         protected override void OnDestroy()

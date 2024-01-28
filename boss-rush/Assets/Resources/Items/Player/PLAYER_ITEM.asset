@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: 
   description: 
-  prefab: {fileID: 1809785152957721139, guid: ba9e832e47f33d440a5e2ad99cd578cd, type: 3}
+  prefab: {fileID: 3703859142703795258, guid: 35c64239320d9b842a2d4fece5c960b6, type: 3}
   spawnPoint: {x: -5, y: -2, z: 0}
   maxHealth: 100
   deck:

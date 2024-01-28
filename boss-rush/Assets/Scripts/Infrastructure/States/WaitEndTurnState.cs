@@ -35,7 +35,7 @@ namespace Infrastructure.States
             character.OnEndTurn -= OnTurnEnded;
             
             character.CardsDeck.DiscardingCards();
-            _stateMachine.Enter<CheckHealthState>();
+            _stateMachine.Enter<StepTransitionState>();
         }
         
         public void Exit()
