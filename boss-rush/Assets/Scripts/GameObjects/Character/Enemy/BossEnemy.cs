@@ -35,9 +35,11 @@ namespace GameObjects.Character.Enemy
             OnShieldChanged += healthBar.UpdateShieldCounter;
 
             _utilityAi = new UtilityAi(enemyItem.UtilityAiItem, this, gameState.GetPlayer());
+            
+            gameState.OnTurnStarted += OnTurnStarted;
         }
 
-        protected override void OnTurnStarted()
+        private void OnTurnStarted()
         {
             if (gameState.ActiveCharacter.IsPlayer())
             {
@@ -45,7 +47,6 @@ namespace GameObjects.Character.Enemy
             }
             else
             {
-                Shield = 0;
                 UseAllCardsInStack();
             }
         }
@@ -90,6 +91,13 @@ namespace GameObjects.Character.Enemy
         protected override void CreateCardsDeck()
         {
             cardsDeck = new CardsDeck(item.Deck, item.AttackCards, item.ProtectionCards, item.UseCardsLimit);
+        }
+
+        protected override void OnDestroy()
+        {
+            base.OnDestroy();
+
+            gameState.OnTurnStarted -= OnTurnStarted;
         }
     }
 }

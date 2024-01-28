@@ -1,6 +1,5 @@
 ﻿using Infrastructure.Services.State;
 using Items;
-using Items.Card;
 using Ui.Hud;
 using Zenject;
 
@@ -26,14 +25,6 @@ namespace GameObjects.Character.Player
             healthBar.Init(playerItem.MaxHealth);
             OnHealthChanged += healthBar.UpdateHealthBar;
             OnShieldChanged += healthBar.UpdateShieldCounter;
-        }
-
-        protected override void OnTurnStarted()
-        {
-            if (gameState.ActiveCharacter.IsPlayer())
-            {
-                Shield = 0;
-            }
         }
 
         protected override void CreateCardsDeck()

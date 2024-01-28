@@ -16,7 +16,7 @@ namespace Ui.Hud
         [SerializeField] private Image health;
         [SerializeField] private TextMeshProUGUI healthAmountText;
         [SerializeField] private TextMeshProUGUI shieldCountText;
-        [SerializeField] private GameObject shield;
+        [SerializeField] private Image shield;
         
         private int _maxHealth;
 
@@ -35,8 +35,11 @@ namespace Ui.Hud
         public void UpdateShieldCounter(int shieldCount)
         {
             shieldCountText.text = $"{shieldCount}";
-            shield.SetActive(shieldCount > 0);
-            health.color = shieldCount > 0 ? shieldColor : normalColor;
+
+            DOTween.Sequence()
+                .Append(shield.DOColor(shieldCount > 0 ? new Color(1, 1, 1, 1) : new Color(0, 0, 0, 0), .5f))
+                .Join(shield.transform.DOScale(shieldCount > 0 ? Vector3.one : Vector3.zero, .5f))
+                .Join(health.DOColor(shieldCount > 0 ? shieldColor : normalColor, .5f));
         }
     }
 }

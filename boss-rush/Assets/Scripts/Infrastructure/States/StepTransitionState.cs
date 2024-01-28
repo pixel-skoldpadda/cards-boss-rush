@@ -3,8 +3,6 @@ using Data;
 using GameObjects.Character;
 using Infrastructure.Services.State;
 using Infrastructure.States.Interfaces;
-using Ui.Hud;
-using Ui.Hud.MiddleContainers;
 using UnityEngine;
 
 namespace Infrastructure.States
@@ -42,10 +40,10 @@ namespace Infrastructure.States
                 gameState.ActiveCharacter = characters[currentIndex];
             }
 
-            StepContainer stepContainer = gameState.HUD.StepContainer;
-            string description = gameState.ActiveCharacter.Item.StepDescription;
+            Character activeCharacter = gameState.ActiveCharacter;
+            activeCharacter.ResetShield();
             
-            stepContainer.Show(description, () =>
+            gameState.HUD.StepContainer.Show(activeCharacter.Item.StepDescription, () =>
             {
                 _stateMachine.Enter<GenerateCardsInHandState>();
             });

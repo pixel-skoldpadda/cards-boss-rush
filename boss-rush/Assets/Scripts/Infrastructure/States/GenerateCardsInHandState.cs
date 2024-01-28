@@ -2,7 +2,6 @@
 using GameObjects.Character;
 using Infrastructure.Services.State;
 using Infrastructure.States.Interfaces;
-using Ui.Hud;
 using Ui.Hud.MiddleContainers;
 using UnityEngine;
 
