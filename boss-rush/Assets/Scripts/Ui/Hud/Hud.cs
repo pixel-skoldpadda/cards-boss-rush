@@ -1,4 +1,5 @@
 ﻿using Ui.Hud.Boss;
+using Ui.Hud.Card;
 using Ui.Hud.MiddleContainers;
 using UnityEngine;
 
@@ -21,5 +22,23 @@ namespace Ui.Hud
         public CardsLimitContainer CardsLimitContainer => cardsLimitContainer;
         public BossCardsContainer BossCardsContainer => bossCardsContainer;
         public BaseMiddleContainer DeathContainer => deathContainer;
+
+        public void Hide()
+        {
+            bossHealthBar.Hide();
+            CardsContainer.Hide();
+            EndTurnButton.Hide();
+            CardsContainer.Hide();
+            BossCardsContainer.Hide();
+        }
+
+        public void Show()
+        {
+            bossHealthBar.Show();
+            CardsContainer.Show();
+            EndTurnButton.Show();
+            CardsContainer.Show();
+            BossCardsContainer.Show();
+        }
     }
 }

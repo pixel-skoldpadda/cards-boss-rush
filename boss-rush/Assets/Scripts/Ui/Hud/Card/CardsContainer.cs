@@ -7,9 +7,9 @@ using Items.Card;
 using TMPro;
 using UnityEngine;
 
-namespace Ui.Hud
+namespace Ui.Hud.Card
 {
-    public class CardsContainer : MonoBehaviour
+    public class CardsContainer : BaseHudContainer
     {
         [Description("Cards rotation settings")]
         [SerializeField] private AnimationCurve rotationCurve;
@@ -26,7 +26,7 @@ namespace Ui.Hud
         [SerializeField] private TextMeshProUGUI cardsInDeckCounter;
         [SerializeField] private TextMeshProUGUI cardsInOutCounter;
 
-        private readonly List<Card.Card> cards = new();
+        private readonly List<Card> cards = new();
         private IGameStateService _gameStateService;
 
         private CardsDeck _cardsDeck;
@@ -34,6 +34,13 @@ namespace Ui.Hud
         public void Construct(IGameStateService gameStateService)
         {
             _gameStateService = gameStateService;
+        }
+
+        protected override void ResetContainer()
+        {
+            base.ResetContainer();
+            
+            DestroyCards();
         }
 
         public void InitCardsDeck(CardsDeck cardsDeck)
@@ -66,8 +73,12 @@ namespace Ui.Hud
         private void OnCardsDiscarding()
         {
             cardsInOutCounter.text = $"{_cardsDeck.OutCardsCount}";
-            
-            foreach (Card.Card card in cards)
+            DestroyCards();
+        }
+
+        private void DestroyCards()
+        {
+            foreach (Card card in cards)
             {
                 card.DisableInteraction();
                 Destroy(card.gameObject);
@@ -88,7 +99,7 @@ namespace Ui.Hud
         {
             GameObject cardGameObject = Instantiate(cardPrefab, transform);
                 
-            Card.Card card = cardGameObject.GetComponent<Card.Card>();
+            Card card = cardGameObject.GetComponent<Card>();
             card.Init(cardItem);
             card.OnCardClicked += OnCardClicked;
             cards.Add(card);
@@ -113,7 +124,7 @@ namespace Ui.Hud
             }
         }
 
-        private void OnCardClicked(Card.Card clickedCard)
+        private void OnCardClicked(Card clickedCard)
         {
             GameState gameState = _gameStateService.State;
             Character player = gameState.ActiveCharacter;

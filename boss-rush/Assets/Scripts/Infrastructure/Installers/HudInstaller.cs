@@ -1,5 +1,6 @@
 ﻿using Infrastructure.Services.State;
 using Ui.Hud;
+using Ui.Hud.Card;
 using UnityEngine;
 using Zenject;
 

@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Ui.Hud.Boss
 {
-    public class BossCardsContainer : MonoBehaviour
+    public class BossCardsContainer : BaseHudContainer 
     {
         [SerializeField] private GameObject cardIconPrefab;
         

@@ -79,25 +79,13 @@ namespace GameObjects.Character
             return false;
         }
 
-        protected int Shield
-        {
-            get => shield;
-            set
-            {
-                shield = value;
-                OnShieldChanged?.Invoke(value);
-            }
-        }
-        
-        protected virtual void OnDestroy()
-        {
-            OnHealthChanged = null;
-            OnShieldChanged = null;
-            gameState.OnTurnStarted = null;
-        }
-
         public void TakeDamage(int damage)
         {
+            if (Health <= 0)
+            {
+                return;
+            }
+            
             damage -= Shield;
             Shield = damage < 0 ? Math.Abs(damage) : 0;
 
@@ -111,12 +99,29 @@ namespace GameObjects.Character
                 Health -= damage;
                 
                 animator.PlayDamageAnimation();
-                
                 healthBar.UpdateHealthBar(Health);
                 if (Health <= 0)
                 {
+                    gameState.HUD.Hide();
                     _stateMachine.Enter<CheckHealthState>();
                 }
+            }
+        }
+
+        protected virtual void OnDestroy()
+        {
+            OnHealthChanged = null;
+            OnShieldChanged = null;
+            gameState.OnTurnStarted = null;
+        }
+
+        private int Shield
+        {
+            get => shield;
+            set
+            {
+                shield = value;
+                OnShieldChanged?.Invoke(value);
             }
         }
     }

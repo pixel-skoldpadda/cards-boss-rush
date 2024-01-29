@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 namespace Ui.Hud
 {
-    public abstract class HealthBar : MonoBehaviour
+    public abstract class HealthBar : BaseHudContainer
     {
         [Description("Progress colors")]
         [SerializeField] private Color normalColor;

@@ -4,6 +4,7 @@ using Infrastructure.States;
 using Items;
 using Items.Card;
 using Ui.Hud;
+using Ui.Hud.Card;
 using UnityEngine;
 using Zenject;
 

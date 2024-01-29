@@ -1,9 +1,9 @@
 ﻿using TMPro;
 using UnityEngine;
 
-namespace Ui.Hud
+namespace Ui.Hud.Card
 {
-    public class CardsLimitContainer : MonoBehaviour
+    public class CardsLimitContainer : BaseHudContainer
     {
         [SerializeField] private TextMeshProUGUI limit;
 

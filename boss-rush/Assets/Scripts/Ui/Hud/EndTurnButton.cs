@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 namespace Ui.Hud
 {
-    public class EndTurnButton : MonoBehaviour
+    public class EndTurnButton : BaseHudContainer
     {
         [SerializeField] private Button endTurnButton;
         
@@ -18,6 +18,13 @@ namespace Ui.Hud
 
             _gameState.OnTurnStarted += OnTurnStarted;
             _gameState.OnTurnFinished += OnTurnFinished;
+        }
+
+        protected override void ResetContainer()
+        {
+            base.ResetContainer();
+
+            endTurnButton.interactable = false;
         }
 
         private void OnTurnStarted()
