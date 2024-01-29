@@ -1,7 +1,6 @@
-using System.Collections.Generic;
 using GameObjects.Character.Enemy;
-using Infrastructure.Services.Items;
 using Infrastructure.Services.State;
+using Infrastructure.States;
 using Items.Boss;
 using UnityEngine;
 using Zenject;
@@ -10,25 +9,21 @@ namespace Infrastructure.Services.Factory
 {
     public class GameFactory : IGameFactory
     {
-        private readonly IInstantiator _instantiator;
-        private readonly IItemsService _items;
         private readonly IGameStateService _gameStateService;
 
         [Inject]
-        public GameFactory(IInstantiator instantiator, IItemsService items, IGameStateService gameStateService)
+        public GameFactory(IGameStateService gameStateService)
         {
-            _instantiator = instantiator;
             _gameStateService = gameStateService;
-            _items = items;
         }
-
-        public void CreateBossEnemy(BossType type)
+        
+        //: TODO Костыль с передачей зависимости stateMachine починить
+        public void CreateBossEnemy(BossEnemyItem item, IGameStateMachine stateMachine)
         {
-            BossEnemyItem item = _items.GetBossEnemyItem(type);
-            BossEnemy bossEnemy = _instantiator.InstantiatePrefabForComponent<BossEnemy>(item.Prefab, item.SpawnPoint, Quaternion.identity, null, 
-                new List<BossEnemyItem> { item });
+            BossEnemy enemy = Object.Instantiate(item.Prefab, item.SpawnPoint, Quaternion.identity, null).GetComponent<BossEnemy>();
+            enemy.Construct(item, _gameStateService, stateMachine);
             
-            _gameStateService.State.Characters.Add(bossEnemy);
+            _gameStateService.State.Characters.Add(enemy);
         }
     }
 }

@@ -1,5 +1,7 @@
-﻿using Infrastructure.Services.Factory;
+﻿using System.Collections.Generic;
+using Infrastructure.Services.Items;
 using Infrastructure.Services.Loader;
+using Infrastructure.Services.State;
 using Infrastructure.States.Interfaces;
 using Items.Boss;
 using Ui.Curtain;
@@ -12,14 +14,17 @@ namespace Infrastructure.States
         private readonly GameStateMachine _stateMachine;
         private readonly ISceneLoader _sceneLoader;
         private readonly LoadingCurtain _loadingCurtain;
-        private readonly IGameFactory _gameFactory;
+        private readonly IItemsService _items;
+        private readonly IGameStateService _gameStateService;
 
-        public LoadLevelState(GameStateMachine stateMachine, ISceneLoader sceneLoader, LoadingCurtain loadingCurtain, IGameFactory gameFactory)
+        public LoadLevelState(GameStateMachine stateMachine, ISceneLoader sceneLoader, LoadingCurtain loadingCurtain, IItemsService items, 
+            IGameStateService gameStateService)
         {
             _stateMachine = stateMachine;
             _sceneLoader = sceneLoader;
             _loadingCurtain = loadingCurtain;
-            _gameFactory = gameFactory;
+            _items = items;
+            _gameStateService = gameStateService;
         }
 
         public void Enter(string sceneName)
@@ -39,14 +44,13 @@ namespace Infrastructure.States
 
         private void OnLoaded()
         {
-            InitGameWorld();
-            
-            _stateMachine.Enter<StepTransitionState>();
-        }
+            Queue<BossEnemyItem> queue = _gameStateService.State.BossesQueue;
+            foreach (BossEnemyItem enemyItem in _items.BossEnemyItems)
+            {
+                queue.Enqueue(enemyItem);
+            }
 
-        private void InitGameWorld()
-        {
-            _gameFactory.CreateBossEnemy(BossType.CosmicSlug);
+            _stateMachine.Enter<SpawnBossEnemyState>();
         }
     }
 }

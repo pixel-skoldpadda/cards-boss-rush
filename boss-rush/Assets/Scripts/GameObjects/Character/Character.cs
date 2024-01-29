@@ -12,7 +12,8 @@ namespace GameObjects.Character
     {
         [SerializeField] protected HealthBar healthBar;
         [SerializeField] protected CharacterAnimator animator;
-
+        
+        //: TODO Избавить от ивента
         public Action OnEndTurn { get; set; }
         
         protected CharacterItem item;
@@ -51,8 +52,6 @@ namespace GameObjects.Character
             {
                 Shield += cardItem.Value;
             }
-            
-            cardsDeck.RemoveCardsFromHand(cardItem);
         }
 
         public CardsDeck CardsDeck => cardsDeck;
@@ -68,7 +67,7 @@ namespace GameObjects.Character
                 OnHealthChanged?.Invoke(value);
             }
         }
-
+        
         public void ResetShield()
         {
             Shield = 0;
@@ -107,14 +106,7 @@ namespace GameObjects.Character
                 }
             }
         }
-
-        protected virtual void OnDestroy()
-        {
-            OnHealthChanged = null;
-            OnShieldChanged = null;
-            gameState.OnTurnStarted = null;
-        }
-
+        
         private int Shield
         {
             get => shield;

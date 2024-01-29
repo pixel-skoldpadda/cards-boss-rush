@@ -26,6 +26,8 @@ namespace Ui.Hud.Card
         [SerializeField] private TextMeshProUGUI cardsInDeckCounter;
         [SerializeField] private TextMeshProUGUI cardsInOutCounter;
 
+        [SerializeField] private EndTurnButton endTurnButton;
+        
         private readonly List<Card> cards = new();
         private IGameStateService _gameStateService;
 
@@ -80,7 +82,7 @@ namespace Ui.Hud.Card
         {
             foreach (Card card in cards)
             {
-                card.DisableInteraction();
+                card.ChangeInteractionEnabled(false);
                 Destroy(card.gameObject);
             }
             cards.Clear();
@@ -136,7 +138,8 @@ namespace Ui.Hud.Card
                 return;
             }
             
-            clickedCard.DisableInteraction();
+            endTurnButton.ChangeInteractable(false);
+            clickedCard.ChangeInteractionEnabled(false);
             cards.Remove(clickedCard);
 
             CardItem cardItem = clickedCard.CardItem;
@@ -153,10 +156,12 @@ namespace Ui.Hud.Card
             }
             
             cardsDeck.UpdateUsedCardsCounter();
+            cardsDeck.RemoveCardsFromHand(cardItem);
             clickedCard.CardAnimator.MoveToAndDestroy(position, () =>
             {
                 Destroy(clickedCard.gameObject);
                 player.UseCard(cardItem);
+                endTurnButton.ChangeInteractable(true);
             });
             
             AlignCards();

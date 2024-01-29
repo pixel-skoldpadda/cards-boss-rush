@@ -27,6 +27,7 @@ namespace Infrastructure.States
             Character currentCharacter = gameState.ActiveCharacter;
             if (currentCharacter == null)
             {
+                gameState.CharacterIndex = 0;
                 gameState.ActiveCharacter = gameState.Characters[gameState.CharacterIndex];
             }
             else

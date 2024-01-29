@@ -7,7 +7,6 @@ using Items.Card;
 using Ui.Hud;
 using Ui.Hud.Boss;
 using UnityEngine;
-using Zenject;
 
 namespace GameObjects.Character.Enemy
 {
@@ -16,7 +15,6 @@ namespace GameObjects.Character.Enemy
         private BossCardsContainer _cardsContainer;
         private UtilityAi _utilityAi;
         
-        [Inject]
         public void Construct(BossEnemyItem enemyItem, IGameStateService gameStateService, IGameStateMachine stateMachine)
         {
             base.Construct(enemyItem, gameStateService.State, stateMachine);
@@ -93,11 +91,11 @@ namespace GameObjects.Character.Enemy
             cardsDeck.OnCardsGenerated += ChooseCardsInStack;
         }
 
-        protected override void OnDestroy()
+        protected void OnDestroy()
         {
-            base.OnDestroy();
-
             gameState.OnTurnStarted -= OnTurnStarted;
+            OnHealthChanged -= healthBar.UpdateHealthBar;
+            OnShieldChanged -= healthBar.UpdateShieldCounter;
         }
     }
 }

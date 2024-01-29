@@ -56,9 +56,9 @@ namespace Ui.Hud.Card
         public CardAnimator CardAnimator => cardAnimator;
         public CardItem CardItem => _cardItem;
 
-        public void DisableInteraction()
+        public void ChangeInteractionEnabled(bool enabled)
         {
-            eventTrigger.enabled = false;
+            eventTrigger.enabled = enabled;
         }
     }
 }

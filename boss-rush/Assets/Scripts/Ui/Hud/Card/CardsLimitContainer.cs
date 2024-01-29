@@ -7,6 +7,13 @@ namespace Ui.Hud.Card
     {
         [SerializeField] private TextMeshProUGUI limit;
 
+        protected override void ResetContainer()
+        {
+            base.ResetContainer();
+            
+            UpdateUsedCardsCounter(0, 0);
+        }
+
         public void UpdateUsedCardsCounter(int current, int max)
         {
             limit.text = $"{current}/{max}";

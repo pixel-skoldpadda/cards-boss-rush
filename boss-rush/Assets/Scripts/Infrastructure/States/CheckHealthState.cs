@@ -1,4 +1,5 @@
 ﻿using Configs;
+using Data;
 using DG.Tweening;
 using GameObjects.Character;
 using Infrastructure.Services.State;
@@ -10,7 +11,7 @@ using UnityEngine;
 
 namespace Infrastructure.States
 {
-    // TODO: Переименовать стейт
+    // TODO: Переименовать стейт ОТРЕФАКТОРИТЬ!
     public class CheckHealthState : IState
     {
         private readonly IGameStateMachine _stateMachine;
@@ -27,20 +28,28 @@ namespace Infrastructure.States
         public void Enter()
         {
             Debug.Log($"{GetType()} entered.");
+
+            GameState gameState = _gameStateService.State;
+
+            Character character = gameState.GetOpponentCharacter();
+            character.Animator.PlayDeathAnimation();
             
-            Character character = _gameStateService.State.GetOpponentCharacter();
-            character.Animator.PlayDeathAnimation(() =>
+            if (character.IsPlayer())
             {
-                if (character.IsPlayer())
-                {
-                    ShowDeathContainer();
-                }
-                else
-                {
-                    _windowsManager.OpenWindow(
-                        WindowType.ChooseCardWindow, false, null, character.CardsDeck.GetRandomThreeSpecialCards());
-                }
-            });
+                ShowDeathContainer();
+            }
+            else
+            {
+                gameState.ActiveCharacter.CardsDeck.Reset();
+                gameState.ActiveCharacter = null;
+                gameState.Characters.Remove(character);
+                
+                _windowsManager.OpenWindow(
+                    WindowType.ChooseCardWindow, 
+                    false, 
+                    () => _stateMachine.Enter<SpawnBossEnemyState>(), 
+                    character.CardsDeck.GetRandomThreeSpecialCards());
+            }
         }
 
         private void ShowDeathContainer()

@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1eef3b7b21c94dbb8d57fc0d5437a4d2, type: 3}
-  m_Name: SPACE_SLUG_ENEMY_ITEM
+  m_Name: 1_SPACE_SLUG_ENEMY_ITEM
   m_EditorClassIdentifier: 
   itemName: "\u041A\u043E\u0441\u043C\u0438\u0447\u0435\u0441\u043A\u0438\u0439 \u0441\u043B\u0438\u0437\u0435\u043D\u044C"
   description: 
   prefab: {fileID: 8856918681617681602, guid: b5ef8394946b6fc4a82299bd6111d272, type: 3}
   spawnPoint: {x: 5, y: -2, z: 0}
-  maxHealth: 50
+  maxHealth: 5
   deck:
   - {fileID: 11400000, guid: 067fd02d40786d249b363445568f3cfd, type: 2}
   - {fileID: 11400000, guid: 067fd02d40786d249b363445568f3cfd, type: 2}

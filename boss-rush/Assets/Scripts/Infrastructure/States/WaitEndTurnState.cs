@@ -22,25 +22,24 @@ namespace Infrastructure.States
             Debug.Log($"{GetType()} entered.");
 
             GameState gameState = _gameStateService.State;
-
             Character character = gameState.ActiveCharacter;
-            character.OnEndTurn += OnTurnEnded;
             
+            character.OnEndTurn += OnTurnEnded;
             gameState.OnTurnStarted?.Invoke();
         }
 
         private void OnTurnEnded()
         {
-            Character character = _gameStateService.State.ActiveCharacter;
-            character.OnEndTurn -= OnTurnEnded;
-            
-            character.CardsDeck.DiscardingCards();
             _stateMachine.Enter<StepTransitionState>();
         }
         
         public void Exit()
         {
             Debug.Log($"{GetType()} exited.");
+            
+            Character character = _gameStateService.State.ActiveCharacter;
+            character.CardsDeck.DiscardingCards();
+            character.OnEndTurn -= OnTurnEnded;
             
             _gameStateService.State.OnTurnFinished?.Invoke();
         }

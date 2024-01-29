@@ -5,9 +5,10 @@ using ModestTree;
 
 namespace GameObjects.Character
 {
+    [Serializable]
     public class CardsDeck
     {
-        private readonly List<CardItem> _allCards;
+        private readonly List<CardItem> _allCards = new();
         private readonly List<CardItem> _outCards = new();
         private readonly List<CardItem> _cardsInHand = new();
 
@@ -21,6 +22,7 @@ namespace GameObjects.Character
 
         private int _cardsUsed;
         
+        // TODO Навести порядок избавиться от кучи слушателей
         public Action OnCardsGenerated { get; set; }
         public Action OnHangUp { get; set; }
         public Action OnCardGoOut { get; set; }
@@ -29,14 +31,28 @@ namespace GameObjects.Character
 
         public CardsDeck(List<CardItem> allCards, int attackCardsCount, int protectionCardsCount, int useCardsLimit)
         {
-            _allCards = allCards;
+            _allCards.AddRange(allCards);
             _attackCardsCount = attackCardsCount;
             _protectionCardsCount = protectionCardsCount;
             _useCardsLimit = useCardsLimit;
             
-            DistributeCardsByType(allCards);
+            DistributeCardsByType(_allCards);
         }
 
+        public void AddCard(CardItem cardItem)
+        {
+            _allCards.Add(cardItem);
+
+            if (CardType.Protection.Equals(cardItem.CardType))
+            {
+                _protectionCards.Add(cardItem);
+            }
+            else
+            {
+                _attackCards.Add(cardItem);
+            }
+        }
+        
         public CardItem ChooseCardToStack(CardType cardType)
         {
             CardItem cardItem = null;
@@ -61,6 +77,7 @@ namespace GameObjects.Character
             {
                 _outCards.Add(cardItem);
             }
+            
             _cardsInHand.Clear();
             OnCardsDiscarding?.Invoke();
             
@@ -144,6 +161,18 @@ namespace GameObjects.Character
             }
             return false;
         }
+
+        public void Reset()
+        {
+            DistributeCardsByType(_cardsInHand);
+            DistributeCardsByType(_outCards);
+            
+            _cardsUsed = 0;
+            _cardsInHand.Clear();
+            _outCards.Clear();
+            
+            OnHangUp?.Invoke();
+        }
         
         public List<CardItem> CardsInHand => _cardsInHand;
         public int CardsCount => _protectionCards.Count + _attackCards.Count;
@@ -151,7 +180,7 @@ namespace GameObjects.Character
         public int UseCardsLimit => _useCardsLimit;
         public int CardsUsed => _cardsUsed;
         public List<CardItem> CardsStack => _cardsStack;
-
+        
         private void PutCardsInHand(List<CardItem> cards, int count)
         {
             Random random = new Random();

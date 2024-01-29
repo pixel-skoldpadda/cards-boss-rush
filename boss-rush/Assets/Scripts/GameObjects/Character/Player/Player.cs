@@ -51,11 +51,11 @@ namespace GameObjects.Character.Player
             return true;
         }
 
-        protected override void OnDestroy()
+        protected void OnDestroy()
         {
-            base.OnDestroy();
-
             cardsDeck.OnUsedCardsCountChanged -= _limitContainer.UpdateUsedCardsCounter;
+            OnHealthChanged -= healthBar.UpdateHealthBar;
+            OnShieldChanged -= healthBar.UpdateShieldCounter;
         }
     }
 }

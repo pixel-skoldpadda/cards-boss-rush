@@ -20,6 +20,9 @@ namespace Ui.Hud
         
         private int _maxHealth;
 
+        private Tweener _fillTween;
+        private Sequence _shieldSequence;
+        
         public void Init(int maxHealth)
         {
             _maxHealth = maxHealth;
@@ -28,7 +31,7 @@ namespace Ui.Hud
         
         public void UpdateHealthBar(int currentValue)
         {
-            health.DOFillAmount((float)currentValue / _maxHealth, .5f);
+            _fillTween = health.DOFillAmount((float) currentValue / _maxHealth, .5f);
             healthAmountText.text = $"{currentValue}/{_maxHealth}";
         }
 
@@ -36,10 +39,19 @@ namespace Ui.Hud
         {
             shieldCountText.text = $"{shieldCount}";
 
-            DOTween.Sequence()
+            _shieldSequence = DOTween.Sequence()
                 .Append(shield.DOColor(shieldCount > 0 ? new Color(1, 1, 1, 1) : new Color(0, 0, 0, 0), .5f))
                 .Join(shield.transform.DOScale(shieldCount > 0 ? Vector3.one : Vector3.zero, .5f))
                 .Join(health.DOColor(shieldCount > 0 ? shieldColor : normalColor, .5f));
+        }
+
+        private void OnDestroy()
+        {
+            _fillTween?.Kill();
+            _fillTween = null;
+            
+            _shieldSequence?.Kill();
+            _shieldSequence = null;
         }
     }
 }

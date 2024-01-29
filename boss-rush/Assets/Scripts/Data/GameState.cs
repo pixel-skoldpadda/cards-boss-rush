@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using GameObjects.Character;
 using GameObjects.Character.Player;
+using Items.Boss;
 using Items.Card;
 using Ui.Hud;
 using UnityEngine;
@@ -18,10 +19,13 @@ namespace Data
 
         [NonSerialized] private Hud _hud;
         
+        //: TODO Избавить от ивентов
         [NonSerialized] private Action _onTurnStarted;
         [NonSerialized] private Action _onTurnFinished;
 
         [SerializeField] private List<CardItem> _playerCards = new();
+
+        private Queue<BossEnemyItem> _bossesQueue = new();
         
         public Character GetOpponentCharacter()
         {
@@ -77,5 +81,7 @@ namespace Data
             get => _playerCards;
             set => _playerCards = value;
         }
+
+        public Queue<BossEnemyItem> BossesQueue => _bossesQueue;
     }
 }

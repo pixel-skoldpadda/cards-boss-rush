@@ -230,6 +230,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38a05d37ce0441f0855ea8a1dc8ed067, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  card: {fileID: 5957640070724981756}
   rectTransform: {fileID: 2441270645342375479}
   canvas: {fileID: 1538126258772849929}
 --- !u!114 &5957640070724981756

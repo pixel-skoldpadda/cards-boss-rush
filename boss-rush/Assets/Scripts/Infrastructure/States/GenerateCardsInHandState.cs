@@ -2,7 +2,6 @@
 using GameObjects.Character;
 using Infrastructure.Services.State;
 using Infrastructure.States.Interfaces;
-using Ui.Hud.MiddleContainers;
 using UnityEngine;
 
 namespace Infrastructure.States
@@ -31,12 +30,9 @@ namespace Infrastructure.States
                 character.CardsDeck.GeneratedCardsInHand();
                 gameState.GetOpponentCharacter().CardsDeck.GeneratedCardsInHand();
             }
-
-            StepContainer stepContainer = gameState.HUD.StepContainer;
-            stepContainer.Hide(() =>
-            {
-                _stateMachine.Enter<WaitEndTurnState>();
-            });
+            
+            gameState.HUD.StepContainer.Hide();
+            _stateMachine.Enter<WaitEndTurnState>();
         }
 
         public void Exit()

@@ -11,13 +11,14 @@ namespace GameObjects.Character
         [SerializeField] private Animator animator;
 
         private Sequence _attackSequence;
+        private Tweener _deathTween;
 
         // TODO: Переделать на DeathAnimation.anim
-        public void PlayDeathAnimation(TweenCallback onComplete)
+        public void PlayDeathAnimation()
         {
-            spriteRenderer
+            _deathTween = spriteRenderer
                 .DOColor(new Color(0, 0, 0, 0), 1f)
-                .OnComplete(onComplete);
+                .OnComplete(() => Destroy(gameObject));
         }
 
         public void PlayAttackAnimation(Vector3 direction, TweenCallback onComplete = null)
@@ -41,6 +42,15 @@ namespace GameObjects.Character
         public void PlayDamageAnimation()
         {
             animator.SetTrigger(DamageHash);
+        }
+
+        private void OnDestroy()
+        {
+            _deathTween?.Kill();
+            _deathTween = null;
+            
+            _attackSequence?.Kill();
+            _attackSequence = null;
         }
     }
 }

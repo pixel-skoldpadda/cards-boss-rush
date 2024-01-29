@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Data;
 using Infrastructure.Services.State;
 using Items.Card;
 using UnityEngine;
@@ -35,8 +36,10 @@ namespace Ui.Windows.ChooseCard
             {
                 card.DisableInteraction();
             }
-            
-            _gameStateService.State.PlayerCards.Add(cardItem);
+
+            GameState gameState = _gameStateService.State;
+            gameState.PlayerCards.Add(cardItem);
+            gameState.GetPlayer().CardsDeck.AddCard(cardItem);
             Close();
         }
     }

@@ -6,7 +6,8 @@ namespace Ui.Hud.Card
     public class CardAnimator : MonoBehaviour
     {
         private const int MAX_SORTING_ORDER = 5;
-        
+
+        [SerializeField] private Card card;
         [SerializeField] private RectTransform rectTransform;
         [SerializeField] private Canvas canvas;
         
@@ -81,6 +82,7 @@ namespace Ui.Hud.Card
                 {
                     _isMoving = false;
                     UpdateDefaultValues();
+                    card.ChangeInteractionEnabled(true);
                 });
         }
 

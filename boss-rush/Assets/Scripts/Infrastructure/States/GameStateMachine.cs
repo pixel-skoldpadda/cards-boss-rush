@@ -25,9 +25,10 @@ namespace Infrastructure.States
             _states = new Dictionary<Type, IExitableState>
             {
                 [typeof(BootstrapState)] = new BootstrapState(this, items),
-                [typeof(LoadLevelState)] = new LoadLevelState(this, sceneLoader, loadingCurtain, gameFactory),
+                [typeof(LoadLevelState)] = new LoadLevelState(this, sceneLoader, loadingCurtain, items, gameStateService),
                 [typeof(LoadSceneState)] = new LoadSceneState(sceneLoader, loadingCurtain),
                 [typeof(LoadProgressState)] = new LoadProgressState(this, gameStateService, saveLoadService, audio),
+                [typeof(SpawnBossEnemyState)] = new SpawnBossEnemyState(this, gameFactory, gameStateService),
                 [typeof(StepTransitionState)] = new StepTransitionState(this, gameStateService),
                 [typeof(GenerateCardsInHandState)] = new GenerateCardsInHandState(this, gameStateService),
                 [typeof(WaitEndTurnState)] = new WaitEndTurnState(this, gameStateService),

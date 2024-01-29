@@ -11,13 +11,18 @@ namespace Ui.Hud
         [SerializeField] private Button endTurnButton;
         
         private GameState _gameState;
-        
+
         public void Construct(IGameStateService gameStateService)
         {
             _gameState = gameStateService.State;
 
             _gameState.OnTurnStarted += OnTurnStarted;
             _gameState.OnTurnFinished += OnTurnFinished;
+        }
+
+        public void ChangeInteractable(bool interactable)
+        {
+            endTurnButton.interactable = interactable;
         }
 
         protected override void ResetContainer()

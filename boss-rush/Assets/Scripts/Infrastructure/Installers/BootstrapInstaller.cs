@@ -12,7 +12,7 @@ using Ui.Curtain;
 using UnityEngine;
 using Zenject;
 
-namespace Infrastructure
+namespace Infrastructure.Installers
 {
     public class BootstrapInstaller : MonoInstaller
     {
