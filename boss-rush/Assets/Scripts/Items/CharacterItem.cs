@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.ComponentModel;
 using Items.Card;
 using UnityEngine;
 
@@ -9,20 +8,16 @@ namespace Items
     {
         [SerializeField] private int maxHealth;
         [SerializeField] private List<CardItem> deck;
-        [SerializeField] private int useCardsLimit = 3;
         [SerializeField] private string stepDescription;
 
         [Space(10)]
-        [Description("Deck settings")]
-        [SerializeField] private int cardsOnHand;
-        [SerializeField] private int protectionCards;
-        [SerializeField] private int attackCards;
+        [Header("Deck settings")]
+        [SerializeField] private int cardsOnHand = 5;
+        [SerializeField] private int useCardsLimit = 3;
 
         public int MaxHealth => maxHealth;
         public List<CardItem> Deck => deck;
         public int CardsOnHand => cardsOnHand;
-        public int ProtectionCards => protectionCards;
-        public int AttackCards => attackCards;
         public int UseCardsLimit => useCardsLimit;
         public string StepDescription => stepDescription;
     }

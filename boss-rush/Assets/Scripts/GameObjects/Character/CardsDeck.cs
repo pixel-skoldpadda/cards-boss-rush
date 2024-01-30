@@ -11,14 +11,11 @@ namespace GameObjects.Character
         private readonly List<CardItem> _allCards = new();
         private readonly List<CardItem> _outCards = new();
         private readonly List<CardItem> _cardsInHand = new();
-
-        private readonly List<CardItem> _protectionCards = new();
-        private readonly List<CardItem> _attackCards =  new();
+        
         private readonly List<CardItem> _cardsStack = new();
         
-        private readonly int _attackCardsCount;
-        private readonly int _protectionCardsCount;
         private readonly int _useCardsLimit;
+        private readonly int _cardInHandCount;
 
         private int _cardsUsed;
         
@@ -29,28 +26,16 @@ namespace GameObjects.Character
         public Action OnCardsDiscarding { get; set; }
         public Action<int, int> OnUsedCardsCountChanged { get; set; }
 
-        public CardsDeck(List<CardItem> allCards, int attackCardsCount, int protectionCardsCount, int useCardsLimit)
+        public CardsDeck(List<CardItem> allCards, int cardsInHandCount, int useCardsLimit)
         {
             _allCards.AddRange(allCards);
-            _attackCardsCount = attackCardsCount;
-            _protectionCardsCount = protectionCardsCount;
             _useCardsLimit = useCardsLimit;
-            
-            DistributeCardsByType(_allCards);
+            _cardInHandCount = cardsInHandCount;
         }
 
         public void AddCard(CardItem cardItem)
         {
             _allCards.Add(cardItem);
-
-            if (CardType.Protection.Equals(cardItem.CardType))
-            {
-                _protectionCards.Add(cardItem);
-            }
-            else
-            {
-                _attackCards.Add(cardItem);
-            }
         }
         
         public CardItem ChooseCardToStack(CardType cardType)
@@ -89,8 +74,13 @@ namespace GameObjects.Character
         {
             TryHangUp();
             
-            PutCardsInHand(_attackCards, _attackCardsCount);
-            PutCardsInHand(_protectionCards, _protectionCardsCount);
+            Random random = new Random();
+            for (int i = 0; i < _cardInHandCount; i++)
+            {
+                int index = random.Next(0, _allCards.Count);
+                _cardsInHand.Add(_allCards[index]);
+                _allCards.RemoveAt(index);
+            }
             
             OnCardsGenerated?.Invoke();
         }
@@ -164,8 +154,8 @@ namespace GameObjects.Character
 
         public void Reset()
         {
-            DistributeCardsByType(_cardsInHand);
-            DistributeCardsByType(_outCards);
+            _allCards.AddRange(_outCards);
+            _allCards.AddRange(_cardsInHand);
             
             _cardsUsed = 0;
             _cardsInHand.Clear();
@@ -175,45 +165,19 @@ namespace GameObjects.Character
         }
         
         public List<CardItem> CardsInHand => _cardsInHand;
-        public int CardsCount => _protectionCards.Count + _attackCards.Count;
+        public int CardsCount => _allCards.Count;
         public int OutCardsCount => _outCards.Count;
         public int UseCardsLimit => _useCardsLimit;
         public int CardsUsed => _cardsUsed;
         public List<CardItem> CardsStack => _cardsStack;
-        
-        private void PutCardsInHand(List<CardItem> cards, int count)
-        {
-            Random random = new Random();
-            for (int i = 0; i < count; i++)
-            {
-                int index = random.Next(0, cards.Count);
-                _cardsInHand.Add(cards[index]);
-                cards.RemoveAt(index);
-            }
-        }
 
         private void TryHangUp()
         {
-            if (_protectionCards.Count < _protectionCardsCount || _attackCards.Count < _attackCardsCount)
+            if (_allCards.Count < _cardInHandCount)
             {
-                DistributeCardsByType(_outCards);
+                _allCards.AddRange(_outCards);
                 _outCards.Clear();
                 OnHangUp?.Invoke();
-            }
-        }
-
-        private void DistributeCardsByType(List<CardItem> allCards)
-        {
-            foreach (CardItem cardItem in allCards)
-            {
-                if (CardType.Attack.Equals(cardItem.CardType))
-                {
-                    _attackCards.Add(cardItem);
-                }
-                else
-                {
-                    _protectionCards.Add(cardItem);
-                }
             }
         }
     }

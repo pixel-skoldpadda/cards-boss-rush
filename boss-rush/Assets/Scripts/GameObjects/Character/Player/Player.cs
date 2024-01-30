@@ -37,7 +37,7 @@ namespace GameObjects.Character.Player
             List<CardItem> cardItems = item.Deck;
             cardItems.AddRange(gameState.PlayerCards);
 
-            cardsDeck = new CardsDeck(cardItems, item.AttackCards, item.ProtectionCards, item.UseCardsLimit);
+            cardsDeck = new CardsDeck(cardItems, item.CardsOnHand, item.UseCardsLimit);
         }
 
         protected override void UseAttackCard(CardItem cardItem)
