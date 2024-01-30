@@ -3,11 +3,13 @@ using Items.Card;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 namespace Ui.Windows.ChooseCard
 {
     public class SelectiveCard : MonoBehaviour
     {
+        [SerializeField] private Image icon;
         [SerializeField] private TextMeshProUGUI description;
         [SerializeField] private EventTrigger eventTrigger;
         [SerializeField] private RectTransform rectTransform;
@@ -23,6 +25,7 @@ namespace Ui.Windows.ChooseCard
             _cardItem = cardItem;
             _window = window;
 
+            icon.sprite = cardItem.CardIcon;
             description.text = string.Format(cardItem.Description, cardItem.Value);
         }
 

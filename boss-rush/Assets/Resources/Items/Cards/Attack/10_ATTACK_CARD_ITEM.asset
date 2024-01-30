@@ -15,6 +15,13 @@ MonoBehaviour:
   itemName: "\u041A\u0430\u0440\u0442\u0430 \u0430\u0442\u0430\u043A\u0438"
   description: "\u041D\u0430\u043D\u043E\u0441\u0438\u0442 <color=#eb4034>{0}</color>
     \u0443\u0440\u043E\u043D\u0430\n\u043F\u043E \u0432\u0440\u0430\u0433\u0443"
+  cardIcon: {fileID: 21300000, guid: 677c978fd2b64f94ea5b81af300a27f3, type: 3}
+  special: 1
+  _effects:
+  - type: 2
+    value: 10
+    turns: 0
+    icon: {fileID: 0}
   cardType: 1
   icon: {fileID: 21300000, guid: e6d66de9aec17f74fae2189b4434815d, type: 3}
   value: 10

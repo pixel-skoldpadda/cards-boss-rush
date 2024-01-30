@@ -18,12 +18,12 @@ namespace Editor
         {
             base.OnInspectorGUI();
 
-            if (_cardItem.FaceSprite == null)
+            if (_cardItem.CardIcon == null)
             {
                 return;
             }
 
-            Texture2D texture2D = AssetPreview.GetAssetPreview(_cardItem.FaceSprite);
+            Texture2D texture2D = AssetPreview.GetAssetPreview(_cardItem.CardIcon);
             GUILayout.Label("", GUILayout.Height(104), GUILayout.Width(74));
             GUI.DrawTexture( GUILayoutUtility.GetLastRect(), texture2D);
         }

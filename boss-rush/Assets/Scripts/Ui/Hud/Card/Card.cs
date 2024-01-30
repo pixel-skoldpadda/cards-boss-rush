@@ -9,8 +9,8 @@ namespace Ui.Hud.Card
 {
     public class Card : MonoBehaviour
     {
+        [SerializeField] private Image icon;
         [SerializeField] private TextMeshProUGUI descriptionText;
-        [SerializeField] private Image faceImage;
         [SerializeField] private GameObject shirt;
         [SerializeField] private CardAnimator cardAnimator;
         [SerializeField] private EventTrigger eventTrigger;
@@ -24,8 +24,8 @@ namespace Ui.Hud.Card
         {
             _cardItem = cardItem;
             descriptionText.text = string.Format(_cardItem.Description, _cardItem.Value);
-
-            faceImage.sprite = _cardItem.FaceSprite;
+            icon.sprite = _cardItem.CardIcon;
+            
             shirt.SetActive(false);
         }
 
