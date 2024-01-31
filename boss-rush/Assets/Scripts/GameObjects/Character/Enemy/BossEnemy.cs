@@ -34,8 +34,6 @@ namespace GameObjects.Character.Enemy
             OnShieldChanged += healthBar.UpdateShieldCounter;
 
             _utilityAi = new UtilityAi(enemyItem.UtilityAiItem, this, gameState.GetPlayer());
-            
-            gameState.OnTurnStarted += OnTurnStarted;
         }
 
         public int CalculateHealth()
@@ -61,11 +59,12 @@ namespace GameObjects.Character.Enemy
             return Math.Clamp(health, 0, item.MaxHealth);
         }
         
-        private void OnTurnStarted()
+        protected override void OnTurnStarted()
         {
             if (!gameState.ActiveCharacter.IsPlayer())
             {                
                 UseAllCardsInStack();
+                statuses.Update();
             }
         }
 
@@ -100,7 +99,7 @@ namespace GameObjects.Character.Enemy
             }
         }
 
-        public override void PlayAttackAnimation()
+        protected override void PlayAttackAnimation()
         {
             animator.PlayAttackAnimation(Vector3.left);
         }
@@ -118,9 +117,10 @@ namespace GameObjects.Character.Enemy
             cardsDeck.OnCardsGenerated += ChooseCardsInStack;
         }
 
-        protected void OnDestroy()
+        protected override void OnDestroy()
         {
-            gameState.OnTurnStarted -= OnTurnStarted;
+            base.OnDestroy();
+            
             OnHealthChanged -= healthBar.UpdateHealthBar;
             OnShieldChanged -= healthBar.UpdateShieldCounter;
         }

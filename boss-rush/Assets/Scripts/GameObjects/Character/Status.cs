@@ -1,4 +1,5 @@
-﻿using Items.Card;
+﻿using System;
+using Items.Card;
 
 namespace GameObjects.Character
 {
@@ -6,20 +7,25 @@ namespace GameObjects.Character
     {
         private readonly StatusItem _item;
         private int _turns;
-        
+
+        public Action<int> OnTurnsUpdated { get; set; }
+
         public Status(StatusItem item)
         {
             _item = item;
             _turns = item.Turns;
         }
 
-        public StatusItem Item => _item;
-
-        public void AddTurns(int turns)
+        public int Turns
         {
-            _turns += turns;
+            get => _turns;
+            set
+            {
+                _turns = value;
+                OnTurnsUpdated?.Invoke(_turns);
+            }
         }
         
-        public int Turns => _turns;
+        public StatusItem Item => _item;
     }
 }

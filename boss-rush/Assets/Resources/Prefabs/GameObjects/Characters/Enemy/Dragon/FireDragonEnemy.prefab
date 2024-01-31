@@ -66,7 +66,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4306216368646326978, guid: f3e3828b00d5c5a48959eb1ecfaf9ce1, type: 3}
       propertyPath: m_Name
-      value: FireDrugonEnemy
+      value: FireDragonEnemy
       objectReference: {fileID: 0}
     - target: {fileID: 5555631918220544630, guid: f3e3828b00d5c5a48959eb1ecfaf9ce1, type: 3}
       propertyPath: m_LocalPosition.x

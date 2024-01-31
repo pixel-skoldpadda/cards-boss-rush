@@ -4,6 +4,7 @@ using Data;
 using Infrastructure.States;
 using Items;
 using Items.Card;
+using Ui;
 using Ui.Hud;
 using UnityEngine;
 
@@ -13,7 +14,8 @@ namespace GameObjects.Character
     {
         [SerializeField] protected HealthBar healthBar;
         [SerializeField] protected CharacterAnimator animator;
-        
+        [SerializeField] private StatusBar statusBar;
+
         //: TODO Избавить от ивента
         public Action OnEndTurn { get; set; }
         
@@ -24,7 +26,7 @@ namespace GameObjects.Character
         protected Action<int> OnHealthChanged;
         protected Action<int> OnShieldChanged;
 
-        private Statuses statuses;
+        protected Statuses statuses;
         
         private int health;
         private int shield;
@@ -39,12 +41,22 @@ namespace GameObjects.Character
             health = characterItem.MaxHealth;
             
             CreateCardsDeck();
-            statuses = new Statuses(this);
+            statuses = new Statuses(this, statusBar);
+            
+            gameState.OnTurnStarted += OnTurnStarted;
         }
         
         protected abstract void CreateCardsDeck();
-        public abstract void PlayAttackAnimation();
+        protected abstract void PlayAttackAnimation();
+        protected abstract void OnTurnStarted();
 
+        public void ResetState()
+        {
+            cardsDeck.Reset();
+            statuses.Reset();
+            Shield = 0;
+        }
+        
         public virtual void UseCard(CardItem cardItem)
         {
             List<StatusItem> statusItems = cardItem.StatusItems;
@@ -80,11 +92,6 @@ namespace GameObjects.Character
                 health = Math.Clamp(value, 0, item.MaxHealth);
                 OnHealthChanged?.Invoke(health);
             }
-        }
-        
-        public void ResetShield()
-        {
-            Shield = 0;
         }
         
         public virtual bool IsPlayer()
@@ -129,6 +136,11 @@ namespace GameObjects.Character
                 shield = value;
                 OnShieldChanged?.Invoke(value);
             }
+        }
+
+        protected virtual void OnDestroy()
+        {
+            gameState.OnTurnStarted -= OnTurnStarted;
         }
     }
 }

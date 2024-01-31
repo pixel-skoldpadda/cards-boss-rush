@@ -42,7 +42,7 @@ namespace Infrastructure.States
             }
 
             Character activeCharacter = gameState.ActiveCharacter;
-            activeCharacter.ResetShield();
+            activeCharacter.Shield = 0;
             
             gameState.HUD.StepContainer.Show(activeCharacter.Item.StepDescription, () =>
             {

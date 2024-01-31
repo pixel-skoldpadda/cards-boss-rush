@@ -40,9 +40,17 @@ namespace GameObjects.Character.Player
             cardsDeck = new CardsDeck(cardItems, item.CardsOnHand, item.UseCardsLimit);
         }
 
-        public override void PlayAttackAnimation()
+        protected override void PlayAttackAnimation()
         {
             animator.PlayAttackAnimation(Vector3.right);
+        }
+
+        protected override void OnTurnStarted()
+        {
+            if (gameState.ActiveCharacter.IsPlayer())
+            {
+                statuses.Update();
+            }
         }
 
         public override bool IsPlayer()
@@ -50,8 +58,10 @@ namespace GameObjects.Character.Player
             return true;
         }
 
-        protected void OnDestroy()
+        protected override void OnDestroy()
         {
+            base.OnDestroy();
+            
             cardsDeck.OnUsedCardsCountChanged -= _limitContainer.UpdateUsedCardsCounter;
             OnHealthChanged -= healthBar.UpdateHealthBar;
             OnShieldChanged -= healthBar.UpdateShieldCounter;

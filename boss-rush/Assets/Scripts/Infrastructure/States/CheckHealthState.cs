@@ -41,9 +41,10 @@ namespace Infrastructure.States
             }
             else
             {
-                gameState.HUD.BossCardsContainer.ClearAllCards();
-                gameState.ActiveCharacter.CardsDeck.Reset();
+                gameState.ActiveCharacter.ResetState();
                 gameState.ActiveCharacter = null;
+
+                gameState.HUD.BossCardsContainer.ClearAllCards();
                 gameState.Characters.Remove(character);
                 
                 _windowsManager.OpenWindow(

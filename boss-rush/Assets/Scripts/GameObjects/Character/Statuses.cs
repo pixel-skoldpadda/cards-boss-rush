@@ -1,18 +1,20 @@
 ﻿using System.Collections.Generic;
-using Data;
 using Items.Card;
+using Ui;
 
 namespace GameObjects.Character
 {
     public class Statuses
     {
         private readonly Character _character;
+        private readonly StatusBar _statusBar;
+
+        private readonly Dictionary<StatusType, Status> _currentStatuses = new();
         
-        private Dictionary<StatusType, Status> _currentStatuses = new();
-        
-        public Statuses(Character character)
+        public Statuses(Character character, StatusBar statusBar)
         {
             _character = character;
+            _statusBar = statusBar;
         }
 
         public void AddStatus(StatusItem statusItem)
@@ -26,11 +28,13 @@ namespace GameObjects.Character
                 StatusType type = statusItem.Type;
                 if (_currentStatuses.TryGetValue(type, out Status status))
                 {
-                    status.AddTurns(statusItem.Turns);
+                    status.Turns += statusItem.Turns;
                 }
                 else
                 {
-                    _currentStatuses[type] = new Status(statusItem);
+                    Status newStatus = new Status(statusItem);
+                    _currentStatuses[type] = newStatus;
+                    _statusBar.AddStatusIcon(newStatus);
                 }
             }
         }
@@ -53,6 +57,33 @@ namespace GameObjects.Character
             else if (StatusType.ThroughShieldDamage.Equals(type))
             {
                 _character.TakeDamage(item.Value, true);
+            }
+        }
+
+        public void Reset()
+        {
+            _statusBar.RemoveAllIcons();
+            _currentStatuses.Clear();
+        }
+
+        public void Update()
+        {
+            List<StatusType> toRemove = new List<StatusType>();
+            foreach (Status status in _currentStatuses.Values)
+            {
+                StatusItem item = status.Item;
+                ApplyStatusEffect(item);
+                status.Turns--;
+
+                if (status.Turns == 0)
+                {
+                    toRemove.Add(item.Type);
+                }
+            }
+            
+            foreach (StatusType statusType in toRemove)
+            {
+                _currentStatuses.Remove(statusType);
             }
         }
     }

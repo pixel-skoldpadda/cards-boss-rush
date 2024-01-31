@@ -458,7 +458,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -0.48, y: -0.226}
+  m_AnchoredPosition: {x: -0.48, y: -0.12}
   m_SizeDelta: {x: 2.5, y: 0.2}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &5781877112702304286
@@ -631,6 +631,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerCharacter
       objectReference: {fileID: 0}
+    - target: {fileID: 2819321184599739708, guid: 4f73079f36fa1fe4fab93b53d71adc47, type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3941520990631278453, guid: 4f73079f36fa1fe4fab93b53d71adc47, type: 3}
       propertyPath: m_Size.x
       value: 2.92
@@ -687,6 +691,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6768165321207350149, guid: 4f73079f36fa1fe4fab93b53d71adc47, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -0.48
+      objectReference: {fileID: 0}
+    - target: {fileID: 6768165321207350149, guid: 4f73079f36fa1fe4fab93b53d71adc47, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -0.47
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -733,3 +745,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthBar: {fileID: 8637218828939257376}
   animator: {fileID: 1327837627551065041}
+  statusBar: {fileID: 5816336715518788421}
+--- !u!114 &5816336715518788421 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8848624574295450956, guid: 4f73079f36fa1fe4fab93b53d71adc47, type: 3}
+  m_PrefabInstance: {fileID: 3061152823554303497}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: edec703994e7468493ac210f1d391a77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
