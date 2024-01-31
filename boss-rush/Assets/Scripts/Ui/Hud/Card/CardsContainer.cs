@@ -143,14 +143,23 @@ namespace Ui.Hud.Card
             cards.Remove(clickedCard);
 
             CardItem cardItem = clickedCard.CardItem;
-            CardType cardType = cardItem.CardType;
+            bool hasNegativeEffect = false;
+            
+            foreach (StatusItem statusItem in cardItem.StatusItems)
+            {
+                if (StatusSubtype.Negative.Equals(statusItem.Subtype))
+                {
+                    hasNegativeEffect = true;
+                    break;
+                }
+            }
 
-            Vector3 position = Vector3.zero;
-            if (CardType.Attack.Equals(cardType))
+            Vector3 position;
+            if (hasNegativeEffect)
             {
                 position = Camera.main.WorldToScreenPoint(gameState.GetOpponentCharacter().transform.position);
             }
-            else if (CardType.Protection.Equals(cardType))
+            else
             {
                 position = Camera.main.WorldToScreenPoint(player.transform.position);
             }

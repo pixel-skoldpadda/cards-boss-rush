@@ -5,17 +5,17 @@ using UnityEngine.UI;
 
 namespace Ui.Hud.Boss
 {
-    public class EffectIconView : MonoBehaviour
+    public class StausIconView : MonoBehaviour
     {
         [SerializeField] private Image image;
         [SerializeField] private TextMeshProUGUI count;
 
         private int _currentValue;
         
-        public void Init(EffectItem effectItem)
+        public void Init(StatusItem statusItem)
         {
-            _currentValue = effectItem.Value;
-            image.sprite = effectItem.Icon;
+            _currentValue = statusItem.Value;
+            image.sprite = statusItem.Icon;
             
             UpdateCounterText();
         }

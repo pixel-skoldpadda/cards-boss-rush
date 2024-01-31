@@ -1,6 +1,5 @@
 ﻿using GameObjects.Character;
 using Items.Boss.AI;
-using Items.Card;
 
 namespace Ai
 {
@@ -21,7 +20,7 @@ namespace Ai
 
         public void CalculateGrade(int currentValue, int maxValue)
         {
-            if (!_cardsDeck.HasAnyCardInHand(_actionItem.CardType))
+            if (!_cardsDeck.HasAnyCardInHandWithStatus(_actionItem.StatusType, _actionItem.StatusSubtype))
             {
                 _score = -1;
             }
@@ -31,13 +30,8 @@ namespace Ai
                 _score = _actionItem.UseActionCurve.Evaluate(function);
             }
         }
-
-        public CardType CardType => _actionItem.CardType;
         
-        public float Score
-        {
-            get => _score;
-            set => _score = value;
-        }
+        public UtilityAiAction ActionItem => _actionItem;
+        public float Score => _score;
     }
 }

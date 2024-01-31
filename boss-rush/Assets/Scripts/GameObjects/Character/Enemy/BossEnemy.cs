@@ -3,6 +3,7 @@ using Ai;
 using Infrastructure.Services.State;
 using Infrastructure.States;
 using Items.Boss;
+using Items.Boss.AI;
 using Items.Card;
 using Ui.Hud;
 using Ui.Hud.Boss;
@@ -12,7 +13,7 @@ namespace GameObjects.Character.Enemy
 {
     public class BossEnemy : Character
     {
-        private BossCardsContainer _cardsContainer;
+        private BossStatusContainer _statusContainer;
         private UtilityAi _utilityAi;
         
         public void Construct(BossEnemyItem enemyItem, IGameStateService gameStateService, IGameStateMachine stateMachine)
@@ -20,7 +21,7 @@ namespace GameObjects.Character.Enemy
             base.Construct(enemyItem, gameStateService.State, stateMachine);
 
             Hud hud = gameState.HUD;
-            _cardsContainer = hud.BossCardsContainer;
+            _statusContainer = hud.BossStatusContainer;
 
             BossHealthBar bossHealthBar = hud.BossHealthBar;
             bossHealthBar.Init(Health, enemyItem.ItemName);
@@ -53,7 +54,7 @@ namespace GameObjects.Character.Enemy
             }
             
             cardsDeck.CardsStack.Clear();
-            _cardsContainer.ClearAllCards();
+            _statusContainer.ClearAllCards();
 
             OnEndTurn?.Invoke();
         }
@@ -66,16 +67,16 @@ namespace GameObjects.Character.Enemy
                 Action action = _utilityAi.ChooseBestAction();
                 if (action.Score >= 0)
                 {
-                    CardItem cardItem = cardsDeck.ChooseCardToStack(action.CardType);
-                    _cardsContainer.AddCard(cardItem);
+                    UtilityAiAction actionItem = action.ActionItem;
+                    CardItem cardItem = cardsDeck.ChooseCardToStack(actionItem.StatusType, actionItem.StatusSubtype);
+                    _statusContainer.AddCard(cardItem);
                 }
             }
         }
 
-        protected override void UseAttackCard(CardItem cardItem)
+        public override void PlayAttackAnimation()
         {
             animator.PlayAttackAnimation(Vector3.left);
-            gameState.GetOpponentCharacter().TakeDamage(cardItem.Value);
         }
 
         public override void UseCard(CardItem cardItem)

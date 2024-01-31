@@ -38,15 +38,18 @@ namespace GameObjects.Character
             _allCards.Add(cardItem);
         }
         
-        public CardItem ChooseCardToStack(CardType cardType)
+        public CardItem ChooseCardToStack(StatusType type, StatusSubtype subtype)
         {
             CardItem cardItem = null;
             foreach (CardItem item in _cardsInHand)
             {
-                if (cardType.Equals(item.CardType))
+                foreach (StatusItem statusItem in item.StatusItems)
                 {
-                    cardItem = item;
-                    break;
+                    if (type.Equals(statusItem.Type) && subtype.Equals(statusItem.Subtype))
+                    {
+                        cardItem = item;
+                        break;
+                    }
                 }
             }
             
@@ -140,13 +143,16 @@ namespace GameObjects.Character
             return _cardsUsed < _useCardsLimit;
         }
 
-        public bool HasAnyCardInHand(CardType cardType)
+        public bool HasAnyCardInHandWithStatus(StatusType type, StatusSubtype subtype)
         {
             foreach (CardItem cardItem in _cardsInHand)
             {
-                if (cardType.Equals(cardItem.CardType))
+                foreach (StatusItem statusItem in cardItem.StatusItems)
                 {
-                    return true;
+                    if (statusItem.Type.Equals(type) && statusItem.Subtype.Equals(subtype))
+                    {
+                        return true;
+                    }
                 }
             }
             return false;

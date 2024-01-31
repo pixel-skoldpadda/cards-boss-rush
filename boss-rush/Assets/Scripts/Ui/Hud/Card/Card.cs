@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using Items.Card;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using Object = System.Object;
 
 namespace Ui.Hud.Card
 {
@@ -23,7 +25,16 @@ namespace Ui.Hud.Card
         public void Init(CardItem cardItem)
         {
             _cardItem = cardItem;
-            descriptionText.text = string.Format(_cardItem.Description, _cardItem.Value);
+
+            List<StatusItem> statusItems = _cardItem.StatusItems;
+
+            object[] values = new object[statusItems.Count];
+            for (var i = 0; i < statusItems.Count; i++)
+            {
+                values[i] = statusItems[i].Value;
+            }
+            
+            descriptionText.text = string.Format(_cardItem.Description, values);
             icon.sprite = _cardItem.CardIcon;
             
             shirt.SetActive(false);

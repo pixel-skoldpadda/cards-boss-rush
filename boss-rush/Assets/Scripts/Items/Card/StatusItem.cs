@@ -4,14 +4,19 @@ using UnityEngine;
 namespace Items.Card
 {
     [Serializable]
-    public class EffectItem
+    public class StatusItem
     {
-        [SerializeField] private EffectType type;
+        [SerializeField] private StatusType type;
+        [SerializeField] private StatusSubtype subtype;
+        
+        [Space(15)]
         [SerializeField] private int value;
         [SerializeField] private int turns;
         [SerializeField] private Sprite icon;
 
-        public EffectType Type => type;
+        public StatusType Type => type;
+        public StatusSubtype Subtype => subtype;
+
         public int Turns => turns;
         public int Value => value;
         public Sprite Icon => icon;

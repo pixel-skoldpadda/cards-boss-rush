@@ -17,10 +17,11 @@ MonoBehaviour:
     \u0449\u0438\u0442\u0430\n\u043F\u043E\u0441\u043B\u0435 \u0438\u0441\u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u043D\u0438\u044F"
   cardIcon: {fileID: 21300000, guid: 257eff11e93b88145b4b37a62f4a3b86, type: 3}
   special: 0
-  _effects:
+  statusItems:
   - type: 0
+    subtype: 0
     value: 5
-    turns: 1
+    turns: 0
     icon: {fileID: 21300000, guid: 75ac78a92ab9fd84d936973c810b6ddb, type: 3}
   cardType: 0
   icon: {fileID: 21300000, guid: 0c0793463064fbd4ca7b8f62768996e2, type: 3}

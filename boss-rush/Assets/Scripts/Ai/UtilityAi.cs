@@ -26,15 +26,13 @@ namespace Ai
         {
             foreach (Action action in _actions)
             {
-                CardType type = action.CardType;
-                if (CardType.Attack.Equals(type))
-                {
-                    action.CalculateGrade(_player.Health, _player.Item.MaxHealth);
-                }
-                else if (CardType.Protection.Equals(type))
-                {
-                    action.CalculateGrade(_boss.Health, _boss.Item.MaxHealth);
-                }
+                UtilityAiAction actionItem = action.ActionItem;
+                StatusSubtype subtype = actionItem.StatusSubtype;
+
+                int maxHealth = StatusSubtype.Negative.Equals(subtype) ? _player.Item.MaxHealth : _boss.Item.MaxHealth;
+                int currentHealth = StatusSubtype.Negative.Equals(subtype) ? _player.Health :_boss.Health;
+                
+                action.CalculateGrade(currentHealth, maxHealth);
             }
 
             Action bestAction = _actions[0];

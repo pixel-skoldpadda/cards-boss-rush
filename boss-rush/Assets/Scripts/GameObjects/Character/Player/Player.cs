@@ -40,10 +40,9 @@ namespace GameObjects.Character.Player
             cardsDeck = new CardsDeck(cardItems, item.CardsOnHand, item.UseCardsLimit);
         }
 
-        protected override void UseAttackCard(CardItem cardItem)
+        public override void PlayAttackAnimation()
         {
             animator.PlayAttackAnimation(Vector3.right);
-            gameState.GetOpponentCharacter().TakeDamage(cardItem.Value);
         }
 
         public override bool IsPlayer()

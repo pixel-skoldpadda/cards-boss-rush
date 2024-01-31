@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Data;
 using Infrastructure.States;
 using Items;
@@ -23,6 +24,8 @@ namespace GameObjects.Character
         protected Action<int> OnHealthChanged;
         protected Action<int> OnShieldChanged;
 
+        private Statuses statuses;
+        
         private int health;
         private int shield;
 
@@ -36,35 +39,46 @@ namespace GameObjects.Character
             health = characterItem.MaxHealth;
             
             CreateCardsDeck();
+            statuses = new Statuses(this);
         }
         
         protected abstract void CreateCardsDeck();
-        protected abstract void UseAttackCard(CardItem cardItem);
+        public abstract void PlayAttackAnimation();
 
         public virtual void UseCard(CardItem cardItem)
         {
-            CardType type = cardItem.CardType;
-            if (CardType.Attack.Equals(type))
+            List<StatusItem> statusItems = cardItem.StatusItems;
+            foreach (StatusItem status in statusItems)
             {
-                UseAttackCard(cardItem);
-            }
-            else if (CardType.Protection.Equals(type))
-            {
-                Shield += cardItem.Value;
+                StatusSubtype subtype = status.Subtype;
+                if (StatusSubtype.Negative.Equals(subtype))
+                {
+                    if (StatusType.Damage.Equals(status.Type))
+                    {
+                        PlayAttackAnimation();
+                    }
+                    
+                    gameState.GetOpponentCharacter().statuses.AddStatus(status);
+                }
+                else if (StatusSubtype.Positive.Equals(subtype))
+                {
+                    statuses.AddStatus(status);
+                }
             }
         }
 
         public CardsDeck CardsDeck => cardsDeck;
         public CharacterItem Item => item;
         public CharacterAnimator Animator => animator;
+        public Statuses Statuses => statuses;
 
         public int Health
         {
             get => health;
             set
             {
-                health = value;
-                OnHealthChanged?.Invoke(value);
+                health = Math.Clamp(value, 0, item.MaxHealth);
+                OnHealthChanged?.Invoke(health);
             }
         }
         
@@ -107,7 +121,7 @@ namespace GameObjects.Character
             }
         }
         
-        private int Shield
+        public int Shield
         {
             get => shield;
             set

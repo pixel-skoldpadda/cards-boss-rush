@@ -1,6 +1,6 @@
 ﻿namespace Items.Card
 {
-    public enum EffectType
+    public enum StatusType
     {
         Protection,
         Health,

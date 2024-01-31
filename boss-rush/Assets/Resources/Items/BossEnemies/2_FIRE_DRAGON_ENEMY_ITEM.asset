@@ -26,6 +26,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: cc46dca0f60074b48b0c064548c85ed9, type: 2}
   - {fileID: 11400000, guid: 1b990ae86e47d7544a49cc0ee97b0519, type: 2}
   - {fileID: 11400000, guid: 559d0ebb4112efd4897d2578481f7c75, type: 2}
+  - {fileID: 11400000, guid: 02bdafd89c1d7684cb4d4216c5c8d002, type: 2}
+  - {fileID: 11400000, guid: a2484224bc916aa4d9f217269bc48fdd, type: 2}
   stepDescription: "\u0425\u043E\u0434 \u0432\u0440\u0430\u0433\u0430"
   cardsOnHand: 5
   useCardsLimit: 3
@@ -33,7 +35,8 @@ MonoBehaviour:
   utilityAiItem:
     maxScore: 100
     aiActions:
-    - cardType: 1
+    - statusType: 0
+      statusSubtype: 0
       useActionCurve:
         serializedVersion: 2
         m_Curve:
@@ -58,7 +61,34 @@ MonoBehaviour:
         m_PreInfinity: 2
         m_PostInfinity: 2
         m_RotationOrder: 4
-    - cardType: 0
+    - statusType: 2
+      statusSubtype: 1
+      useActionCurve:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 1
+          inSlope: -0.01
+          outSlope: -0.01
+          tangentMode: 34
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0.33333334
+        - serializedVersion: 3
+          time: 100
+          value: 0
+          inSlope: -0.01
+          outSlope: -0.01
+          tangentMode: 34
+          weightedMode: 0
+          inWeight: 0.33333334
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+    - statusType: 1
+      statusSubtype: 0
       useActionCurve:
         serializedVersion: 2
         m_Curve:

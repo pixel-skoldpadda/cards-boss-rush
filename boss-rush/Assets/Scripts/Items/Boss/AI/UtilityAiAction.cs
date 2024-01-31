@@ -7,10 +7,12 @@ namespace Items.Boss.AI
     [Serializable]
     public class UtilityAiAction
     {
-        [SerializeField] private CardType cardType;
+        [SerializeField] private StatusType statusType;
+        [SerializeField] private StatusSubtype statusSubtype;
         [SerializeField] private AnimationCurve useActionCurve;
-
-        public CardType CardType => cardType;
+        
         public AnimationCurve UseActionCurve => useActionCurve;
+        public StatusType StatusType => statusType;
+        public StatusSubtype StatusSubtype => statusSubtype;
     }
 }
