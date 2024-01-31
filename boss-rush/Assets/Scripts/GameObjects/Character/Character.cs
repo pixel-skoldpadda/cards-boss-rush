@@ -53,7 +53,8 @@ namespace GameObjects.Character
                 StatusSubtype subtype = status.Subtype;
                 if (StatusSubtype.Negative.Equals(subtype))
                 {
-                    if (StatusType.Damage.Equals(status.Type))
+                    StatusType statusType = status.Type;
+                    if (StatusType.Damage.Equals(statusType) || StatusType.ThroughShieldDamage.Equals(statusType))
                     {
                         PlayAttackAnimation();
                     }

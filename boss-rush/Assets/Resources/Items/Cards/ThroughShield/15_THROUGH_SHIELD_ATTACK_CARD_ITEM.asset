@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a13c85c949a340d2a50727846b43f058, type: 3}
+  m_Name: 15_THROUGH_SHIELD_ATTACK_CARD_ITEM
+  m_EditorClassIdentifier: 
+  itemName: "\u041A\u0430\u0440\u0442\u0430 \u0430\u0442\u0430\u043A\u0438"
+  description: "\u041D\u0430\u043D\u043E\u0441\u0438\u0442 <color=#eb4034>{0}</color>
+    \u0443\u0440\u043E\u043D\u0430\n\u0441\u043A\u0432\u043E\u0437\u044C \u0449\u0438\u0442
+    \u043F\u043E \u0432\u0440\u0430\u0433\u0443"
+  cardIcon: {fileID: 21300000, guid: 4222426e2f0f92549a8ef802aaf5d1bc, type: 3}
+  special: 0
+  statusItems:
+  - type: 3
+    subtype: 1
+    value: 15
+    turns: 0
+    icon: {fileID: 21300000, guid: 4849c35cc8ed20d4c9c1c744d5d842c4, type: 3}

@@ -50,6 +50,10 @@ namespace GameObjects.Character
             {
                 _character.TakeDamage(item.Value);
             }
+            else if (StatusType.ThroughShieldDamage.Equals(type))
+            {
+                _character.Health -= item.Value;
+            }
         }
     }
 }

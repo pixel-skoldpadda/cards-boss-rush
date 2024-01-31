@@ -28,10 +28,9 @@ namespace Ai
             {
                 UtilityAiAction actionItem = action.ActionItem;
                 StatusSubtype subtype = actionItem.StatusSubtype;
-
-                int maxHealth = StatusSubtype.Negative.Equals(subtype) ? _player.Item.MaxHealth : _boss.Item.MaxHealth;
-                int currentHealth = StatusSubtype.Negative.Equals(subtype) ? _player.Health :_boss.Health;
                 
+                int maxHealth = StatusSubtype.Negative.Equals(subtype) ? _player.Item.MaxHealth : _boss.Item.MaxHealth;
+                int currentHealth = StatusSubtype.Negative.Equals(subtype) ? _player.Health : _boss.Health;
                 action.CalculateGrade(currentHealth, maxHealth);
             }
 

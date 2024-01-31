@@ -4,6 +4,7 @@
     {
         Protection,
         Health,
-        Damage
+        Damage,
+        ThroughShieldDamage
     }
 }
