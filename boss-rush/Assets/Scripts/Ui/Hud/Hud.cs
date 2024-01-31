@@ -30,6 +30,7 @@ namespace Ui.Hud
             EndTurnButton.Hide();
             CardsContainer.Hide();
             BossCardsContainer.Hide();
+            cardsLimitContainer.Hide();
         }
 
         public void Show()
@@ -39,6 +40,7 @@ namespace Ui.Hud
             EndTurnButton.Show();
             CardsContainer.Show();
             BossCardsContainer.Show();
+            cardsLimitContainer.Show();
         }
     }
 }

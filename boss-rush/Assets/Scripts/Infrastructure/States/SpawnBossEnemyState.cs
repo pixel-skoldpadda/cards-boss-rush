@@ -1,8 +1,10 @@
-﻿using Configs;
+﻿using System.Collections.Generic;
+using Configs;
 using Infrastructure.Services.Factory;
 using Infrastructure.Services.State;
 using Infrastructure.States.Interfaces;
 using Items.Boss;
+using ModestTree;
 using UnityEngine;
 
 namespace Infrastructure.States
@@ -24,8 +26,8 @@ namespace Infrastructure.States
         {
             Debug.Log($"{GetType()} entered.");
 
-            BossEnemyItem enemyItem = _gameStateService.State.BossesQueue.Dequeue();
-            if (enemyItem == null)
+            Queue<BossEnemyItem> queue = _gameStateService.State.BossesQueue;
+            if (queue.IsEmpty())
             {
                 //: TODO Show thanks for playing dialog
                 _stateMachine.Enter<LoadSceneState, string>(SceneConfig.MenuScene);
@@ -33,7 +35,7 @@ namespace Infrastructure.States
             else
             {
                 _gameStateService.State.HUD.Show();
-                _gameFactory.CreateBossEnemy(enemyItem, _stateMachine);
+                _gameFactory.CreateBossEnemy(queue.Dequeue(), _stateMachine);
             }
             
             _stateMachine.Enter<StepTransitionState>();

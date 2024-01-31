@@ -21,7 +21,7 @@ MonoBehaviour:
   - type: 0
     value: 15
     turns: 1
-    icon: {fileID: 0}
+    icon: {fileID: 21300000, guid: 75ac78a92ab9fd84d936973c810b6ddb, type: 3}
   cardType: 0
   icon: {fileID: 21300000, guid: 0c0793463064fbd4ca7b8f62768996e2, type: 3}
   value: 15

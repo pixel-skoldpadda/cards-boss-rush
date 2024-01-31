@@ -1,5 +1,5 @@
 ﻿using Data;
-using GameObjects.Character;
+using DG.Tweening;
 using Infrastructure.Services.State;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,6 +11,7 @@ namespace Ui.Hud
         [SerializeField] private Button endTurnButton;
         
         private GameState _gameState;
+        private Tweener _rotationTween;
 
         public void Construct(IGameStateService gameStateService)
         {
@@ -44,14 +45,15 @@ namespace Ui.Hud
 
         public void OnButtonClicked()
         {
-            Character character = _gameState.ActiveCharacter;
-            character.OnEndTurn?.Invoke();
+            _gameState.ActiveCharacter.OnEndTurn?.Invoke();
         }
 
         private void OnDestroy()
         {
             _gameState.OnTurnStarted -= OnTurnStarted;
             _gameState.OnTurnFinished -= OnTurnFinished;
+            _rotationTween?.Kill();
+            _rotationTween = null;
         }
     }
 }

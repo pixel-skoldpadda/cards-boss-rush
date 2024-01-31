@@ -7,6 +7,14 @@ namespace Ui.Hud
     {
         [SerializeField] private CanvasGroup canvasGroup;
 
+        private void Awake()
+        {
+            if (canvasGroup != null)
+            {
+                canvasGroup.alpha = 0;   
+            }
+        }
+
         protected virtual void ResetContainer() {}
         
         public void Hide()

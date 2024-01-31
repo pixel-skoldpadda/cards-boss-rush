@@ -5,18 +5,18 @@ using UnityEngine.UI;
 
 namespace Ui.Hud.Boss
 {
-    public class CardIcon : MonoBehaviour
+    public class EffectIconView : MonoBehaviour
     {
         [SerializeField] private Image image;
         [SerializeField] private TextMeshProUGUI count;
 
         private int _currentValue;
         
-        public void Init(CardItem cardItem)
+        public void Init(EffectItem effectItem)
         {
-            _currentValue = cardItem.Value;
+            _currentValue = effectItem.Value;
+            image.sprite = effectItem.Icon;
             
-            image.sprite = cardItem.Icon;
             UpdateCounterText();
         }
 

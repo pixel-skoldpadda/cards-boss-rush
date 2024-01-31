@@ -33,6 +33,7 @@ namespace Infrastructure.States
 
             Character character = gameState.GetOpponentCharacter();
             character.Animator.PlayDeathAnimation();
+            character.CardsDeck.Reset();
             
             if (character.IsPlayer())
             {

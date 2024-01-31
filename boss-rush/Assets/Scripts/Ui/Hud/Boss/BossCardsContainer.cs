@@ -8,27 +8,31 @@ namespace Ui.Hud.Boss
     {
         [SerializeField] private GameObject cardIconPrefab;
         
-        private readonly Dictionary<CardType, CardIcon> _icons = new();
-
+        private readonly Dictionary<EffectType, EffectIconView> _icons = new();
+        
         public void AddCard(CardItem cardItem)
         {
-            CardType type = cardItem.CardType;
-            if (_icons.TryGetValue(type, out CardIcon icon))
+            List<EffectItem> effects = cardItem.Effects;
+            foreach (EffectItem effectItem in effects)
             {
-                icon.UpdateValue(cardItem.Value);
-            }
-            else
-            {
-                CardIcon cardIcon = Instantiate(cardIconPrefab, transform).GetComponent<CardIcon>();
-                cardIcon.Init(cardItem);
+                EffectType type = effectItem.Type;
+                if (_icons.TryGetValue(type, out EffectIconView icon))
+                {
+                    icon.UpdateValue(effectItem.Value);
+                }
+                else
+                {
+                    EffectIconView effectIconView = Instantiate(cardIconPrefab, transform).GetComponent<EffectIconView>();
+                    effectIconView.Init(effectItem);
 
-                _icons[type] = cardIcon;
+                    _icons[type] = effectIconView;
+                }
             }
         }
 
         public void ClearAllCards()
         {
-            foreach (CardIcon cardIcon in _icons.Values)
+            foreach (EffectIconView cardIcon in _icons.Values)
             {
                 Destroy(cardIcon.gameObject);
             }
