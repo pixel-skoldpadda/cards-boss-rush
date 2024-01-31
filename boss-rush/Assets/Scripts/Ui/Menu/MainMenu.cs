@@ -9,7 +9,6 @@ namespace Ui.Menu
 {
     public class MainMenu : MonoBehaviour
     {
-        [SerializeField] private GameObject continueButton;
         [SerializeField] private GameObject audioSettings;
         [SerializeField] private GameObject menu;
 
@@ -26,15 +25,8 @@ namespace Ui.Menu
         private void Start()
         {
             audioSettings.SetActive(false);
-            continueButton.SetActive(_gameStateService.State != null);
         }
-
         
-        public void OnContinueButtonClicked()
-        {
-            _gameStateMachine.Enter<LoadLevelState, string>(SceneConfig.GameScene);
-        }
-
         public void OnNewGameButtonClicked()
         {
             PlayerPrefs.DeleteAll();
