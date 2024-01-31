@@ -41,6 +41,7 @@ namespace Infrastructure.States
             }
             else
             {
+                gameState.HUD.BossCardsContainer.ClearAllCards();
                 gameState.ActiveCharacter.CardsDeck.Reset();
                 gameState.ActiveCharacter = null;
                 gameState.Characters.Remove(character);

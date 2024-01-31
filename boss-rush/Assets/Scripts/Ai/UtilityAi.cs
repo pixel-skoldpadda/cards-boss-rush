@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using GameObjects.Character;
+using GameObjects.Character.Enemy;
 using Items.Boss.AI;
 using Items.Card;
-using ModestTree;
 using UnityEngine;
 
 namespace Ai
@@ -10,12 +10,12 @@ namespace Ai
     public class UtilityAi
     {
         private readonly UtilityAiItem _utilityAiItem;
-        private readonly Character _boss;
+        private readonly BossEnemy _boss;
         private readonly Character _player;
         
         private readonly List<Action> _actions = new();
         
-        public UtilityAi(UtilityAiItem utilityAiItem, Character boss, Character player)
+        public UtilityAi(UtilityAiItem utilityAiItem, BossEnemy boss, Character player)
         {
             _utilityAiItem = utilityAiItem;
             _boss = boss;
@@ -37,7 +37,7 @@ namespace Ai
                 StatusSubtype subtype = actionItem.StatusSubtype;
                 
                 int maxHealth = StatusSubtype.Negative.Equals(subtype) ? _player.Item.MaxHealth : _boss.Item.MaxHealth;
-                int currentHealth = StatusSubtype.Negative.Equals(subtype) ? _player.Health : _boss.Health;
+                int currentHealth = StatusSubtype.Negative.Equals(subtype) ? _player.Health : _boss.CalculateHealth();
                 action.CalculateGrade(currentHealth, maxHealth);
             }
 

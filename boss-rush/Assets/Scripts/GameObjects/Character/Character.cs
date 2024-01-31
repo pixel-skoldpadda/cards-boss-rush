@@ -71,8 +71,7 @@ namespace GameObjects.Character
         public CardsDeck CardsDeck => cardsDeck;
         public CharacterItem Item => item;
         public CharacterAnimator Animator => animator;
-        public Statuses Statuses => statuses;
-
+        
         public int Health
         {
             get => health;
@@ -93,32 +92,32 @@ namespace GameObjects.Character
             return false;
         }
 
-        public void TakeDamage(int damage)
+        public void TakeDamage(int damage, bool throughShield = false)
         {
             if (Health <= 0)
             {
                 return;
             }
-            
-            damage -= Shield;
-            Shield = damage < 0 ? Math.Abs(damage) : 0;
+
+            if (!throughShield)
+            {
+                damage -= Shield;
+                Shield = damage < 0 ? Math.Abs(damage) : 0;
+            }
 
             if (damage < 0)
             {
-                Shield = Math.Abs(damage);
+                return;
             }
-            else
-            {
-                Shield = 0;
-                Health -= damage;
+            
+            Health -= damage;
                 
-                animator.PlayDamageAnimation();
-                healthBar.UpdateHealthBar(Health);
-                if (Health <= 0)
-                {
-                    gameState.HUD.Hide();
-                    _stateMachine.Enter<CheckHealthState>();
-                }
+            animator.PlayDamageAnimation();
+            healthBar.UpdateHealthBar(Health);
+            if (Health <= 0)
+            {
+                gameState.HUD.Hide();
+                _stateMachine.Enter<CheckHealthState>();
             }
         }
         

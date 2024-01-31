@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace Ui.Hud.Boss
 {
-    public class StausIconView : MonoBehaviour
+    public class CardIconView : MonoBehaviour
     {
         [SerializeField] private Image image;
         [SerializeField] private TextMeshProUGUI count;

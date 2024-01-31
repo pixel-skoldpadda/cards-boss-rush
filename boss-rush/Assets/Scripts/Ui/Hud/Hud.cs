@@ -13,7 +13,7 @@ namespace Ui.Hud
         [SerializeField] private StepContainer stepContainer;
         [SerializeField] private EndTurnButton endTurnButton;
         [SerializeField] private CardsLimitContainer cardsLimitContainer;
-        [FormerlySerializedAs("bossCardsContainer")] [SerializeField] private BossStatusContainer bossStatusContainer;
+        [FormerlySerializedAs("bossStatusContainer")] [SerializeField] private BossCardsContainer bossCardsContainer;
         [SerializeField] private BaseMiddleContainer deathContainer;
         
         public BossHealthBar BossHealthBar => bossHealthBar;
@@ -21,7 +21,7 @@ namespace Ui.Hud
         public StepContainer StepContainer => stepContainer;
         public EndTurnButton EndTurnButton => endTurnButton;
         public CardsLimitContainer CardsLimitContainer => cardsLimitContainer;
-        public BossStatusContainer BossStatusContainer => bossStatusContainer;
+        public BossCardsContainer BossCardsContainer => bossCardsContainer;
         public BaseMiddleContainer DeathContainer => deathContainer;
 
         public void Hide()
@@ -30,7 +30,7 @@ namespace Ui.Hud
             CardsContainer.Hide();
             EndTurnButton.Hide();
             CardsContainer.Hide();
-            BossStatusContainer.Hide();
+            BossCardsContainer.Hide();
             cardsLimitContainer.Hide();
         }
 
@@ -40,7 +40,7 @@ namespace Ui.Hud
             CardsContainer.Show();
             EndTurnButton.Show();
             CardsContainer.Show();
-            BossStatusContainer.Show();
+            BossCardsContainer.Show();
             cardsLimitContainer.Show();
         }
     }

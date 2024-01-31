@@ -52,7 +52,7 @@ namespace GameObjects.Character
             }
             else if (StatusType.ThroughShieldDamage.Equals(type))
             {
-                _character.Health -= item.Value;
+                _character.TakeDamage(item.Value, true);
             }
         }
     }

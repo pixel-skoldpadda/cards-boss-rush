@@ -4,11 +4,11 @@ using UnityEngine;
 
 namespace Ui.Hud.Boss
 {
-    public class BossStatusContainer : BaseHudContainer 
+    public class BossCardsContainer : BaseHudContainer 
     {
         [SerializeField] private GameObject cardIconPrefab;
         
-        private readonly Dictionary<StatusType, StausIconView> _icons = new();
+        private readonly Dictionary<StatusType, CardIconView> _icons = new();
         
         public void AddCard(CardItem cardItem)
         {
@@ -16,23 +16,23 @@ namespace Ui.Hud.Boss
             foreach (StatusItem effectItem in effects)
             {
                 StatusType type = effectItem.Type;
-                if (_icons.TryGetValue(type, out StausIconView icon))
+                if (_icons.TryGetValue(type, out CardIconView icon))
                 {
                     icon.UpdateValue(effectItem.Value);
                 }
                 else
                 {
-                    StausIconView stausIconView = Instantiate(cardIconPrefab, transform).GetComponent<StausIconView>();
-                    stausIconView.Init(effectItem);
+                    CardIconView cardIconView = Instantiate(cardIconPrefab, transform).GetComponent<CardIconView>();
+                    cardIconView.Init(effectItem);
 
-                    _icons[type] = stausIconView;
+                    _icons[type] = cardIconView;
                 }
             }
         }
 
         public void ClearAllCards()
         {
-            foreach (StausIconView cardIcon in _icons.Values)
+            foreach (CardIconView cardIcon in _icons.Values)
             {
                 Destroy(cardIcon.gameObject);
             }

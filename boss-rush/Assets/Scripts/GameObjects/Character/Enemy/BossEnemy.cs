@@ -1,19 +1,22 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Ai;
 using Infrastructure.Services.State;
 using Infrastructure.States;
 using Items.Boss;
 using Items.Boss.AI;
 using Items.Card;
+using ModestTree;
 using Ui.Hud;
 using Ui.Hud.Boss;
 using UnityEngine;
+using Action = Ai.Action;
 
 namespace GameObjects.Character.Enemy
 {
     public class BossEnemy : Character
     {
-        private BossStatusContainer _statusContainer;
+        private BossCardsContainer _cardsContainer;
         private UtilityAi _utilityAi;
         
         public void Construct(BossEnemyItem enemyItem, IGameStateService gameStateService, IGameStateMachine stateMachine)
@@ -21,7 +24,7 @@ namespace GameObjects.Character.Enemy
             base.Construct(enemyItem, gameStateService.State, stateMachine);
 
             Hud hud = gameState.HUD;
-            _statusContainer = hud.BossStatusContainer;
+            _cardsContainer = hud.BossCardsContainer;
 
             BossHealthBar bossHealthBar = hud.BossHealthBar;
             bossHealthBar.Init(Health, enemyItem.ItemName);
@@ -35,6 +38,29 @@ namespace GameObjects.Character.Enemy
             gameState.OnTurnStarted += OnTurnStarted;
         }
 
+        public int CalculateHealth()
+        {
+            List<CardItem> cardsStack = cardsDeck.CardsStack;
+            if (cardsStack.IsEmpty())
+            {
+                return Health;
+            }
+
+            int health = Health;
+            foreach (CardItem cardItem in cardsStack)
+            {
+                List<StatusItem> statusItems = cardItem.StatusItems;
+                foreach (StatusItem statusItem in statusItems)
+                {
+                    if (StatusType.Health.Equals(statusItem.Type))
+                    {
+                        health += statusItem.Value;
+                    }
+                }
+            } 
+            return Math.Clamp(health, 0, item.MaxHealth);
+        }
+        
         private void OnTurnStarted()
         {
             if (!gameState.ActiveCharacter.IsPlayer())
@@ -54,7 +80,7 @@ namespace GameObjects.Character.Enemy
             }
             
             cardsDeck.CardsStack.Clear();
-            _statusContainer.ClearAllCards();
+            _cardsContainer.ClearAllCards();
 
             OnEndTurn?.Invoke();
         }
@@ -69,7 +95,7 @@ namespace GameObjects.Character.Enemy
                 {
                     UtilityAiAction actionItem = action.ActionItem;
                     CardItem cardItem = cardsDeck.ChooseCardToStack(actionItem.StatusType, actionItem.StatusSubtype);
-                    _statusContainer.AddCard(cardItem);
+                    _cardsContainer.AddCard(cardItem);
                 }
             }
         }
