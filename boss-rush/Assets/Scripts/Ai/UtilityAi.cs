@@ -2,6 +2,8 @@
 using GameObjects.Character;
 using Items.Boss.AI;
 using Items.Card;
+using ModestTree;
+using UnityEngine;
 
 namespace Ai
 {
@@ -24,6 +26,11 @@ namespace Ai
 
         public Action ChooseBestAction()
         {
+            if (_utilityAiItem.ActionsLogging)
+            {
+                Debug.Log("<color=red>Choose best action</color>");
+            }
+            
             foreach (Action action in _actions)
             {
                 UtilityAiAction actionItem = action.ActionItem;
@@ -43,6 +50,12 @@ namespace Ai
                 }
             }
 
+            if (_utilityAiItem.ActionsLogging)
+            {
+                UtilityAiAction item = bestAction.ActionItem;
+                Debug.Log($"<color=green>Best action type: {item.StatusType}, subtype {item.StatusSubtype} </color>.");
+            }
+            
             return bestAction;
         }
         
@@ -50,7 +63,7 @@ namespace Ai
         {
             foreach (UtilityAiAction aiAction in _utilityAiItem.AIActions)
             {
-                _actions.Add(new Action(aiAction, _utilityAiItem.MaxScore, _boss.CardsDeck));
+                _actions.Add(new Action(aiAction, _utilityAiItem.MaxScore, _boss.CardsDeck, _utilityAiItem.ActionsLogging));
             }
         }
     }

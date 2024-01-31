@@ -10,7 +10,12 @@ namespace Items.Boss.AI
         [SerializeField] private int maxScore;
         [SerializeField] private List<UtilityAiAction> aiActions;
 
+        [Space(10)]
+        [Header("Logs the calculation of action scores.")]
+        [SerializeField] private bool actionsLogging;
+        
         public List<UtilityAiAction> AIActions => aiActions;
         public int MaxScore => maxScore;
+        public bool ActionsLogging => actionsLogging;
     }
 }
