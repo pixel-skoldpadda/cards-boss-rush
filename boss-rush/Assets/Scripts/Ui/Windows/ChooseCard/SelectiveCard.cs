@@ -30,7 +30,7 @@ namespace Ui.Windows.ChooseCard
 
             List<StatusItem> statusItems = _cardItem.StatusItems;
             
-            int[] values = new int[statusItems.Count];
+            object[] values = new object[statusItems.Count];
             for (var i = 0; i < statusItems.Count; i++)
             {
                 values[i] = statusItems[i].Value;
