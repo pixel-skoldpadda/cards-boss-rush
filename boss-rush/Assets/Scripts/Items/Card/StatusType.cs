@@ -5,6 +5,7 @@
         Protection,
         Health,
         Damage,
-        ThroughShieldDamage
+        ThroughShieldDamage,
+        Poison
     }
 }

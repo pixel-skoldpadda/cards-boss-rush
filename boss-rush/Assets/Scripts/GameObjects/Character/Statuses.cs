@@ -58,6 +58,10 @@ namespace GameObjects.Character
             {
                 _character.TakeDamage(item.Value, true);
             }
+            else if (StatusType.Poison.Equals(type))
+            {
+                _character.TakeDamage(item.Value, true);
+            }
         }
 
         public void Reset()
