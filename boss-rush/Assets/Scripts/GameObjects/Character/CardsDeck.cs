@@ -162,6 +162,7 @@ namespace GameObjects.Character
         {
             _allCards.AddRange(_outCards);
             _allCards.AddRange(_cardsInHand);
+            _allCards.AddRange(_cardsStack);
             
             _cardsUsed = 0;
             _cardsInHand.Clear();
