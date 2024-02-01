@@ -32,27 +32,29 @@ namespace Infrastructure.States
             GameState gameState = _gameStateService.State;
 
             Character character = gameState.GetOpponentCharacter();
-            character.Animator.PlayDeathAnimation();
             character.CardsDeck.Reset();
-            
-            if (character.IsPlayer())
+            character.Animator.PlayDeathAnimation(() =>
             {
-                ShowDeathContainer();
-            }
-            else
-            {
-                gameState.ActiveCharacter.ResetState();
-                gameState.ActiveCharacter = null;
+                if (character.IsPlayer())
+                {
+                    ShowDeathContainer();
+                }
+                else
+                {
+                    gameState.ActiveCharacter.ResetState();
+                    gameState.ActiveCharacter = null;
 
-                gameState.HUD.BossCardsContainer.ClearAllCards();
-                gameState.Characters.Remove(character);
-                
-                _windowsManager.OpenWindow(
-                    WindowType.ChooseCardWindow, 
-                    false, 
-                    () => _stateMachine.Enter<SpawnBossEnemyState>(), 
-                    character.CardsDeck.GetRandomThreeSpecialCards());
-            }
+                    gameState.HUD.BossCardsContainer.ClearAllCards();
+                    gameState.Characters.Remove(character);
+                    Object.Destroy(character.gameObject);
+                    
+                    _windowsManager.OpenWindow(
+                        WindowType.ChooseCardWindow, 
+                        false, 
+                        () => _stateMachine.Enter<SpawnBossEnemyState>(), 
+                        character.CardsDeck.GetRandomThreeSpecialCards());
+                } 
+            });
         }
 
         private void ShowDeathContainer()

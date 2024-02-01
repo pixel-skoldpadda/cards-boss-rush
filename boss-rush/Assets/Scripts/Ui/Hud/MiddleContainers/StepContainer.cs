@@ -8,11 +8,11 @@ namespace Ui.Hud.MiddleContainers
     {
         [SerializeField] private TextMeshProUGUI stepText;
 
-        public void Show(string stepDescription, TweenCallback onComplete)
+        public void ShowAndHide(string stepDescription, TweenCallback onComplete)
         {
             stepText.text = stepDescription;
             
-            base.Show(onComplete);
+            Show(() => Hide(onComplete));
         }
     }
 }

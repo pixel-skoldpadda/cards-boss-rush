@@ -44,7 +44,7 @@ namespace Infrastructure.States
             Character activeCharacter = gameState.ActiveCharacter;
             activeCharacter.Shield = 0;
             
-            gameState.HUD.StepContainer.Show(activeCharacter.Item.StepDescription, () =>
+            gameState.HUD.StepContainer.ShowAndHide(activeCharacter.Item.StepDescription, () =>
             {
                 _stateMachine.Enter<GenerateCardsInHandState>();
             });

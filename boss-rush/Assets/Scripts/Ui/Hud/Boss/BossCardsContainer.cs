@@ -22,10 +22,10 @@ namespace Ui.Hud.Boss
                 }
                 else
                 {
-                    CardIconView cardIconView = Instantiate(cardIconPrefab, transform).GetComponent<CardIconView>();
-                    cardIconView.Init(effectItem);
+                    CardIconView iconView = Instantiate(cardIconPrefab, transform).GetComponent<CardIconView>();
+                    iconView.Init(effectItem);
 
-                    _icons[type] = cardIconView;
+                    _icons[type] = iconView;
                 }
             }
         }

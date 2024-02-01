@@ -31,7 +31,6 @@ namespace Infrastructure.States
                 gameState.GetOpponentCharacter().CardsDeck.GeneratedCardsInHand();
             }
             
-            gameState.HUD.StepContainer.Hide();
             _stateMachine.Enter<WaitEndTurnState>();
         }
 

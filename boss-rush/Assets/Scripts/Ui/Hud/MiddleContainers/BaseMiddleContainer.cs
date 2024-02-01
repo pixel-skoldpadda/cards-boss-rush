@@ -13,14 +13,14 @@ namespace Ui.Hud.MiddleContainers
         public void Show(TweenCallback onComplete)
         {
             _fadeZero = canvasGroup
-                .DOFade(1, 1f)
+                .DOFade(1, .8f)
                 .OnComplete(onComplete);
         }
         
         public void Hide(TweenCallback onComplete = null)
         {
             _fadeOne = canvasGroup
-                .DOFade(0, 1f)
+                .DOFade(0, .8f)
                 .OnComplete(onComplete);
         }
 

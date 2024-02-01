@@ -14,11 +14,11 @@ namespace GameObjects.Character
         private Tweener _deathTween;
 
         // TODO: Переделать на DeathAnimation.anim
-        public void PlayDeathAnimation()
+        public void PlayDeathAnimation(TweenCallback onComplete)
         {
             _deathTween = spriteRenderer
                 .DOColor(new Color(0, 0, 0, 0), 1f)
-                .OnComplete(() => Destroy(gameObject));
+                .OnComplete(onComplete);
         }
 
         public void PlayAttackAnimation(Vector3 direction, TweenCallback onComplete = null)
