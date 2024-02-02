@@ -78,7 +78,7 @@ namespace GameObjects.Character
             }
             else if (StatusType.Damage.Equals(type))
             {
-                _character.TakeDamage(item.Value);
+                ApplyDamageEffect(item);
             }
             else if (StatusType.ThroughShieldDamage.Equals(type))
             {
@@ -89,7 +89,19 @@ namespace GameObjects.Character
                 _character.TakeDamage(item.Value, true);
             }
         }
-        
+
+        private void ApplyDamageEffect(StatusItem item)
+        {
+            int damage = item.Value;
+            
+            Status status = GetStatus(StatusType.Vulnerability);
+            if (status != null)
+            {
+                damage += damage * status.Item.Value / 100;
+            }
+            _character.TakeDamage(damage);
+        }
+
         private void ApplyHealthEffect(StatusItem item)
         {
             int health = item.Value;

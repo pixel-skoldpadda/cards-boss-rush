@@ -10,6 +10,7 @@
         IncreasedDamage,
         DecreasedDamage,
         IncreasedHealth,
-        DecreasedHealth
+        DecreasedHealth,
+        Vulnerability
     }
 }
