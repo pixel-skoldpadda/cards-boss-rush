@@ -11,6 +11,7 @@
         DecreasedDamage,
         IncreasedHealth,
         DecreasedHealth,
-        Vulnerability
+        Vulnerability,
+        Confused 
     }
 }

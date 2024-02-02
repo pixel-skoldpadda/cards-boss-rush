@@ -113,7 +113,7 @@ namespace GameObjects.Character.Enemy
 
         protected override void CreateCardsDeck()
         {
-            cardsDeck = new CardsDeck(item.Deck, item.CardsOnHand, item.UseCardsLimit);
+            cardsDeck = new CardsDeck(item.Deck, item.CardsOnHand, item.UseCardsLimit, statuses);
             cardsDeck.OnCardsGenerated += ChooseCardsInStack;
         }
 

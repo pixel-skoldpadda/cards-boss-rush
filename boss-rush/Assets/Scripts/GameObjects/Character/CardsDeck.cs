@@ -16,6 +16,7 @@ namespace GameObjects.Character
         
         private readonly int _useCardsLimit;
         private readonly int _cardInHandCount;
+        private readonly Statuses _statuses;
 
         private int _cardsUsed;
         
@@ -26,11 +27,12 @@ namespace GameObjects.Character
         public Action OnCardsDiscarding { get; set; }
         public Action<int, int> OnUsedCardsCountChanged { get; set; }
 
-        public CardsDeck(List<CardItem> allCards, int cardsInHandCount, int useCardsLimit)
+        public CardsDeck(List<CardItem> allCards, int cardsInHandCount, int useCardsLimit, Statuses statuses)
         {
             _allCards.AddRange(allCards);
             _useCardsLimit = useCardsLimit;
             _cardInHandCount = cardsInHandCount;
+            _statuses = statuses;
         }
 
         public void AddCard(CardItem cardItem)
@@ -76,9 +78,16 @@ namespace GameObjects.Character
         public void GeneratedCardsInHand()
         {
             TryHangUp();
-            
+
+            int cardsCount = _cardInHandCount;
+            Status status = _statuses.GetStatus(StatusType.Confused);
+            if (status != null)
+            {
+                cardsCount -= status.Item.Value;
+            }
+
             Random random = new Random();
-            for (int i = 0; i < _cardInHandCount; i++)
+            for (int i = 0; i < cardsCount; i++)
             {
                 int index = random.Next(0, _allCards.Count);
                 _cardsInHand.Add(_allCards[index]);

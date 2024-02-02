@@ -39,10 +39,10 @@ namespace GameObjects.Character
             gameState = state;
             _stateMachine = stateMachine;
             health = characterItem.MaxHealth;
-            
-            CreateCardsDeck();
+
             statuses = new Statuses(this, statusBar);
-            
+            CreateCardsDeck();
+
             gameState.OnTurnStarted += OnTurnStarted;
         }
         

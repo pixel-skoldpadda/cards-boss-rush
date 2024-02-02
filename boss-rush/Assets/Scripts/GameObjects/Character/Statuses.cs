@@ -65,6 +65,18 @@ namespace GameObjects.Character
             }
         }
 
+        public Status GetStatus(StatusType type)
+        {
+            foreach (Status status in _activeStatuses)
+            {
+                if (type.Equals(status.Item.Type))
+                {
+                    return status;
+                }
+            }
+            return null;
+        }
+
         private void ApplyStatusEffect(StatusItem item)
         {
             StatusType type = item.Type;
@@ -120,18 +132,6 @@ namespace GameObjects.Character
                 }
             }
             _character.Health += health;
-        }
-
-        private Status GetStatus(StatusType type)
-        {
-            foreach (Status status in _activeStatuses)
-            {
-                if (type.Equals(status.Item.Type))
-                {
-                    return status;
-                }
-            }
-            return null;
         }
     }
 }

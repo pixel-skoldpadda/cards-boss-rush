@@ -37,7 +37,7 @@ namespace GameObjects.Character.Player
             List<CardItem> cardItems = item.Deck;
             cardItems.AddRange(gameState.PlayerCards);
 
-            cardsDeck = new CardsDeck(cardItems, item.CardsOnHand, item.UseCardsLimit);
+            cardsDeck = new CardsDeck(cardItems, item.CardsOnHand, item.UseCardsLimit, statuses);
         }
 
         protected override void PlayAttackAnimation()
