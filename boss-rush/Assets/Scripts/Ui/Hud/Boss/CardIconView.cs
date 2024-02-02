@@ -10,10 +10,12 @@ namespace Ui.Hud.Boss
         [SerializeField] private Image image;
         [SerializeField] private TextMeshProUGUI count;
 
+        private StatusItem _statusItem;
         private int _currentValue;
         
         public void Init(StatusItem statusItem)
         {
+            _statusItem = statusItem;
             _currentValue = statusItem.Value;
             image.sprite = statusItem.Icon;
             
@@ -28,7 +30,7 @@ namespace Ui.Hud.Boss
 
         private void UpdateCounterText()
         {
-            count.text = $"{_currentValue}";
+            count.text = $"{_currentValue}{_statusItem.ValuePostfix}";
         }
     }
 }

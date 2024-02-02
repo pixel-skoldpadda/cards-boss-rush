@@ -6,6 +6,10 @@
         Health,
         Damage,
         ThroughShieldDamage,
-        Poison
+        Poison,
+        IncreasedDamage,
+        DecreasedDamage,
+        IncreasedHealth,
+        DecreasedHealth
     }
 }

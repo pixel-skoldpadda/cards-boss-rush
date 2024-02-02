@@ -8,8 +8,7 @@ namespace GameObjects.Character
     {
         private readonly Character _character;
         private readonly StatusBar _statusBar;
-
-        private readonly Dictionary<StatusType, Status> _currentStatuses = new();
+        private readonly List<Status> _activeStatuses = new();
         
         public Statuses(Character character, StatusBar statusBar)
         {
@@ -25,17 +24,44 @@ namespace GameObjects.Character
             }
             else
             {
-                StatusType type = statusItem.Type;
-                if (_currentStatuses.TryGetValue(type, out Status status))
+                Status status = GetStatus(statusItem.Type);
+                if (status != null)
                 {
                     status.Turns += statusItem.Turns;
                 }
                 else
                 {
                     Status newStatus = new Status(statusItem);
-                    _currentStatuses[type] = newStatus;
+                    _activeStatuses.Add(newStatus);
                     _statusBar.AddStatusIcon(newStatus);
                 }
+            }
+        }
+
+        public void Reset()
+        {
+            _statusBar.RemoveAllIcons();
+            _activeStatuses.Clear();
+        }
+
+        public void Update()
+        {
+            List<Status> toRemove = new List<Status>();
+            foreach (Status status in _activeStatuses)
+            {
+                StatusItem item = status.Item;
+                ApplyStatusEffect(item);
+                status.Turns--;
+
+                if (status.Turns == 0)
+                {
+                    toRemove.Add(status);
+                }
+            }
+            
+            foreach (Status status in toRemove)
+            {
+                _activeStatuses.Remove(status);
             }
         }
 
@@ -48,7 +74,7 @@ namespace GameObjects.Character
             }
             else if (StatusType.Health.Equals(type))
             {
-                _character.Health += item.Value;
+                ApplyHealthEffect(item);
             }
             else if (StatusType.Damage.Equals(type))
             {
@@ -63,32 +89,37 @@ namespace GameObjects.Character
                 _character.TakeDamage(item.Value, true);
             }
         }
-
-        public void Reset()
+        
+        private void ApplyHealthEffect(StatusItem item)
         {
-            _statusBar.RemoveAllIcons();
-            _currentStatuses.Clear();
-        }
-
-        public void Update()
-        {
-            List<StatusType> toRemove = new List<StatusType>();
-            foreach (Status status in _currentStatuses.Values)
+            int health = item.Value;
+            foreach (Status status in _activeStatuses)
             {
-                StatusItem item = status.Item;
-                ApplyStatusEffect(item);
-                status.Turns--;
+                StatusItem statusItem = status.Item;
+                StatusType statusType = statusItem.Type;
 
-                if (status.Turns == 0)
+                if (StatusType.IncreasedHealth.Equals(statusType))
                 {
-                    toRemove.Add(item.Type);
+                    health += health * statusItem.Value / 100;
+                }
+                else if (StatusType.DecreasedHealth.Equals(statusType))
+                {
+                    health -= health * statusItem.Value / 100;
                 }
             }
-            
-            foreach (StatusType statusType in toRemove)
+            _character.Health += health;
+        }
+
+        private Status GetStatus(StatusType type)
+        {
+            foreach (Status status in _activeStatuses)
             {
-                _currentStatuses.Remove(statusType);
+                if (type.Equals(status.Item.Type))
+                {
+                    return status;
+                }
             }
+            return null;
         }
     }
 }

@@ -11,6 +11,7 @@ namespace Items.Card
         
         [Space(15)]
         [SerializeField] private int value;
+        [SerializeField] private string valuePostfix;
         [SerializeField] private int turns;
         [SerializeField] private Sprite icon;
 
@@ -19,6 +20,7 @@ namespace Items.Card
 
         public int Turns => turns;
         public int Value => value;
+        public string ValuePostfix => valuePostfix;
         public Sprite Icon => icon;
     }
 }
