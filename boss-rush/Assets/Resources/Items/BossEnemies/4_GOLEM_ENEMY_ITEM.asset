@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1eef3b7b21c94dbb8d57fc0d5437a4d2, type: 3}
-  m_Name: 2_FIRE_DRAGON_ENEMY_ITEM
+  m_Name: 4_GOLEM_ENEMY_ITEM
   m_EditorClassIdentifier: 
-  itemName: "\u041E\u0433\u043D\u0435\u043D\u043D\u044B\u0439 \u0434\u0440\u0430\u043A\u043E\u043D"
+  itemName: "\u0413\u043E\u043B\u0435\u043C"
   description: 
-  prefab: {fileID: 5382907451340632761, guid: 399a34c4a12a6f540ab46c0e38b7e590, type: 3}
+  prefab: {fileID: 8061734909105625444, guid: 2e6bc2f7cba84fc43a1e814447a779be, type: 3}
   spawnPoint: {x: 5, y: -2, z: 0}
-  maxHealth: 100
+  maxHealth: 130
   deck:
   - {fileID: 11400000, guid: 33020f3c8f70487489b31c4dc1038cf2, type: 2}
   - {fileID: 11400000, guid: 33020f3c8f70487489b31c4dc1038cf2, type: 2}
