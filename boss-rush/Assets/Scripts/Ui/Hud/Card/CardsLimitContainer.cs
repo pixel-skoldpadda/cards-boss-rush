@@ -7,7 +7,7 @@ namespace Ui.Hud.Card
     {
         [SerializeField] private TextMeshProUGUI limit;
 
-        protected override void ResetContainer()
+        public override void ResetContainer()
         {
             base.ResetContainer();
             

@@ -2,7 +2,6 @@
 using Ui.Hud.Card;
 using Ui.Hud.MiddleContainers;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Ui.Hud
 {
@@ -12,35 +11,47 @@ namespace Ui.Hud
         [SerializeField] private CardsContainer cardsContainer;
         [SerializeField] private StepContainer stepContainer;
         [SerializeField] private EndTurnButton endTurnButton;
+        [SerializeField] private ExchangeButton exchangeButton;
         [SerializeField] private CardsLimitContainer cardsLimitContainer;
-        [FormerlySerializedAs("bossStatusContainer")] [SerializeField] private BossCardsContainer bossCardsContainer;
+        [SerializeField] private BossCardsContainer bossCardsContainer;
         [SerializeField] private BaseMiddleContainer deathContainer;
         
         public BossHealthBar BossHealthBar => bossHealthBar;
         public CardsContainer CardsContainer => cardsContainer;
         public StepContainer StepContainer => stepContainer;
         public EndTurnButton EndTurnButton => endTurnButton;
+        public ExchangeButton ExchangeButton => exchangeButton;
         public CardsLimitContainer CardsLimitContainer => cardsLimitContainer;
         public BossCardsContainer BossCardsContainer => bossCardsContainer;
         public BaseMiddleContainer DeathContainer => deathContainer;
 
+        public void ResetContainers()
+        {
+            cardsContainer.ResetContainer();
+            cardsLimitContainer.ResetContainer();
+            endTurnButton.ResetContainer();
+            
+        }
+        
         public void Hide()
         {
             bossHealthBar.Hide();
-            CardsContainer.Hide();
-            EndTurnButton.Hide();
-            CardsContainer.Hide();
-            BossCardsContainer.Hide();
+            cardsContainer.Hide();
+            endTurnButton.Hide();
+            exchangeButton.Hide();
+            cardsContainer.Hide();
+            bossCardsContainer.Hide();
             cardsLimitContainer.Hide();
         }
 
         public void Show()
         {
             bossHealthBar.Show();
-            CardsContainer.Show();
-            EndTurnButton.Show();
-            CardsContainer.Show();
-            BossCardsContainer.Show();
+            cardsContainer.Show();
+            endTurnButton.Show();
+            exchangeButton.Show();
+            cardsContainer.Show();
+            bossCardsContainer.Show();
             cardsLimitContainer.Show();
         }
     }

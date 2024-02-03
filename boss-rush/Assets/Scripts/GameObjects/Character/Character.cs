@@ -129,7 +129,10 @@ namespace GameObjects.Character
             healthBar.UpdateHealthBar(Health);
             if (Health <= 0)
             {
-                gameState.HUD.Hide();
+                Hud hud = gameState.HUD;
+                hud.ResetContainers();
+                hud.Hide();
+
                 _stateMachine.Enter<CheckHealthState>();
             }
         }

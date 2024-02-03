@@ -26,7 +26,7 @@ namespace Ui.Hud
             endTurnButton.interactable = interactable;
         }
 
-        protected override void ResetContainer()
+        public override void ResetContainer()
         {
             base.ResetContainer();
 

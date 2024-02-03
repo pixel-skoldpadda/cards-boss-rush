@@ -38,7 +38,7 @@ namespace Ui.Hud.Card
             _gameStateService = gameStateService;
         }
 
-        protected override void ResetContainer()
+        public override void ResetContainer()
         {
             base.ResetContainer();
             
