@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 namespace Ui.Hud.Card
 {
-    public class Card : MonoBehaviour
+    public class CardView : MonoBehaviour
     {
         [SerializeField] private Image icon;
         [SerializeField] private TextMeshProUGUI descriptionText;
@@ -18,7 +18,7 @@ namespace Ui.Hud.Card
         private CardItem _cardItem;
         private int _cardIndex;
         
-        public Action<Card> OnCardClicked;
+        public Action<CardView> OnCardClicked;
         
         public void Init(CardItem cardItem)
         {

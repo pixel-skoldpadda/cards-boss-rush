@@ -28,7 +28,7 @@ namespace Ui.Hud.Card
 
         [SerializeField] private EndTurnButton endTurnButton;
         
-        private readonly List<Card> cards = new();
+        private readonly List<CardView> cardViews = new();
         private IGameStateService _gameStateService;
 
         private CardsDeck _cardsDeck;
@@ -80,12 +80,12 @@ namespace Ui.Hud.Card
 
         private void DestroyCards()
         {
-            foreach (Card card in cards)
+            foreach (CardView card in cardViews)
             {
                 card.ChangeInteractionEnabled(false);
                 Destroy(card.gameObject);
             }
-            cards.Clear();
+            cardViews.Clear();
         }
 
         private void AddCardsToDeck(List<CardItem> cardItems)
@@ -101,15 +101,15 @@ namespace Ui.Hud.Card
         {
             GameObject cardGameObject = Instantiate(cardPrefab, transform);
                 
-            Card card = cardGameObject.GetComponent<Card>();
-            card.Init(cardItem);
-            card.OnCardClicked += OnCardClicked;
-            cards.Add(card);
+            CardView cardView = cardGameObject.GetComponent<CardView>();
+            cardView.Init(cardItem);
+            cardView.OnCardClicked += OnCardClicked;
+            cardViews.Add(cardView);
         }
 
         private void AlignCards()
         {
-            int size = cards.Count;
+            int size = cardViews.Count;
             
             Vector2 position = new Vector2();
             position.x = -(xOffsetValue * size - xOffsetValue) / 2;
@@ -121,12 +121,12 @@ namespace Ui.Hud.Card
                 position.y = yOffsetCurve.Evaluate(cardsRatio) * yOffsetValue;
                 rotation.z = rotationCurve.Evaluate(cardsRatio) * rotationValue;
                 
-                cards[i].CardAnimator.PlayPositioningAnimation(position, rotation, i);
+                cardViews[i].CardAnimator.PlayPositioningAnimation(position, rotation, i);
                 position.x += xOffsetValue;
             }
         }
 
-        private void OnCardClicked(Card clickedCard)
+        private void OnCardClicked(CardView clickedCardView)
         {
             GameState gameState = _gameStateService.State;
             Character player = gameState.ActiveCharacter;
@@ -139,10 +139,10 @@ namespace Ui.Hud.Card
             }
             
             endTurnButton.ChangeInteractable(false);
-            clickedCard.ChangeInteractionEnabled(false);
-            cards.Remove(clickedCard);
+            clickedCardView.ChangeInteractionEnabled(false);
+            cardViews.Remove(clickedCardView);
 
-            CardItem cardItem = clickedCard.CardItem;
+            CardItem cardItem = clickedCardView.CardItem;
             bool hasNegativeEffect = false;
             
             foreach (StatusItem statusItem in cardItem.StatusItems)
@@ -166,9 +166,9 @@ namespace Ui.Hud.Card
             
             cardsDeck.UpdateUsedCardsCounter();
             cardsDeck.RemoveCardsFromHand(cardItem);
-            clickedCard.CardAnimator.MoveToAndDestroy(position, () =>
+            clickedCardView.CardAnimator.MoveToAndDestroy(position, () =>
             {
-                Destroy(clickedCard.gameObject);
+                Destroy(clickedCardView.gameObject);
                 player.UseCard(cardItem);
                 endTurnButton.ChangeInteractable(true);
             });

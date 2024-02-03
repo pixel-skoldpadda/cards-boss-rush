@@ -1,5 +1,6 @@
 ﻿using DG.Tweening;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Ui.Hud.Card
 {
@@ -7,7 +8,7 @@ namespace Ui.Hud.Card
     {
         private const int MAX_SORTING_ORDER = 5;
 
-        [SerializeField] private Card card;
+        [FormerlySerializedAs("card")] [SerializeField] private CardView cardView;
         [SerializeField] private RectTransform rectTransform;
         [SerializeField] private Canvas canvas;
         
@@ -82,7 +83,7 @@ namespace Ui.Hud.Card
                 {
                     _isMoving = false;
                     UpdateDefaultValues();
-                    card.ChangeInteractionEnabled(true);
+                    cardView.ChangeInteractionEnabled(true);
                 });
         }
 
