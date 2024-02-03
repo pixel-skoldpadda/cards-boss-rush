@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a13c85c949a340d2a50727846b43f058, type: 3}
+  m_Name: THORNS_CARD_ITEM
+  m_EditorClassIdentifier: 
+  itemName: "\u0412\u043E\u0437\u0432\u0440\u0430\u0442 \u0443\u0440\u043E\u043D\u0430"
+  description: "\u0412\u0435\u0440\u043D\u0435\u0442  <color=#3477eb>50%</color>
+    \u043D\u0430\u043D\u0435\u0441\u0435\u043D\u043D\u043E\u0433\u043E\n\u0443\u0440\u043E\u043D\u0430."
+  cardIcon: {fileID: 21300000, guid: ef4720d25334c994db9b78410e0dbce3, type: 3}
+  special: 0
+  statusItems:
+  - type: 11
+    subtype: 0
+    description: "\u0412\u0435\u0440\u043D\u0435\u0442  <color=#3477eb>50%</color>
+      \u043D\u0430\u043D\u0435\u0441\u0435\u043D\u043D\u043E\u0433\u043E\n\u0443\u0440\u043E\u043D\u0430."
+    value: 50
+    turns: 3
+    icon: {fileID: 21300000, guid: 83a0d4f7dad0c1945a1da11c21fadfc0, type: 3}

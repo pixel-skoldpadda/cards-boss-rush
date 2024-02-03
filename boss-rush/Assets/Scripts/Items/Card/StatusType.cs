@@ -12,6 +12,7 @@
         IncreasedHealth,
         DecreasedHealth,
         Vulnerability,
-        Confused 
+        Confused,
+        Thorns
     }
 }

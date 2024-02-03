@@ -40,7 +40,7 @@ namespace GameObjects.Character
             _stateMachine = stateMachine;
             health = characterItem.MaxHealth;
 
-            statuses = new Statuses(this, statusBar);
+            statuses = new Statuses(this, statusBar, gameState);
             CreateCardsDeck();
 
             gameState.OnTurnStarted += OnTurnStarted;
@@ -111,7 +111,7 @@ namespace GameObjects.Character
             {
                 return;
             }
-
+            
             if (!throughShield)
             {
                 damage -= Shield;
@@ -133,7 +133,7 @@ namespace GameObjects.Character
                 _stateMachine.Enter<CheckHealthState>();
             }
         }
-        
+
         public int Shield
         {
             get => shield;

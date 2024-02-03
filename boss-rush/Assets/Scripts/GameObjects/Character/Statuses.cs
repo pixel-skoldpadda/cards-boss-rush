@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Data;
 using Items.Card;
 using Ui;
 
@@ -8,12 +9,15 @@ namespace GameObjects.Character
     {
         private readonly Character _character;
         private readonly StatusBar _statusBar;
+        private readonly GameState _gameState;
+        
         private readonly List<Status> _activeStatuses = new();
         
-        public Statuses(Character character, StatusBar statusBar)
+        public Statuses(Character character, StatusBar statusBar, GameState gameState)
         {
             _character = character;
             _statusBar = statusBar;
+            _gameState = gameState;
         }
 
         public void AddStatus(Status status)
@@ -113,7 +117,7 @@ namespace GameObjects.Character
             }
             else if (StatusType.ThroughShieldDamage.Equals(type))
             {
-                _character.TakeDamage(status.Value, true);
+                ApplyDamageEffect(status.Value, true);
             }
             else if (StatusType.Poison.Equals(type))
             {
@@ -121,17 +125,36 @@ namespace GameObjects.Character
             }
         }
 
-        private void ApplyDamageEffect(int value)
+        private void ApplyDamageEffect(int value, bool throughShield = false)
         {
+            TryReturnDamage(value);
+            
             int damage = value;
             Status status = GetStatus(StatusType.Vulnerability);
             if (status != null)
             {
                 damage += damage * status.Item.Value / 100;
             }
-            _character.TakeDamage(damage);
+            _character.TakeDamage(damage, throughShield);
         }
 
+        private void TryReturnDamage(int damage)
+        {
+            Character activeCharacter = _gameState.ActiveCharacter;
+            if (activeCharacter.Equals(_character))
+            {
+                return;
+            }
+            
+            Status status = GetStatus(StatusType.Thorns);
+            if (status != null)
+            {
+                damage = damage * status.Value / 100;
+            }
+            
+            activeCharacter.TakeDamage(damage);
+        }
+        
         private void ApplyHealthEffect(int value)
         {
             int health = value;
