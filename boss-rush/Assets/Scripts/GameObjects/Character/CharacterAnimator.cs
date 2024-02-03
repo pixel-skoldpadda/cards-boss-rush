@@ -6,6 +6,7 @@ namespace GameObjects.Character
     public class CharacterAnimator : MonoBehaviour
     {
         private static readonly int DamageHash = Animator.StringToHash("Damage");
+        private static readonly int SlashAttack = Animator.StringToHash("SlashAttack");
         
         [SerializeField] private SpriteRenderer spriteRenderer;
         [SerializeField] private Animator animator;
@@ -21,7 +22,7 @@ namespace GameObjects.Character
                 .OnComplete(onComplete);
         }
 
-        public void PlayAttackAnimation(Vector3 direction, TweenCallback onComplete = null)
+        public void PlayAttackAnimation(Vector3 direction, TweenCallback onComplete = null, TweenCallback callback = null)
         {
             if (_attackSequence != null && _attackSequence.IsActive())
             {
@@ -33,12 +34,18 @@ namespace GameObjects.Character
             targetPosition.x += direction.x;;
 
             _attackSequence = DOTween.Sequence()
+                .AppendCallback(callback)
                 .Append(transform.DOMove(targetPosition, .15f))
                 .Append(transform.DOMove(defaultPosition, .15f))
                 .SetEase(Ease.OutBack)
                 .OnComplete(onComplete);
         }
 
+        public void PlaySplashAttackAnimation()
+        {
+            animator.SetTrigger(SlashAttack);
+        }
+        
         public void PlayDamageAnimation()
         {
             animator.SetTrigger(DamageHash);

@@ -42,7 +42,7 @@ namespace GameObjects.Character.Player
 
         protected override void PlayAttackAnimation()
         {
-            animator.PlayAttackAnimation(Vector3.right);
+            animator.PlayAttackAnimation(Vector3.right, null, animator.PlaySplashAttackAnimation);
         }
 
         protected override void OnTurnStarted()
