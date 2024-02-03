@@ -663,6 +663,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerCharacter
       objectReference: {fileID: 0}
+    - target: {fileID: 2725331599524559804, guid: 4f73079f36fa1fe4fab93b53d71adc47, type: 3}
+      propertyPath: m_SortingOrder
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 2819321184599739708, guid: 4f73079f36fa1fe4fab93b53d71adc47, type: 3}
       propertyPath: m_PresetInfoIsWorld
       value: 1
@@ -737,7 +741,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6768165321207350149, guid: 4f73079f36fa1fe4fab93b53d71adc47, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -0.47
+      value: -0.52
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

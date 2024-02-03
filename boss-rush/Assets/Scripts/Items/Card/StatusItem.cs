@@ -8,19 +8,19 @@ namespace Items.Card
     {
         [SerializeField] private StatusType type;
         [SerializeField] private StatusSubtype subtype;
+        [SerializeField] [TextArea] private string description;
         
         [Space(15)]
         [SerializeField] private int value;
-        [SerializeField] private string valuePostfix;
         [SerializeField] private int turns;
         [SerializeField] private Sprite icon;
 
         public StatusType Type => type;
         public StatusSubtype Subtype => subtype;
+        public string Description => description;
 
         public int Turns => turns;
         public int Value => value;
-        public string ValuePostfix => valuePostfix;
         public Sprite Icon => icon;
     }
 }

@@ -21,13 +21,14 @@ MonoBehaviour:
   statusItems:
   - type: 0
     subtype: 0
+    description: "\u0414\u043E\u0431\u0430\u0432\u043B\u044F\u0435\u0442 <color=#3477eb>5</color>
+      \u0449\u0438\u0442\u0430\n\u0432 \u043D\u0430\u0447\u0430\u043B\u0435 \u0445\u043E\u0434\u0430."
     value: 5
-    valuePostfix: 
     turns: 0
     icon: {fileID: 21300000, guid: 34f73b51cdf257842b1024d96532036a, type: 3}
   - type: 2
     subtype: 1
+    description: 
     value: 5
-    valuePostfix: 
     turns: 0
     icon: {fileID: 0}

@@ -21,7 +21,8 @@ MonoBehaviour:
   statusItems:
   - type: 5
     subtype: 0
+    description: "\u0414\u043E\u0431\u0430\u0432\u043B\u044F\u0435\u0442 <color=#eb4034>20%</color>
+      \u0443\u0440\u043E\u043D\u0430."
     value: 20
-    valuePostfix: 
     turns: 2
     icon: {fileID: 21300000, guid: 075f0ebfd04ee46489f0cc190a68878f, type: 3}
