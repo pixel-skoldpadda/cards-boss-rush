@@ -20,14 +20,18 @@ MonoBehaviour:
   deck:
   - {fileID: 11400000, guid: 33020f3c8f70487489b31c4dc1038cf2, type: 2}
   - {fileID: 11400000, guid: 33020f3c8f70487489b31c4dc1038cf2, type: 2}
-  - {fileID: 11400000, guid: 2ae3eb96393c65e4ca9d9b54dd9fbd16, type: 2}
+  - {fileID: 11400000, guid: 067fd02d40786d249b363445568f3cfd, type: 2}
+  - {fileID: 11400000, guid: 28609b874e4dbdc4aaec0d71a82ceaeb, type: 2}
   - {fileID: 11400000, guid: 89d69f6fc12230549bcb9f9da3f5305c, type: 2}
+  - {fileID: 11400000, guid: 89d69f6fc12230549bcb9f9da3f5305c, type: 2}
+  - {fileID: 11400000, guid: 2ae3eb96393c65e4ca9d9b54dd9fbd16, type: 2}
   - {fileID: 11400000, guid: 0abeb3b81c7fbd74088735d124454b6f, type: 2}
   - {fileID: 11400000, guid: 0abeb3b81c7fbd74088735d124454b6f, type: 2}
-  - {fileID: 11400000, guid: 067fd02d40786d249b363445568f3cfd, type: 2}
-  - {fileID: 11400000, guid: 067fd02d40786d249b363445568f3cfd, type: 2}
+  - {fileID: 11400000, guid: 1b990ae86e47d7544a49cc0ee97b0519, type: 2}
+  - {fileID: 11400000, guid: 94fc6f1f96155454d9814e2ea4b62327, type: 2}
   - {fileID: 11400000, guid: e6354fca0f6a06f44a0312b191e55e31, type: 2}
-  - {fileID: 11400000, guid: e6354fca0f6a06f44a0312b191e55e31, type: 2}
+  - {fileID: 11400000, guid: 7139c6f5546cb1a489319f060f6c85f6, type: 2}
+  - {fileID: 11400000, guid: dc6b2062a58959f43bb6b2db1a6a701a, type: 2}
   stepDescription: "\u0425\u043E\u0434 \u0438\u0433\u0440\u043E\u043A\u0430"
   cardsOnHand: 5
   useCardsLimit: 3
