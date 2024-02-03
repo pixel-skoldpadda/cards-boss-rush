@@ -16,24 +16,23 @@ namespace GameObjects.Character
             _statusBar = statusBar;
         }
 
-        public void AddStatus(StatusItem statusItem)
+        public void AddStatus(Status status)
         {
-            if (statusItem.Turns == 0)
+            if (status.IsInstantaneous())
             {
-                ApplyStatusEffect(statusItem);
+                ApplyStatusEffect(status);
             }
             else
             {
-                Status status = GetStatus(statusItem.Type);
-                if (status != null)
+                Status currentStatus = GetStatus(status.Item.Type);
+                if (currentStatus != null)
                 {
-                    status.Turns += statusItem.Turns;
+                    currentStatus.Turns += status.Turns;
                 }
                 else
                 {
-                    Status newStatus = new Status(statusItem);
-                    _activeStatuses.Add(newStatus);
-                    _statusBar.AddStatusIcon(newStatus);
+                    _activeStatuses.Add(status);
+                    _statusBar.AddStatusIcon(status);
                 }
             }
         }
@@ -49,8 +48,7 @@ namespace GameObjects.Character
             List<Status> toRemove = new List<Status>();
             foreach (Status status in _activeStatuses)
             {
-                StatusItem item = status.Item;
-                ApplyStatusEffect(item);
+                ApplyStatusEffect(new Status(status.Item));
                 status.Turns--;
 
                 if (status.Turns == 0)
@@ -77,35 +75,55 @@ namespace GameObjects.Character
             return null;
         }
 
-        private void ApplyStatusEffect(StatusItem item)
+        // TODO: Временное решение, по хорошему нужно выделить обратно типы карт с главным эффектом типо урона, а статусы применять отдельно.
+        public int CalculateDamageEffect(int value)
         {
-            StatusType type = item.Type;
+            int damage = value;
+            foreach (Status status in _activeStatuses)
+            {
+                StatusItem statusItem = status.Item;
+                StatusType statusType = statusItem.Type;
+
+                if (StatusType.IncreasedDamage.Equals(statusType))
+                {
+                    damage += damage * statusItem.Value / 100;
+                }
+                else if (StatusType.DecreasedDamage.Equals(statusType))
+                {
+                    damage -= damage * statusItem.Value / 100;
+                }
+            }
+            return damage;
+        }
+        
+        private void ApplyStatusEffect(Status status)
+        {
+            StatusType type = status.Item.Type;
             if (StatusType.Protection.Equals(type))
             {
-                _character.Shield += item.Value;
+                _character.Shield += status.Value;
             }
             else if (StatusType.Health.Equals(type))
             {
-                ApplyHealthEffect(item);
+                ApplyHealthEffect(status.Value);
             }
             else if (StatusType.Damage.Equals(type))
             {
-                ApplyDamageEffect(item);
+                ApplyDamageEffect(status.Value);
             }
             else if (StatusType.ThroughShieldDamage.Equals(type))
             {
-                _character.TakeDamage(item.Value, true);
+                _character.TakeDamage(status.Value, true);
             }
             else if (StatusType.Poison.Equals(type))
             {
-                _character.TakeDamage(item.Value, true);
+                _character.TakeDamage(status.Value, true);
             }
         }
 
-        private void ApplyDamageEffect(StatusItem item)
+        private void ApplyDamageEffect(int value)
         {
-            int damage = item.Value;
-            
+            int damage = value;
             Status status = GetStatus(StatusType.Vulnerability);
             if (status != null)
             {
@@ -114,9 +132,9 @@ namespace GameObjects.Character
             _character.TakeDamage(damage);
         }
 
-        private void ApplyHealthEffect(StatusItem item)
+        private void ApplyHealthEffect(int value)
         {
-            int health = item.Value;
+            int health = value;
             foreach (Status status in _activeStatuses)
             {
                 StatusItem statusItem = status.Item;

@@ -7,6 +7,7 @@ namespace GameObjects.Character
     {
         private readonly StatusItem _item;
         private int _turns;
+        private int _value;
 
         public Action<int> OnTurnsUpdated { get; set; }
 
@@ -14,6 +15,7 @@ namespace GameObjects.Character
         {
             _item = item;
             _turns = item.Turns;
+            _value = item.Value;
         }
 
         public int Turns
@@ -24,6 +26,17 @@ namespace GameObjects.Character
                 _turns = value;
                 OnTurnsUpdated?.Invoke(_turns);
             }
+        }
+
+        public int Value
+        {
+            get => _value;
+            set => _value = value;
+        }
+
+        public bool IsInstantaneous()
+        {
+            return _turns == 0;
         }
         
         public StatusItem Item => _item;

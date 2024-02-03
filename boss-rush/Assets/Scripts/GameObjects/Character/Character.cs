@@ -60,17 +60,23 @@ namespace GameObjects.Character
         public virtual void UseCard(CardItem cardItem)
         {
             List<StatusItem> statusItems = cardItem.StatusItems;
-            foreach (StatusItem status in statusItems)
+            foreach (StatusItem statusItem in statusItems)
             {
-                StatusSubtype subtype = status.Subtype;
+                Status status = new Status(statusItem);
+                StatusSubtype subtype = statusItem.Subtype;
+                
                 if (StatusSubtype.Negative.Equals(subtype))
                 {
-                    StatusType statusType = status.Type;
+                    StatusType statusType = statusItem.Type;
                     if (StatusType.Damage.Equals(statusType) || StatusType.ThroughShieldDamage.Equals(statusType))
                     {
                         PlayAttackAnimation();
+
+                        if (status.IsInstantaneous())
+                        {
+                            status.Value = statuses.CalculateDamageEffect(status.Value);
+                        }
                     }
-                    
                     gameState.GetOpponentCharacter().statuses.AddStatus(status);
                 }
                 else if (StatusSubtype.Positive.Equals(subtype))
