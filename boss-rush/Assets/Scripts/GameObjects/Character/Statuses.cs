@@ -149,10 +149,8 @@ namespace GameObjects.Character
             Status status = GetStatus(StatusType.Thorns);
             if (status != null)
             {
-                damage = damage * status.Value / 100;
+                activeCharacter.TakeDamage(damage * status.Value / 100);
             }
-            
-            activeCharacter.TakeDamage(damage);
         }
         
         private void ApplyHealthEffect(int value)
