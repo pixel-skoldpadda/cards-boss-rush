@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using Items.Card;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using Object = System.Object;
 
 namespace Ui.Hud.Card
 {
@@ -25,16 +23,8 @@ namespace Ui.Hud.Card
         public void Init(CardItem cardItem)
         {
             _cardItem = cardItem;
-
-            List<StatusItem> statusItems = _cardItem.StatusItems;
-
-            object[] values = new object[statusItems.Count];
-            for (var i = 0; i < statusItems.Count; i++)
-            {
-                values[i] = statusItems[i].Value;
-            }
             
-            descriptionText.text = string.Format(_cardItem.Description, values);
+            descriptionText.text = _cardItem.Description;
             icon.sprite = _cardItem.CardIcon;
             
             shirt.SetActive(false);
@@ -67,9 +57,9 @@ namespace Ui.Hud.Card
         public CardAnimator CardAnimator => cardAnimator;
         public CardItem CardItem => _cardItem;
 
-        public void ChangeInteractionEnabled(bool enabled)
+        public void ChangeInteractionEnabled(bool interactionEnabled)
         {
-            eventTrigger.enabled = enabled;
+            eventTrigger.enabled = interactionEnabled;
         }
     }
 }

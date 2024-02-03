@@ -1,5 +1,4 @@
 ﻿using Items.Card;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,29 +7,22 @@ namespace Ui.Hud.Boss
     public class CardIconView : MonoBehaviour
     {
         [SerializeField] private Image image;
-        [SerializeField] private TextMeshProUGUI count;
-
-        private StatusItem _statusItem;
-        private int _currentValue;
+        [SerializeField] private Hint hint;
         
-        public void Init(StatusItem statusItem)
+        public void Init(CardItem cardItem)
         {
-            _statusItem = statusItem;
-            _currentValue = statusItem.Value;
-            image.sprite = statusItem.Icon;
-            
-            UpdateCounterText();
+            image.sprite = cardItem.CardIcon;
+            hint.Init(cardItem.Description);
         }
 
-        public void UpdateValue(int value)
+        public void OnPointerEnter()
         {
-            _currentValue += value;
-            UpdateCounterText();
+            hint.Show();
         }
 
-        private void UpdateCounterText()
+        public void OnPointerExit()
         {
-            count.text = $"{_currentValue}{_statusItem.ValuePostfix}";
+            hint.Hide();
         }
     }
 }

@@ -4,39 +4,26 @@ using UnityEngine;
 
 namespace Ui.Hud.Boss
 {
-    public class BossCardsContainer : BaseHudContainer 
+    public class BossCardsContainer : BaseHudContainer
     {
         [SerializeField] private GameObject cardIconPrefab;
-        
-        private readonly Dictionary<StatusType, CardIconView> _icons = new();
-        
+
+        private readonly List<CardIconView> _cardIcons = new();
+
         public void AddCard(CardItem cardItem)
         {
-            List<StatusItem> effects = cardItem.StatusItems;
-            foreach (StatusItem effectItem in effects)
-            {
-                StatusType type = effectItem.Type;
-                if (_icons.TryGetValue(type, out CardIconView icon))
-                {
-                    icon.UpdateValue(effectItem.Value);
-                }
-                else
-                {
-                    CardIconView iconView = Instantiate(cardIconPrefab, transform).GetComponent<CardIconView>();
-                    iconView.Init(effectItem);
-
-                    _icons[type] = iconView;
-                }
-            }
+            CardIconView iconView = Instantiate(cardIconPrefab, transform).GetComponent<CardIconView>();
+            iconView.Init(cardItem);
+            _cardIcons.Add(iconView);
         }
 
         public void ClearAllCards()
         {
-            foreach (CardIconView cardIcon in _icons.Values)
+            foreach (CardIconView cardIcon in _cardIcons)
             {
                 Destroy(cardIcon.gameObject);
             }
-            _icons.Clear();
+            _cardIcons.Clear();
         }
     }
 }

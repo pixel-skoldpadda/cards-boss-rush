@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using DG.Tweening;
+﻿using DG.Tweening;
 using Items.Card;
 using TMPro;
 using UnityEngine;
@@ -27,16 +26,7 @@ namespace Ui.Windows.ChooseCard
             _window = window;
 
             icon.sprite = cardItem.CardIcon;
-
-            List<StatusItem> statusItems = _cardItem.StatusItems;
-            
-            object[] values = new object[statusItems.Count];
-            for (var i = 0; i < statusItems.Count; i++)
-            {
-                values[i] = statusItems[i].Value;
-            }
-            
-            description.text = string.Format(cardItem.Description, values);
+            description.text = cardItem.Description;
         }
 
         public void OnPointerEnter()
