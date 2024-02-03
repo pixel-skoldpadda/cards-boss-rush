@@ -16,7 +16,7 @@ MonoBehaviour:
   description: "\u0414\u043E\u0431\u0430\u0432\u043B\u044F\u0435\u0442 <color=#eb4034>20%</color>
     \u0443\u0440\u043E\u043D\u0430 \u0432 \u0442\u0435\u0447\u0435\u043D\u0438\u0438\n<color=#34eb93>2</color>
     \u0445\u043E\u0434\u043E\u0432"
-  cardIcon: {fileID: 21300000, guid: 677c978fd2b64f94ea5b81af300a27f3, type: 3}
+  cardIcon: {fileID: 21300000, guid: 931f55f247bffc3438a81087baa97344, type: 3}
   special: 0
   statusItems:
   - type: 5
