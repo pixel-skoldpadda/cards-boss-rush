@@ -13,6 +13,7 @@ namespace GameObjects.Character.Player
     public class Player : Character
     {
         private CardsLimitContainer _limitContainer;
+        private ExchangeButton _exchangeButton;
         
         [Inject]
         public void Construct(PlayerItem playerItem, IGameStateService gameStateService, IGameStateMachine stateMachine)
@@ -20,12 +21,15 @@ namespace GameObjects.Character.Player
             base.Construct(playerItem, gameStateService.State, stateMachine);
 
             Hud hud = gameState.HUD;
+            hud.CardsContainer.InitCardsDeck(cardsDeck);
 
             _limitContainer = hud.CardsLimitContainer;
-            
-            hud.CardsContainer.InitCardsDeck(cardsDeck);
             cardsDeck.OnUsedCardsCountChanged += _limitContainer.UpdateUsedCardsCounter;
             _limitContainer.UpdateUsedCardsCounter(cardsDeck.CardsUsed, cardsDeck.UseCardsLimit);
+
+            _exchangeButton = hud.ExchangeButton;
+            OnExchangeCountChanged += _exchangeButton.UpdateExchangeCounter;
+            _exchangeButton.UpdateExchangeCounter(exchange, item.UseExchangeLimit);
             
             healthBar.Init(playerItem.MaxHealth);
             OnHealthChanged += healthBar.UpdateHealthBar;
@@ -65,6 +69,7 @@ namespace GameObjects.Character.Player
             cardsDeck.OnUsedCardsCountChanged -= _limitContainer.UpdateUsedCardsCounter;
             OnHealthChanged -= healthBar.UpdateHealthBar;
             OnShieldChanged -= healthBar.UpdateShieldCounter;
+            OnExchangeCountChanged -= _exchangeButton.UpdateExchangeCounter;
         }
     }
 }

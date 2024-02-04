@@ -22,16 +22,16 @@ namespace GameObjects.Character
         protected CharacterItem item;
         protected GameState gameState;
         protected CardsDeck cardsDeck;
+        protected Statuses statuses;
 
         protected Action<int> OnHealthChanged;
         protected Action<int> OnShieldChanged;
+        protected Action<int, int> OnExchangeCountChanged;
 
-        protected Statuses statuses;
-        
+        protected int exchange;
         private int _health;
         private int _shield;
-        private int _exchange;
-        
+
         private IGameStateMachine _stateMachine;
         
         protected void Construct(CharacterItem characterItem, GameState state, IGameStateMachine stateMachine)
@@ -40,7 +40,7 @@ namespace GameObjects.Character
             gameState = state;
             _stateMachine = stateMachine;
             _health = characterItem.MaxHealth;
-            _exchange = characterItem.UseExchangeLimit;
+            exchange = characterItem.UseExchangeLimit;
 
             statuses = new Statuses(this, statusBar, gameState);
             CreateCardsDeck();
@@ -57,7 +57,7 @@ namespace GameObjects.Character
             cardsDeck.Reset();
             statuses.Reset();
             Shield = 0;
-            _exchange = item.UseExchangeLimit;
+            Exchange = item.UseExchangeLimit;
         }
         
         public virtual void UseCard(CardItem cardItem)
@@ -153,8 +153,12 @@ namespace GameObjects.Character
 
         public int Exchange
         {
-            get => _exchange;
-            set => _exchange = value;
+            get => exchange;
+            set
+            {
+                exchange = value;
+                OnExchangeCountChanged?.Invoke(value, item.UseExchangeLimit);
+            }
         }
 
         protected virtual void OnDestroy()

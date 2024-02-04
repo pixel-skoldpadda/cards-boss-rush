@@ -1,5 +1,4 @@
 ﻿using Data;
-using GameObjects.Character.Player;
 using Infrastructure.Services.State;
 using Infrastructure.Services.WindowsManager;
 using TMPro;
@@ -24,18 +23,12 @@ namespace Ui.Hud
             
             _gameState.OnTurnStarted += OnTurnStarted;
             _gameState.OnTurnFinished += OnTurnFinished;
-            
-            UpdateExchangeCounter(3,3);
         }
 
         public void OnButtonClicked()
         {
             exchangeButton.interactable = false;
-
-            Player player = _gameState.GetPlayer();
-            player.Exchange--;
-            
-            UpdateExchangeCounter(player.Exchange, player.Item.UseExchangeLimit);
+            _gameState.GetPlayer().Exchange--;
             
             Hud hud =_gameState.HUD;
             hud.Hide();
@@ -46,7 +39,7 @@ namespace Ui.Hud
             });
         }
 
-        private void UpdateExchangeCounter(int current, int max)
+        public void UpdateExchangeCounter(int current, int max)
         {
             exchangeCount.text = $"{current}/{max}";
         }
