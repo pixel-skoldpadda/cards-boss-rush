@@ -26,6 +26,12 @@ namespace Ui.Windows.Exchange
 
         public void OnExchangeCardButtonClick()
         {
+            if (_gameState.GetPlayer().CardsDeck.CardsInHand.IsEmpty())
+            {
+                Close();
+                return;
+            }
+            
             Hud.Hud hud = _gameState.HUD;
             
             grid.SetActive(false);
@@ -57,6 +63,8 @@ namespace Ui.Windows.Exchange
             cardsContainer.OnCardSelected -= OnCardSelected;
             cardsContainer.Mode = CardsContainerMode.Combat;
             cardsContainer.ChangeCardsInteraction(true);
+
+            player.Exchange--;
             
             Close();
         }
@@ -82,6 +90,8 @@ namespace Ui.Windows.Exchange
                 enemyStatuses.RemoveStatus(enemyStatus);
                 playerStatuses.AddStatus(enemyStatus);
             }
+            
+            player.Exchange--;
             
             Close();
         }

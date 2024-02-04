@@ -30,7 +30,6 @@ namespace Ui.Hud
             hint.Hide();
             
             exchangeButton.interactable = false;
-            _gameState.GetPlayer().Exchange--;
             
             Hud hud =_gameState.HUD;
             hud.Hide();
