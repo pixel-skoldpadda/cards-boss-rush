@@ -112,7 +112,7 @@ namespace GameObjects.Character
             TryHangUp();
 
             int cardsCount = _cardInHandCount;
-            Status status = _statuses.GetStatus(StatusType.Confused);
+            Status status = _statuses.GetStatusByType(StatusType.Confused);
             if (status != null)
             {
                 cardsCount -= status.Item.Value;
@@ -201,6 +201,7 @@ namespace GameObjects.Character
 
         public void Reset()
         {
+            _allCards.Clear();
             _allCards.AddRange(_defaultDeck);
             
             _cardsUsed = 0;
