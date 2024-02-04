@@ -54,5 +54,7 @@ namespace Ui
         {
             _status.OnTurnsUpdated -= OnTurnsUpdated;
         }
+
+        public Status Status => _status;
     }
 }

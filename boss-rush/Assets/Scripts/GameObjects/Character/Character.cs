@@ -28,9 +28,10 @@ namespace GameObjects.Character
 
         protected Statuses statuses;
         
-        private int health;
-        private int shield;
-
+        private int _health;
+        private int _shield;
+        private int _exchange;
+        
         private IGameStateMachine _stateMachine;
         
         protected void Construct(CharacterItem characterItem, GameState state, IGameStateMachine stateMachine)
@@ -38,7 +39,8 @@ namespace GameObjects.Character
             item = characterItem;
             gameState = state;
             _stateMachine = stateMachine;
-            health = characterItem.MaxHealth;
+            _health = characterItem.MaxHealth;
+            _exchange = characterItem.UseExchangeLimit;
 
             statuses = new Statuses(this, statusBar, gameState);
             CreateCardsDeck();
@@ -55,6 +57,7 @@ namespace GameObjects.Character
             cardsDeck.Reset();
             statuses.Reset();
             Shield = 0;
+            _exchange = item.UseExchangeLimit;
         }
         
         public virtual void UseCard(CardItem cardItem)
@@ -89,14 +92,15 @@ namespace GameObjects.Character
         public CardsDeck CardsDeck => cardsDeck;
         public CharacterItem Item => item;
         public CharacterAnimator Animator => animator;
+        public Statuses Statuses => statuses;
         
         public int Health
         {
-            get => health;
+            get => _health;
             set
             {
-                health = Math.Clamp(value, 0, item.MaxHealth);
-                OnHealthChanged?.Invoke(health);
+                _health = Math.Clamp(value, 0, item.MaxHealth);
+                OnHealthChanged?.Invoke(_health);
             }
         }
         
@@ -139,12 +143,18 @@ namespace GameObjects.Character
 
         public int Shield
         {
-            get => shield;
+            get => _shield;
             set
             {
-                shield = value;
+                _shield = value;
                 OnShieldChanged?.Invoke(value);
             }
+        }
+
+        public int Exchange
+        {
+            get => _exchange;
+            set => _exchange = value;
         }
 
         protected virtual void OnDestroy()

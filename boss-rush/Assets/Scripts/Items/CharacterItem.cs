@@ -15,10 +15,16 @@ namespace Items
         [SerializeField] private int cardsOnHand = 5;
         [SerializeField] private int useCardsLimit = 3;
 
+        [Space(10)] 
+        [Header("Exchange settings")]
+        [SerializeField]
+        private int useExchangeLimit;
+        
         public int MaxHealth => maxHealth;
         public List<CardItem> Deck => deck;
         public int CardsOnHand => cardsOnHand;
         public int UseCardsLimit => useCardsLimit;
         public string StepDescription => stepDescription;
+        public int UseExchangeLimit => useExchangeLimit;
     }
 }

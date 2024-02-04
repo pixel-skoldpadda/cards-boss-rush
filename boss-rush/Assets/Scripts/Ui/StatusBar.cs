@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using GameObjects.Character;
+using Items.Card;
 using UnityEngine;
 
 namespace Ui
@@ -23,6 +24,18 @@ namespace Ui
             Destroy(statusIcon.gameObject);
         }
 
+        public void RemoveStatusIconByType(StatusType type)
+        {
+            foreach (StatusIcon statusIcon in _statusIcons)
+            {
+                if (type.Equals(statusIcon.Status.Item.Type))
+                {
+                    RemoveStatusIcon(statusIcon);
+                    break;
+                }
+            }
+        }
+        
         public void RemoveAllIcons()
         {
             foreach (StatusIcon statusIcon in _statusIcons)

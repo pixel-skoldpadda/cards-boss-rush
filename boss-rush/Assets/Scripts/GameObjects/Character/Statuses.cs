@@ -41,6 +41,12 @@ namespace GameObjects.Character
             }
         }
 
+        public void RemoveStatus(Status status)
+        {
+            _statusBar.RemoveStatusIconByType(status.Item.Type);
+            _activeStatuses.Remove(status);
+        }
+        
         public void Reset()
         {
             _statusBar.RemoveAllIcons();
@@ -99,7 +105,9 @@ namespace GameObjects.Character
             }
             return damage;
         }
-        
+
+        public List<Status> ActiveStatuses => _activeStatuses;
+
         private void ApplyStatusEffect(Status status)
         {
             StatusType type = status.Item.Type;
