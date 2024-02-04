@@ -27,6 +27,7 @@ namespace Ui.Hud
         {
             _maxHealth = maxHealth;
             UpdateHealthBar(_maxHealth);
+            UpdateShieldCounter(0);
         }
         
         public void UpdateHealthBar(int currentValue)
