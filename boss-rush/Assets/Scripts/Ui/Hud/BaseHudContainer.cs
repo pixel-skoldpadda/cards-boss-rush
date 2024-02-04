@@ -6,7 +6,7 @@ namespace Ui.Hud
     public abstract class BaseHudContainer : MonoBehaviour
     {
         [SerializeField] private CanvasGroup canvasGroup;
-        [SerializeField] private Hint hint;
+        [SerializeField] protected Hint hint;
         [SerializeField] [TextArea] private string description;
         
         private void Awake()

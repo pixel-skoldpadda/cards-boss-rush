@@ -43,6 +43,7 @@ namespace Ui.Hud
 
         public void OnButtonClicked()
         {
+            hint.Hide();
             _gameState.ActiveCharacter.OnEndTurn?.Invoke();
         }
 

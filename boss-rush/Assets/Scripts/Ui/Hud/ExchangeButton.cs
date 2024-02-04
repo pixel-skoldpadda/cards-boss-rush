@@ -27,6 +27,8 @@ namespace Ui.Hud
 
         public void OnButtonClicked()
         {
+            hint.Hide();
+            
             exchangeButton.interactable = false;
             _gameState.GetPlayer().Exchange--;
             
