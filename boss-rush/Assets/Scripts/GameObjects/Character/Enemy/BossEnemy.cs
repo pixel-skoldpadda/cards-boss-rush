@@ -65,6 +65,7 @@ namespace GameObjects.Character.Enemy
             {                
                 UseAllCardsInStack();
                 statuses.Update();
+                OnEndTurn?.Invoke();
             }
         }
 
@@ -80,8 +81,6 @@ namespace GameObjects.Character.Enemy
             
             cardsDeck.CardsStack.Clear();
             _cardsContainer.ClearAllCards();
-
-            OnEndTurn?.Invoke();
         }
 
         private void ChooseCardsInStack()
