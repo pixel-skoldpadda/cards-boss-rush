@@ -30,13 +30,12 @@ namespace Ui.Hud
 
         public void OnButtonClicked()
         {
+            exchangeButton.interactable = false;
+
             Player player = _gameState.GetPlayer();
-
             player.Exchange--;
-
-            int exchange = player.Exchange;
-            exchangeButton.interactable = exchange > 0;
-            UpdateExchangeCounter(exchange, player.Item.UseExchangeLimit);
+            
+            UpdateExchangeCounter(player.Exchange, player.Item.UseExchangeLimit);
             
             Hud hud =_gameState.HUD;
             hud.Hide();

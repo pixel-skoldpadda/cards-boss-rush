@@ -28,11 +28,13 @@ namespace Ui.Hud
         {
             canvasGroup
                 .DOFade(0, .1f)
-                .SetEase(Ease.InExpo);
+                .SetEase(Ease.InExpo)
+                .OnComplete(() =>  gameObject.SetActive(false));
         }
 
         public void Show()
         {
+            gameObject.SetActive(true);
             canvasGroup
                 .DOFade(1, .1f)
                 .SetEase(Ease.InExpo);
