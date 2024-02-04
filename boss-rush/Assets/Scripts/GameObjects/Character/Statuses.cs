@@ -166,7 +166,7 @@ namespace GameObjects.Character
                 }
             }
 
-            if (returnDamage != damage)
+            if (returnDamage > 0)
             {
                 activeCharacter.TakeDamage(returnDamage);
             }
