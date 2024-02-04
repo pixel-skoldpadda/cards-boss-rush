@@ -5,7 +5,6 @@ using Data;
 using GameObjects.Character;
 using Infrastructure.Services.State;
 using Items.Card;
-using TMPro;
 using UnityEngine;
 
 namespace Ui.Hud.Card
@@ -24,9 +23,6 @@ namespace Ui.Hud.Card
         
         [Space(10)]
         [SerializeField] private GameObject cardPrefab;
-        [SerializeField] private TextMeshProUGUI cardsInDeckCounter;
-        [SerializeField] private TextMeshProUGUI cardsInOutCounter;
-
         [SerializeField] private EndTurnButton endTurnButton;
         
         private readonly List<CardView> _cardViews = new();
@@ -55,8 +51,6 @@ namespace Ui.Hud.Card
             _cardsDeck = cardsDeck;
             
             cardsDeck.OnCardsGenerated += OnCardsGenerated;
-            cardsDeck.OnHangUp += OnHangUp;
-            cardsDeck.OnCardGoOut += OnCardGoOut;
             cardsDeck.OnCardsDiscarding += OnCardsDiscarding;
         }
 
@@ -73,26 +67,13 @@ namespace Ui.Hud.Card
             }
         }
 
-        private void OnCardGoOut()
-        {
-            cardsInOutCounter.text = $"{_cardsDeck.OutCardsCount}";
-        }
-
         private void OnCardsGenerated()
         {
             AddCardsToDeck(_cardsDeck.CardsInHand);
-            cardsInDeckCounter.text = $"{_cardsDeck.CardsCount}";
-        }
-
-        private void OnHangUp()
-        {
-            cardsInOutCounter.text = $"{_cardsDeck.OutCardsCount}";
-            cardsInDeckCounter.text = $"{_cardsDeck.CardsCount}";
         }
         
         private void OnCardsDiscarding()
         {
-            cardsInOutCounter.text = $"{_cardsDeck.OutCardsCount}";
             DestroyCards();
         }
 
@@ -210,8 +191,6 @@ namespace Ui.Hud.Card
         private void OnDestroy()
         {
             _cardsDeck.OnCardsGenerated -= OnCardsGenerated;
-            _cardsDeck.OnHangUp -= OnHangUp;
-            _cardsDeck.OnCardGoOut -= OnCardGoOut;
             _cardsDeck.OnCardsDiscarding -= OnCardsDiscarding;
         }
     }

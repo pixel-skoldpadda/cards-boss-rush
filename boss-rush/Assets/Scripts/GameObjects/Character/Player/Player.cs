@@ -22,6 +22,8 @@ namespace GameObjects.Character.Player
 
             Hud hud = gameState.HUD;
             hud.CardsContainer.InitCardsDeck(cardsDeck);
+            hud.DeckContainer.Init(cardsDeck);
+            hud.OutContainer.Init(cardsDeck);
 
             _limitContainer = hud.CardsLimitContainer;
             cardsDeck.OnUsedCardsCountChanged += _limitContainer.UpdateUsedCardsCounter;
