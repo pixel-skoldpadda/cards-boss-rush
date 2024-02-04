@@ -112,10 +112,12 @@ namespace GameObjects.Character
             TryHangUp();
 
             int cardsCount = _cardInHandCount;
-            Status status = _statuses.GetStatusByType(StatusType.Confused);
-            if (status != null)
+            foreach (Status status in _statuses.ActiveStatuses)
             {
-                cardsCount -= status.Item.Value;
+                if (StatusType.Confused.Equals(status.Item.Type))
+                {
+                    cardsCount -= status.Item.Value;
+                }
             }
 
             Random random = new Random();

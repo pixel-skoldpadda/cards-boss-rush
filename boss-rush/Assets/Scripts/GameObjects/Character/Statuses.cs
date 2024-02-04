@@ -28,7 +28,7 @@ namespace GameObjects.Character
             }
             else
             {
-                Status currentStatus = GetStatus(status.Item.Type);
+                Status currentStatus = GetStatusById(status.ID);
                 if (currentStatus != null)
                 {
                     currentStatus.Turns += status.Turns;
@@ -73,11 +73,11 @@ namespace GameObjects.Character
             }
         }
 
-        public Status GetStatus(StatusType type)
+        private Status GetStatusById(string id)
         {
             foreach (Status status in _activeStatuses)
             {
-                if (type.Equals(status.Item.Type))
+                if (id.Equals(status.ID))
                 {
                     return status;
                 }
@@ -138,11 +138,14 @@ namespace GameObjects.Character
             TryReturnDamage(value);
             
             int damage = value;
-            Status status = GetStatus(StatusType.Vulnerability);
-            if (status != null)
+            foreach (Status status in _activeStatuses)
             {
-                damage += damage * status.Item.Value / 100;
+                if (StatusType.Vulnerability.Equals(status.Item.Type))
+                {
+                    damage += damage * status.Value / 100;
+                }
             }
+       
             _character.TakeDamage(damage, throughShield);
         }
 
@@ -154,10 +157,18 @@ namespace GameObjects.Character
                 return;
             }
             
-            Status status = GetStatus(StatusType.Thorns);
-            if (status != null)
+            int returnDamage = 0;
+            foreach (Status status in _activeStatuses)
             {
-                activeCharacter.TakeDamage(damage * status.Value / 100);
+                if (StatusType.Thorns.Equals(status.Item.Type))
+                {
+                    returnDamage += damage * status.Value / 100;
+                }
+            }
+
+            if (returnDamage != damage)
+            {
+                activeCharacter.TakeDamage(returnDamage);
             }
         }
         

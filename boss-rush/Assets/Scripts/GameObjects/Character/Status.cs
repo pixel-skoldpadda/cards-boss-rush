@@ -8,14 +8,16 @@ namespace GameObjects.Character
         private readonly StatusItem _item;
         private int _turns;
         private int _value;
+        private readonly string _id;
 
         public Action<int> OnTurnsUpdated { get; set; }
-
+        
         public Status(StatusItem item)
         {
             _item = item;
             _turns = item.Turns;
             _value = item.Value;
+            _id = $"{item.Type.ToString()}_{_value}";
         }
 
         public int Turns
@@ -40,5 +42,6 @@ namespace GameObjects.Character
         }
         
         public StatusItem Item => _item;
+        public string ID => _id;
     }
 }
