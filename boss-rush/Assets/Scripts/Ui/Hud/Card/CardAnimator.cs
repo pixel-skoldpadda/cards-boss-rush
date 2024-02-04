@@ -39,7 +39,7 @@ namespace Ui.Hud.Card
             {
                 _pickUpCardSequence = DOTween.Sequence()
                     .Append(rectTransform.DOMove(_endPosition, .03f))
-                    .Join(rectTransform.DOScale(1.1f, .03f))
+                    .Join(rectTransform.DOScale(1.15f, .03f))
                     .Join(rectTransform.DORotate(Vector3.zero, .03f))
                     .SetEase(Ease.OutExpo);
             }
