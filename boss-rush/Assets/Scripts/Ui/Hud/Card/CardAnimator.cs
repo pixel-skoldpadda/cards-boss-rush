@@ -6,11 +6,13 @@ namespace Ui.Hud.Card
 {
     public class CardAnimator : MonoBehaviour
     {
+        private static readonly int ShockwaveHash = Animator.StringToHash("Shockwave");
         private const int MAX_SORTING_ORDER = 5;
 
         [FormerlySerializedAs("card")] [SerializeField] private CardView cardView;
         [SerializeField] private RectTransform rectTransform;
         [SerializeField] private Canvas canvas;
+        [SerializeField] private Animator animator;
         
         private Vector2 _endPosition;
 
@@ -87,6 +89,11 @@ namespace Ui.Hud.Card
                 });
         }
 
+        public void PlayShockwaveAnimation()
+        {
+            animator.SetTrigger(ShockwaveHash);
+        }
+        
         private void UpdateDefaultValues()
         {
             _defaultPosition = rectTransform.position;

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using Data;
 using GameObjects.Character;
@@ -28,11 +29,15 @@ namespace Ui.Hud.Card
 
         [SerializeField] private EndTurnButton endTurnButton;
         
-        private readonly List<CardView> cardViews = new();
+        private readonly List<CardView> _cardViews = new();
         private IGameStateService _gameStateService;
 
         private CardsDeck _cardsDeck;
-        
+
+        private CardsContainerMode _mode = CardsContainerMode.Combat;
+
+        public Action<CardView> OnCardSelected { get; set; }
+
         public void Construct(IGameStateService gameStateService)
         {
             _gameStateService = gameStateService;
@@ -53,6 +58,19 @@ namespace Ui.Hud.Card
             cardsDeck.OnHangUp += OnHangUp;
             cardsDeck.OnCardGoOut += OnCardGoOut;
             cardsDeck.OnCardsDiscarding += OnCardsDiscarding;
+        }
+
+        public CardsContainerMode Mode
+        {
+            set => _mode = value;
+        }
+
+        public void ChangeCardsInteraction(bool interaction)
+        {
+            foreach (CardView cardView in _cardViews)
+            {
+                cardView.ChangeInteractionEnabled(interaction);
+            }
         }
 
         private void OnCardGoOut()
@@ -80,12 +98,12 @@ namespace Ui.Hud.Card
 
         private void DestroyCards()
         {
-            foreach (CardView card in cardViews)
+            foreach (CardView card in _cardViews)
             {
                 card.ChangeInteractionEnabled(false);
                 Destroy(card.gameObject);
             }
-            cardViews.Clear();
+            _cardViews.Clear();
         }
 
         private void AddCardsToDeck(List<CardItem> cardItems)
@@ -104,12 +122,12 @@ namespace Ui.Hud.Card
             CardView cardView = cardGameObject.GetComponent<CardView>();
             cardView.Init(cardItem);
             cardView.OnCardClicked += OnCardClicked;
-            cardViews.Add(cardView);
+            _cardViews.Add(cardView);
         }
 
         private void AlignCards()
         {
-            int size = cardViews.Count;
+            int size = _cardViews.Count;
             
             Vector2 position = new Vector2();
             position.x = -(xOffsetValue * size - xOffsetValue) / 2;
@@ -121,12 +139,25 @@ namespace Ui.Hud.Card
                 position.y = yOffsetCurve.Evaluate(cardsRatio) * yOffsetValue;
                 rotation.z = rotationCurve.Evaluate(cardsRatio) * rotationValue;
                 
-                cardViews[i].CardAnimator.PlayPositioningAnimation(position, rotation, i);
+                _cardViews[i].CardAnimator.PlayPositioningAnimation(position, rotation, i);
                 position.x += xOffsetValue;
             }
         }
 
         private void OnCardClicked(CardView clickedCardView)
+        {
+            if (CardsContainerMode.Combat.Equals(_mode))
+            {
+                TryUseCard(clickedCardView);
+            }
+            else if (CardsContainerMode.Exchange.Equals(_mode))
+            {
+                ChangeCardsInteraction(false);
+                OnCardSelected?.Invoke(clickedCardView);
+            }
+        }
+
+        private void TryUseCard(CardView clickedCardView)
         {
             GameState gameState = _gameStateService.State;
             Character player = gameState.ActiveCharacter;
@@ -140,7 +171,7 @@ namespace Ui.Hud.Card
             
             endTurnButton.ChangeInteractable(false);
             clickedCardView.ChangeInteractionEnabled(false);
-            cardViews.Remove(clickedCardView);
+            _cardViews.Remove(clickedCardView);
 
             CardItem cardItem = clickedCardView.CardItem;
             bool hasNegativeEffect = false;

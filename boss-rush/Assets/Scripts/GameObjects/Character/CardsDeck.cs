@@ -11,8 +11,8 @@ namespace GameObjects.Character
         private readonly List<CardItem> _allCards = new();
         private readonly List<CardItem> _outCards = new();
         private readonly List<CardItem> _cardsInHand = new();
-        
         private readonly List<CardItem> _cardsStack = new();
+        private readonly List<CardItem> _defaultDeck = new();
         
         private readonly int _useCardsLimit;
         private readonly int _cardInHandCount;
@@ -26,9 +26,10 @@ namespace GameObjects.Character
         public Action OnCardGoOut { get; set; }
         public Action OnCardsDiscarding { get; set; }
         public Action<int, int> OnUsedCardsCountChanged { get; set; }
-
+        
         public CardsDeck(List<CardItem> allCards, int cardsInHandCount, int useCardsLimit, Statuses statuses)
         {
+            _defaultDeck.AddRange(allCards);
             _allCards.AddRange(allCards);
             _useCardsLimit = useCardsLimit;
             _cardInHandCount = cardsInHandCount;
@@ -37,7 +38,38 @@ namespace GameObjects.Character
 
         public void AddCard(CardItem cardItem)
         {
+            _defaultDeck.Add(cardItem);
             _allCards.Add(cardItem);
+        }
+        
+        public CardItem ExchangeCard(CardItem cardItem)
+        {
+            CardItem noSpecialCard = GetRandomNoSpecialCard(_cardsInHand);
+            if (noSpecialCard != null)
+            {
+                _cardsInHand.Remove(noSpecialCard);
+                _cardsInHand.Add(cardItem);
+
+                return noSpecialCard;
+            }
+
+            noSpecialCard = GetRandomNoSpecialCard(_allCards);
+            if (noSpecialCard != null)
+            {
+                _allCards.Remove(noSpecialCard);
+                _allCards.Add(cardItem);
+
+                return noSpecialCard;
+            }
+            
+            noSpecialCard = GetRandomNoSpecialCard(_outCards);
+            if (noSpecialCard != null)
+            {
+                _outCards.Remove(noSpecialCard);
+                _outCards.Add(cardItem);
+            }
+            
+            return noSpecialCard;
         }
         
         public CardItem ChooseCardToStack(StatusType type, StatusSubtype subtype)
@@ -131,12 +163,12 @@ namespace GameObjects.Character
 
             return randomCards;
         }
-        
+
         public void UpdateUsedCardsCounter()
         {
             _cardsUsed++;
         }
-        
+
         public void RemoveCardsFromHand(CardItem cardItem)
         {
             OnUsedCardsCountChanged?.Invoke(_cardsUsed, _useCardsLimit);
@@ -169,23 +201,44 @@ namespace GameObjects.Character
 
         public void Reset()
         {
-            _allCards.AddRange(_outCards);
-            _allCards.AddRange(_cardsInHand);
-            _allCards.AddRange(_cardsStack);
+            _allCards.AddRange(_defaultDeck);
             
             _cardsUsed = 0;
             _cardsInHand.Clear();
             _outCards.Clear();
+            _cardsStack.Clear();
             
             OnHangUp?.Invoke();
         }
-        
+
         public List<CardItem> CardsInHand => _cardsInHand;
         public int CardsCount => _allCards.Count;
         public int OutCardsCount => _outCards.Count;
         public int UseCardsLimit => _useCardsLimit;
         public int CardsUsed => _cardsUsed;
         public List<CardItem> CardsStack => _cardsStack;
+
+        private CardItem GetRandomNoSpecialCard(List<CardItem> cards)
+        {
+            List<CardItem> noSpecialCards = new List<CardItem>();
+            foreach (CardItem cardItem in cards)
+            {
+                if (!cardItem.Special)
+                {
+                    noSpecialCards.Add(cardItem);
+                }
+            }
+
+            if (noSpecialCards.IsEmpty())
+            {
+                return null;
+            }
+            
+            Random random = new Random();
+            int index = random.Next(0, noSpecialCards.Count);
+
+            return noSpecialCards[index];
+        }
 
         private void TryHangUp()
         {
