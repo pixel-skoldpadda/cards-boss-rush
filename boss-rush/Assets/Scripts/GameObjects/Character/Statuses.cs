@@ -157,18 +157,22 @@ namespace GameObjects.Character
                 return;
             }
             
-            int returnDamage = 0;
+            int percent = 0;
             foreach (Status status in _activeStatuses)
             {
                 if (StatusType.Thorns.Equals(status.Item.Type))
                 {
-                    returnDamage += damage * status.Value / 100;
+                    percent += status.Value;
                 }
             }
 
-            if (returnDamage > 0)
+            if (percent > 0)
             {
-                activeCharacter.TakeDamage(returnDamage);
+                int returnDamage = damage * percent / 100;
+                if (returnDamage > 0)
+                {
+                    activeCharacter.TakeDamage(returnDamage);
+                }   
             }
         }
         
