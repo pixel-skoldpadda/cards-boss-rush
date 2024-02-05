@@ -17,6 +17,7 @@ namespace Ui.Hud
         [SerializeField] private BaseMiddleContainer deathContainer;
         [SerializeField] private DeckContainer deckContainer;
         [SerializeField] private OutContainer outContainer;
+        [SerializeField] private SettingsContainer settingsContainer;
         
         public BossHealthBar BossHealthBar => bossHealthBar;
         public CardsContainer CardsContainer => cardsContainer;
@@ -28,6 +29,7 @@ namespace Ui.Hud
         public BaseMiddleContainer DeathContainer => deathContainer;
         public DeckContainer DeckContainer => deckContainer;
         public OutContainer OutContainer => outContainer;
+        public SettingsContainer SettingsContainer => settingsContainer;
 
         public void ResetContainers()
         {
@@ -48,6 +50,7 @@ namespace Ui.Hud
             cardsLimitContainer.Hide();
             deckContainer.Hide();
             outContainer.Hide();
+            settingsContainer.Hide();
         }
 
         public void Show()
@@ -61,6 +64,7 @@ namespace Ui.Hud
             cardsLimitContainer.Show();
             deckContainer.Show();
             outContainer.Show();
+            settingsContainer.Show();
         }
     }
 }

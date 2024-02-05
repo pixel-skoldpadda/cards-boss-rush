@@ -24,12 +24,13 @@ namespace Ui.Windows.Pause
 
         public void OnExitToMenuButtonClicked()
         {
-            _stateMachine.Enter<LoadSceneState, string>(SceneConfig.MenuScene);
+            OnWindowClosed += LoadMenuScene;
+            Close();
         }
 
-        public void OnSettingsButtonClicked()
+        private void LoadMenuScene()
         {
-            
+            _stateMachine.Enter<LoadSceneState, string>(SceneConfig.MenuScene);
         }
     }
 }

@@ -19,7 +19,12 @@ namespace Ui.Windows.Congratulations
 
         public void OnExitToMenuButtonPressed()
         {
+            OnWindowClosed += LoadMenuScene;
             Close();
+        }
+        
+        private void LoadMenuScene()
+        {
             _stateMachine.Enter<LoadSceneState, string>(SceneConfig.MenuScene);
         }
     }

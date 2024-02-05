@@ -30,6 +30,7 @@ namespace Infrastructure.Installers
             cardsContainer.Construct(_gameStateService);
             hud.EndTurnButton.Construct(_gameStateService);
             hud.ExchangeButton.Construct(_gameStateService, _windowsManager);
+            hud.SettingsContainer.Construct(_windowsManager, _gameStateService);
         }
     }
 }
