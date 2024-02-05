@@ -12,7 +12,7 @@ using UnityEngine;
 namespace Infrastructure.States
 {
     // TODO: Переименовать стейт ОТРЕФАКТОРИТЬ!
-    public class CheckHealthState : IState
+    public class CheckHealthState : IPayloadedState<Character>
     {
         private readonly IGameStateMachine _stateMachine;
         private readonly IGameStateService _gameStateService;
@@ -25,34 +25,36 @@ namespace Infrastructure.States
             _windowsManager = windowsManager;
         }
         
-        public void Enter()
+        public void Enter(Character deadCharacter)
         {
             Debug.Log($"{GetType()} entered.");
 
             GameState gameState = _gameStateService.State;
-
-            Character character = gameState.GetOpponentCharacter();
-            character.CardsDeck.Reset();
-            character.Animator.PlayDeathAnimation(() =>
+            
+            deadCharacter.Animator.PlayDeathAnimation(() => 
             {
-                if (character.IsPlayer())
+                if (deadCharacter.IsPlayer())
                 {
                     ShowDeathContainer();
                 }
                 else
                 {
-                    gameState.ActiveCharacter.ResetState();
+                    gameState.GetPlayer().ResetState();
+                    
                     gameState.ActiveCharacter = null;
-
                     gameState.HUD.BossCardsContainer.ClearAllCards();
-                    gameState.Characters.Remove(character);
-                    Object.Destroy(character.gameObject);
+                    gameState.Characters.Remove(deadCharacter);
+
+                    CardsDeck deadCharacterDeck = deadCharacter.CardsDeck;
+                    deadCharacterDeck.Reset();
                     
                     _windowsManager.OpenWindow(
                         WindowType.ChooseCardWindow, 
                         false, 
                         () => _stateMachine.Enter<SpawnBossEnemyState>(), 
-                        character.CardsDeck.GetRandomThreeSpecialCards());
+                        deadCharacterDeck.GetRandomThreeSpecialCards());
+                    
+                    Object.Destroy(deadCharacter.gameObject);
                 } 
             });
         }

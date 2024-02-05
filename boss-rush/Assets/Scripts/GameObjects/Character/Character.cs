@@ -137,7 +137,7 @@ namespace GameObjects.Character
                 hud.ResetContainers();
                 hud.Hide();
 
-                _stateMachine.Enter<CheckHealthState>();
+                _stateMachine.Enter<CheckHealthState, Character>(this);
             }
         }
 
