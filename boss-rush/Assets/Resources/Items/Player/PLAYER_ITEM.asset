@@ -32,7 +32,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: e6354fca0f6a06f44a0312b191e55e31, type: 2}
   - {fileID: 11400000, guid: 7139c6f5546cb1a489319f060f6c85f6, type: 2}
   - {fileID: 11400000, guid: dc6b2062a58959f43bb6b2db1a6a701a, type: 2}
-  stepDescription: "\u0425\u043E\u0434 \u0438\u0433\u0440\u043E\u043A\u0430"
+  stepDescription: "Player\u2019s turn"
   cardsOnHand: 5
   useCardsLimit: 3
   useExchangeLimit: 3
