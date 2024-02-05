@@ -44,7 +44,7 @@ namespace GameObjects.Character
         
         public CardItem ExchangeCard(CardItem cardItem)
         {
-            CardItem noSpecialCard = GetRandomNoSpecialCard(_cardsInHand);
+            CardItem noSpecialCard = GetRandomNoSpecialCard(_cardsInHand, cardItem);
             if (noSpecialCard != null)
             {
                 _cardsInHand.Remove(noSpecialCard);
@@ -53,7 +53,7 @@ namespace GameObjects.Character
                 return noSpecialCard;
             }
 
-            noSpecialCard = GetRandomNoSpecialCard(_allCards);
+            noSpecialCard = GetRandomNoSpecialCard(_allCards, cardItem);
             if (noSpecialCard != null)
             {
                 _allCards.Remove(noSpecialCard);
@@ -62,7 +62,7 @@ namespace GameObjects.Character
                 return noSpecialCard;
             }
             
-            noSpecialCard = GetRandomNoSpecialCard(_outCards);
+            noSpecialCard = GetRandomNoSpecialCard(_outCards, cardItem);
             if (noSpecialCard != null)
             {
                 _outCards.Remove(noSpecialCard);
@@ -221,12 +221,12 @@ namespace GameObjects.Character
         public int CardsUsed => _cardsUsed;
         public List<CardItem> CardsStack => _cardsStack;
 
-        private CardItem GetRandomNoSpecialCard(List<CardItem> cards)
+        private CardItem GetRandomNoSpecialCard(List<CardItem> cards, CardItem item)
         {
             List<CardItem> noSpecialCards = new List<CardItem>();
             foreach (CardItem cardItem in cards)
             {
-                if (!cardItem.Special)
+                if (!cardItem.Special && !item.Equals(cardItem))
                 {
                     noSpecialCards.Add(cardItem);
                 }
