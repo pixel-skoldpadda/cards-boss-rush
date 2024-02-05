@@ -13,14 +13,13 @@ MonoBehaviour:
   m_Name: 10_HEALTH_CARD_ITEM
   m_EditorClassIdentifier: 
   itemName: "\u041A\u0430\u0440\u0442\u0430 \u0437\u0434\u043E\u0440\u043E\u0432\u044C\u044F"
-  description: "\u0412\u043E\u0441\u043F\u043E\u043B\u043D\u0438\u0442 <color=#eb4034>10</color>
-    \u0437\u0434\u043E\u0440\u043E\u0432\u044C\u044F"
+  description: Restores <color=#eb4034>10</color> health points
   cardIcon: {fileID: 21300000, guid: 8d4c14d2bf6352f46b8d51198f04db18, type: 3}
   special: 1
   statusItems:
   - type: 1
     subtype: 0
+    description: 
     value: 10
-    valuePostfix: 
     turns: 0
     icon: {fileID: 21300000, guid: 537bd92fe16cb7d43a5d7f200a4ee841, type: 3}

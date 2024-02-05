@@ -13,16 +13,14 @@ MonoBehaviour:
   m_Name: 5_BOLSTER_3_ROUND_CARD_ITEM
   m_EditorClassIdentifier: 
   itemName: "\u041F\u043E\u0432\u044B\u0448\u0435\u043D\u0438\u0435 \u0431\u0440\u043E\u043D\u0438"
-  description: "\u0414\u043E\u0431\u0430\u0432\u043B\u044F\u0435\u0442 <color=#3477eb>5</color>
-    \u0449\u0438\u0442\u0430 \u0432 \u0442\u0435\u0447\u0435\u043D\u0438\u0438\n<color=#34eb93>3</color>
-    \u0445\u043E\u0434\u043E\u0432"
+  description: Gives <color=#3477eb>5</color> shield each turn for <color=#34eb93>3</color>
+    turns
   cardIcon: {fileID: 21300000, guid: 257eff11e93b88145b4b37a62f4a3b86, type: 3}
   special: 0
   statusItems:
   - type: 0
     subtype: 0
-    description: "\u0414\u043E\u0431\u0430\u0432\u043B\u044F\u0435\u0442 <color=#3477eb>5</color>
-      \u0449\u0438\u0442\u0430\n\u0432 \u043D\u0430\u0447\u0430\u043B\u0435 \u0445\u043E\u0434\u0430."
+    description: Gives <color=#3477eb>5</color> shield each turn
     value: 5
     turns: 3
     icon: {fileID: 21300000, guid: 75ac78a92ab9fd84d936973c810b6ddb, type: 3}

@@ -13,15 +13,13 @@ MonoBehaviour:
   m_Name: 60_THORNS_CARD_ITEM
   m_EditorClassIdentifier: 
   itemName: "\u0412\u043E\u0437\u0432\u0440\u0430\u0442 \u0443\u0440\u043E\u043D\u0430"
-  description: "\u0412\u0435\u0440\u043D\u0435\u0442  <color=#3477eb>60%</color>
-    \u043D\u0430\u043D\u0435\u0441\u0435\u043D\u043D\u043E\u0433\u043E\n\u0443\u0440\u043E\u043D\u0430."
+  description: Reflects <color=#3477eb>50%</color> damage
   cardIcon: {fileID: 21300000, guid: ef4720d25334c994db9b78410e0dbce3, type: 3}
   special: 1
   statusItems:
   - type: 11
     subtype: 0
-    description: "\u0412\u0435\u0440\u043D\u0435\u0442  <color=#3477eb>60%</color>
-      \u043D\u0430\u043D\u0435\u0441\u0435\u043D\u043D\u043E\u0433\u043E\n\u0443\u0440\u043E\u043D\u0430."
+    description: Reflects <color=#3477eb>50%</color> damage
     value: 60
     turns: 4
     icon: {fileID: 21300000, guid: 83a0d4f7dad0c1945a1da11c21fadfc0, type: 3}
