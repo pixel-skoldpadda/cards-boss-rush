@@ -90,8 +90,11 @@ namespace Ui.Windows.Exchange
                 enemyStatuses.RemoveStatus(enemyStatus);
                 playerStatuses.AddStatus(enemyStatus);
             }
-            
-            player.Exchange--;
+
+            if (playerStatus != null || enemyStatus != null)
+            {
+                player.Exchange--;   
+            }
             
             Close();
         }

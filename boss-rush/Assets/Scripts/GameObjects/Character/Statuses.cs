@@ -43,7 +43,7 @@ namespace GameObjects.Character
 
         public void RemoveStatus(Status status)
         {
-            _statusBar.RemoveStatusIconByType(status.Item.Type);
+            _statusBar.RemoveStatusIconById(status.ID);
             _activeStatuses.Remove(status);
         }
         
