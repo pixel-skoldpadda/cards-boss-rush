@@ -18,16 +18,18 @@ MonoBehaviour:
   spawnPoint: {x: 5, y: -2, z: 0}
   maxHealth: 130
   deck:
-  - {fileID: 11400000, guid: 33020f3c8f70487489b31c4dc1038cf2, type: 2}
-  - {fileID: 11400000, guid: 33020f3c8f70487489b31c4dc1038cf2, type: 2}
-  - {fileID: 11400000, guid: 89d69f6fc12230549bcb9f9da3f5305c, type: 2}
+  - {fileID: 11400000, guid: 28609b874e4dbdc4aaec0d71a82ceaeb, type: 2}
+  - {fileID: 11400000, guid: 28609b874e4dbdc4aaec0d71a82ceaeb, type: 2}
+  - {fileID: 11400000, guid: 46e7a1c8461e8114995fd94cecba631e, type: 2}
+  - {fileID: 11400000, guid: 94fc6f1f96155454d9814e2ea4b62327, type: 2}
+  - {fileID: 11400000, guid: c5343254ac2edbb4fb6ce3c5871f6380, type: 2}
+  - {fileID: 11400000, guid: e6354fca0f6a06f44a0312b191e55e31, type: 2}
   - {fileID: 11400000, guid: 0abeb3b81c7fbd74088735d124454b6f, type: 2}
   - {fileID: 11400000, guid: 0abeb3b81c7fbd74088735d124454b6f, type: 2}
-  - {fileID: 11400000, guid: cc46dca0f60074b48b0c064548c85ed9, type: 2}
   - {fileID: 11400000, guid: 1b990ae86e47d7544a49cc0ee97b0519, type: 2}
-  - {fileID: 11400000, guid: 559d0ebb4112efd4897d2578481f7c75, type: 2}
-  - {fileID: 11400000, guid: 2ae3eb96393c65e4ca9d9b54dd9fbd16, type: 2}
-  - {fileID: 11400000, guid: a2484224bc916aa4d9f217269bc48fdd, type: 2}
+  - {fileID: 11400000, guid: ba211bd6c0f315c41b4b54bc0bc2ae46, type: 2}
+  - {fileID: 11400000, guid: 1d33e2e08296a2b4cbc71f731535bd49, type: 2}
+  - {fileID: 11400000, guid: 4be0363b8ec257746b95db6cd639f6e6, type: 2}
   stepDescription: "\u0425\u043E\u0434 \u0432\u0440\u0430\u0433\u0430"
   cardsOnHand: 5
   useCardsLimit: 3

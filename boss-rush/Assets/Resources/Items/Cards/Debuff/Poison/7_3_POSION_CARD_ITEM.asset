@@ -17,7 +17,7 @@ MonoBehaviour:
     <color=#eb4034>7</color> \u0443\u0440\u043E\u043D\u0430 \u0432 \u0442\u0435\u0447\u0435\u043D\u0438\u0438\n<color=#34eb93>3</color>
     \u0445\u043E\u0434\u043E\u0432"
   cardIcon: {fileID: 21300000, guid: 7e29f036cd8cd2642b3ecfc40d61cfed, type: 3}
-  special: 0
+  special: 1
   statusItems:
   - type: 4
     subtype: 1
