@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1eef3b7b21c94dbb8d57fc0d5437a4d2, type: 3}
   m_Name: 4_GOLEM_ENEMY_ITEM
   m_EditorClassIdentifier: 
-  itemName: Amber Golem
+  itemName: "\u0413\u043E\u043B\u0435\u043C"
   description: 
   prefab: {fileID: 8061734909105625444, guid: 2e6bc2f7cba84fc43a1e814447a779be, type: 3}
   spawnPoint: {x: 5, y: -2, z: 0}
@@ -31,7 +31,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ba211bd6c0f315c41b4b54bc0bc2ae46, type: 2}
   - {fileID: 11400000, guid: 1d33e2e08296a2b4cbc71f731535bd49, type: 2}
   - {fileID: 11400000, guid: 4be0363b8ec257746b95db6cd639f6e6, type: 2}
-  stepDescription: "Enemy\u2019s turn"
+  stepDescription: "\u0425\u043E\u0434 \u0432\u0440\u0430\u0433\u0430"
   cardsOnHand: 5
   useCardsLimit: 3
   useExchangeLimit: 3
@@ -126,7 +126,7 @@ MonoBehaviour:
         m_PreInfinity: 2
         m_PostInfinity: 2
         m_RotationOrder: 4
-    - statusType: 0
+    - statusType: 11
       statusSubtype: 0
       useActionCurve:
         serializedVersion: 2
@@ -170,7 +170,7 @@ MonoBehaviour:
         m_PreInfinity: 2
         m_PostInfinity: 2
         m_RotationOrder: 4
-    - statusType: 0
+    - statusType: 2
       statusSubtype: 0
       useActionCurve:
         serializedVersion: 2
@@ -205,7 +205,7 @@ MonoBehaviour:
         m_PreInfinity: 2
         m_PostInfinity: 2
         m_RotationOrder: 4
-    - statusType: 0
+    - statusType: 6
       statusSubtype: 1
       useActionCurve:
         serializedVersion: 2
