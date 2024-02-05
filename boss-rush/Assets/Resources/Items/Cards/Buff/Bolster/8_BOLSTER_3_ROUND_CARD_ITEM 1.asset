@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: 8_BOLSTER_3_ROUND_CARD_ITEM 1
   m_EditorClassIdentifier: 
   itemName: "\u041F\u043E\u0432\u044B\u0448\u0435\u043D\u0438\u0435 \u0431\u0440\u043E\u043D\u0438"
-  description: Gives <color=#3477eb>8</color> shield each turn for <color=#34eb93>3</color>
+  description: Gives <color=#3477eb>8</color> shield points each turn for <color=#34eb93>3</color>
     turns
   cardIcon: {fileID: 21300000, guid: 257eff11e93b88145b4b37a62f4a3b86, type: 3}
   special: 1
