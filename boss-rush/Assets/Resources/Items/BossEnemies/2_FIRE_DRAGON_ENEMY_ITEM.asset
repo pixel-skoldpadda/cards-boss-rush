@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1eef3b7b21c94dbb8d57fc0d5437a4d2, type: 3}
   m_Name: 2_FIRE_DRAGON_ENEMY_ITEM
   m_EditorClassIdentifier: 
-  itemName: "\u041E\u0433\u043D\u0435\u043D\u043D\u044B\u0439 \u0434\u0440\u0430\u043A\u043E\u043D"
+  itemName: Depth Dragon
   description: 
   prefab: {fileID: 5382907451340632761, guid: 399a34c4a12a6f540ab46c0e38b7e590, type: 3}
   spawnPoint: {x: 5, y: -2, z: 0}
@@ -30,7 +30,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 83455a0db7aa1e94ea32a0a5506b1a47, type: 2}
   - {fileID: 11400000, guid: 683f516c3a8b53449bef4f53228cbbc5, type: 2}
   - {fileID: 11400000, guid: 2e62a0eb5a407c44296d89aa10e20d65, type: 2}
-  stepDescription: "\u0425\u043E\u0434 \u0432\u0440\u0430\u0433\u0430"
+  stepDescription: "Enemy\u2019s turn"
   cardsOnHand: 5
   useCardsLimit: 3
   useExchangeLimit: 3
