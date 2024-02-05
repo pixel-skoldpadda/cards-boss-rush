@@ -28,7 +28,7 @@ namespace Infrastructure.States
                 [typeof(LoadLevelState)] = new LoadLevelState(this, sceneLoader, loadingCurtain, items, gameStateService),
                 [typeof(LoadSceneState)] = new LoadSceneState(sceneLoader, loadingCurtain),
                 [typeof(LoadProgressState)] = new LoadProgressState(this, gameStateService, saveLoadService, audio),
-                [typeof(SpawnBossEnemyState)] = new SpawnBossEnemyState(this, gameFactory, gameStateService),
+                [typeof(SpawnBossEnemyState)] = new SpawnBossEnemyState(this, gameFactory, gameStateService, windowsManager),
                 [typeof(StepTransitionState)] = new StepTransitionState(this, gameStateService),
                 [typeof(GenerateCardsInHandState)] = new GenerateCardsInHandState(this, gameStateService),
                 [typeof(WaitEndTurnState)] = new WaitEndTurnState(this, gameStateService),

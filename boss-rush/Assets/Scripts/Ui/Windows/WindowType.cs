@@ -4,6 +4,7 @@ namespace Ui.Windows
     {
         Pause,
         ChooseCardWindow,
-        ExchangeWindow
+        ExchangeWindow,
+        CongratulationsWindow
     }
 }
