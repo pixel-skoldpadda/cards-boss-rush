@@ -1,5 +1,6 @@
 ﻿using DG.Tweening;
 using UnityEngine;
+using UnityEngine.VFX;
 
 namespace GameObjects.Character
 {
@@ -10,6 +11,7 @@ namespace GameObjects.Character
         
         private static readonly int Alpha = Shader.PropertyToID("_Alpha");
 
+        [SerializeField] private VisualEffect bloodVFX;
         [SerializeField] private SpriteRenderer spriteRenderer;
         [SerializeField] private Animator animator;
 
@@ -53,7 +55,8 @@ namespace GameObjects.Character
         
         public void PlayDamageAnimation()
         {
-            animator.SetTrigger(DamageHash);
+            bloodVFX.Stop();
+            bloodVFX.Play();
         }
 
         private void OnDestroy()

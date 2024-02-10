@@ -537,6 +537,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canvasGroup: {fileID: 0}
+  hint: {fileID: 0}
+  description: 
   normalColor: {r: 0.68235296, g: 0.14509805, b: 0.13333334, a: 1}
   shieldColor: {r: 0.33333334, g: 0.6039216, b: 0.82745105, a: 1}
   health: {fileID: 3569239521581523980}
@@ -734,6 +736,14 @@ PrefabInstance:
     - target: {fileID: 4380416180806521601, guid: 4f73079f36fa1fe4fab93b53d71adc47, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5673972929150223206, guid: 4f73079f36fa1fe4fab93b53d71adc47, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.354
+      objectReference: {fileID: 0}
+    - target: {fileID: 5673972929150223206, guid: 4f73079f36fa1fe4fab93b53d71adc47, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.001
       objectReference: {fileID: 0}
     - target: {fileID: 6768165321207350149, guid: 4f73079f36fa1fe4fab93b53d71adc47, type: 3}
       propertyPath: m_AnchoredPosition.x

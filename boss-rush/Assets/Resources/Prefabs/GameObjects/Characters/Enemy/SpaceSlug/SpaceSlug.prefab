@@ -60,6 +60,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: SpaceSlug
       objectReference: {fileID: 0}
+    - target: {fileID: 7809636117520556951, guid: f3e3828b00d5c5a48959eb1ecfaf9ce1, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.48
+      objectReference: {fileID: 0}
+    - target: {fileID: 7809636117520556951, guid: f3e3828b00d5c5a48959eb1ecfaf9ce1, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.87
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
