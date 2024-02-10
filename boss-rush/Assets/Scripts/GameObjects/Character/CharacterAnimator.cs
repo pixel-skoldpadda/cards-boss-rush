@@ -8,17 +8,22 @@ namespace GameObjects.Character
         private static readonly int DamageHash = Animator.StringToHash("Damage");
         private static readonly int SlashAttack = Animator.StringToHash("SlashAttack");
         
+        private static readonly int Alpha = Shader.PropertyToID("_Alpha");
+
         [SerializeField] private SpriteRenderer spriteRenderer;
         [SerializeField] private Animator animator;
 
         private Sequence _attackSequence;
         private Tweener _deathTween;
-
+        
         // TODO: Переделать на DeathAnimation.anim
         public void PlayDeathAnimation(TweenCallback onComplete)
         {
-            _deathTween = spriteRenderer
-                .DOColor(new Color(0, 0, 0, 0), 1f)
+            Material material = spriteRenderer.material;
+            _deathTween = DOTween
+                .To(
+                    () => material.GetFloat(Alpha), 
+                    a => material.SetFloat(Alpha, a), 0, 2f)
                 .OnComplete(onComplete);
         }
 
