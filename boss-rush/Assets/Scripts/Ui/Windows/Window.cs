@@ -61,7 +61,7 @@ namespace Ui.Windows
             });
         }
 
-        protected void Close()
+        public void Close()
         {
             WindowsManager.CloseWindow(this);
         }

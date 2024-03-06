@@ -29,8 +29,6 @@ namespace Ui.Hud
         {
             hint.Hide();
             
-            exchangeButton.interactable = false;
-            
             Hud hud =_gameState.HUD;
             hud.Hide();
             
@@ -43,6 +41,7 @@ namespace Ui.Hud
         public void UpdateExchangeCounter(int current, int max)
         {
             exchangeCount.text = $"{current}/{max}";
+            exchangeButton.interactable = current == max;
         }
 
         private void OnTurnStarted()
